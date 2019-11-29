@@ -1,0 +1,306 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pathbuilder v1.0</title>
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+<script>
+    class Hero {
+        constructor(){
+            this.stats=[0,0,0,0,0,0];
+        }
+    } // Contains all the character's data 
+    function DisplayDesc(val) {
+        var desc = document.getElementById("abilityScoreMethodDesc");
+        
+        var metStandard= "<p>Roll 4d6, discard the lowest die result, and add the three remaining results together. Record this total and repeat the process until six numbers are generated.</p><p>Assign these totals to your ability scores as you see fit.</p><p>This method is less random than Classic and tends to create characters with above-average ability scores.</p>";
+        
+        var metClassic= "<p>Roll 3d6 and add the dice together. Record this total and repeat the process until you generate six numbers. Assign these results to your ability scores as you see fit.</p><p>This method is quite random, and some characters will have clearly superior abilities.</p><p>This randomness can be taken one step further, with the totals applied to specific ability scores in the order they are rolled. Characters generated using this method are difficult to fit to predetermined concepts, as their scores might not support given classes or personalities, and instead are best designed around their ability scores.</p>";
+        
+        var metHeroic= "<p>Roll 2d6 and add 6 to the sum of the dice. Record this total and repeat the process until six numbers are generated.<p></p>Assign these totals to your ability scores as you see fit.</p><p>This is less random than the Standard method and generates characters with mostly above-average scores.</p>";
+        
+        var metDicePool= "Each character has a pool of 24d6 to assign to his statistics. Before the dice are rolled, the player selects the number of dice to roll for each score, with a minimum of 3d6 for each ability.</p><p>Once the dice have been assigned, the player rolls each group and totals the result of the three highest dice. For more high-powered games, the GM should increase the total number of dice to 28.</p><p>This method generates characters of a similar power to the Standard method.</p>";
+        
+        var metPurchase= "<p>Each character receives a number of points to spend on increasing his basic attributes.</p><p>In this method, all attributes start at a base of 10. A character can increase an individual score by spending some of his points. Likewise, he can gain more points to spend on other scores by decreasing one or more of his ability scores. No score can be reduced below 7 or raised above 18 using this method</p><p>After all the points are spent, apply any racial modifiers the character might have.</p><p>The number of points you have to spend using the purchase method depends on the type of campaign you are playing. The standard value for a character is 15 points. Average nonplayer characters (NPCs) are typically built using as few as 3 points.</p><p>The purchase method emphasizes player choice and creates equally balanced characters.</p>";
+        
+        var metManualEntry= "<p>Manually enter each stat.</p>"
+        
+        switch(val) {
+            case "standard": desc.innerHTML= metStandard; break;
+            case "classic": desc.innerHTML= metClassic; break;
+            case "heroic": desc.innerHTML= metHeroic; break;
+            case "dicePool": desc.innerHTML= metDicePool; break;
+            case "purchase": desc.innerHTML= metPurchase; break;
+            case "manual": desc.innerHTML= metManualEntry; break;
+            }
+    } //Display the ability score method description
+    function ConfirmStatsMethod(){
+        document.getElementById("ChooseStatsMethod").style.display = "none";
+        switch (document.getElementById("abilityScoreMethod").value){
+            case "standard": StatsStandard(); break;
+            case "classic":  StatsClassic(); break;
+            case "heroic": StatsHeroic(); break;
+            case "dicePool": document.getElementById("DicePoolMethod").style.display = "block"; break;
+            case "purchase": document.getElementById("PMEnterBudget").style.display = "block"; break;
+            case "manual": document.getElementById("ManualEntryMethod").style.display = "block"; break;
+        }
+    } //Activate the chosen stats rolling method  
+    function AssignStats(rolledStats) {
+        document.getElementById("AssignStats").style.display = "block";
+        console.log(rolledStats);
+    }
+    function StatsClassic() {
+        var results= new Array(6);
+        var roll= new Array(3);
+        var i, j;
+        for (i = 0; i < 6; i++) {
+            for (j = 0; j < 3; j++){
+                roll[j]= Math.floor(Math.random() * 6) + 1;
+            }
+            results[i]= (roll[0] + roll[1] + roll[2]);
+        }
+        AssignStats(results);
+    } // Rolls stats according to the classic method
+    function StatsStandard() {
+        var results= new Array(6);
+        var roll= new Array(4);
+        var i, j;
+        for (i = 0; i < 6; i++) {
+            for (j = 0; j < 4; j++){
+                roll[j]= Math.floor(Math.random() * 6) + 1;
+            }
+            results.sort();
+            results[i]= (roll[1] + roll[2] + roll[3]);
+        }
+        AssignStats(results);
+    } // Rolls stats according to the standard method
+    function StatsHeroic() {
+            var results= new Array(6);
+            var roll= new Array(2);
+            var i, j;
+            for (i = 0; i < 6; i++) {
+                for (j = 0; j < 2; j++){
+                    roll[j]= Math.floor(Math.random() * 6) + 1;
+                }
+            results[i]= (roll[0] + roll[1] + 6);
+            }
+            console.log(results);
+            AssignStats(results);
+        } // Rolls stats according to the standard method   
+    function DicePool() {
+        document.getElementById("DicePool").style.display = "block";
+        
+    } // Rolls stats according to the dice poll method   
+    function DPup(stat) {
+        if (nbrDices > 0){
+            poolDices[stat]++; 
+            nbrDices--; 
+        } else {
+            alert("No more dices");
+        }
+        UpdateDPDisplay(stat);
+    } // Rise the number of dices  
+    function DPdown(stat) {
+        if (poolDices[stat] > 3){
+            poolDices[stat]--; 
+            nbrDices++;  
+        } else {
+            alert("Minimum amount of dices: 3");
+        }
+        UpdateDPDisplay(stat);
+    } // Lowers the number of dices
+    function UpdateDPDisplay() {
+        document.getElementById("DPPool").innerHTML = nbrDices;
+        for (i = 0; i < 6; i++){
+            document.getElementById(i + "DPDisplay").innerHTML = poolDices[i];
+        }
+        if (nbrDices == 0){
+            document.getElementById("DPAccept").disabled = false;
+        } else {
+            document.getElementById("DPAccept").disabled = true;
+        }
+   
+    } //Update the dice pool display 
+    function RollDPStats(){
+        document.getElementById("DicePoolMethod").style.display = "none";
+        function DPRoll(nb){
+            var rolls = new Array(nb);
+            for (i = 0; i < nb; i++){
+                for (k = 0; k < nb; k++){
+                    rolls[k]=Math.floor(Math.random() * 6) + 1;
+                }
+                rolls.sort();
+                return (rolls[--nb] + rolls[--nb] + rolls[--nb]);
+            }
+        }
+        for (j = 0; j < 6; j++){
+                hero.stats[j] = DPRoll(poolDices[j]);
+            }
+    } //Roll the stats according to the Dice Pool method
+    function PurchaseMethod() {
+        for (i = 0; i < 6; i++){
+            hero.stats[i] = 10;
+        }
+        PMBudget = document.getElementById("PMBudgetInput").value;
+        document.getElementById("PMEnterBudget").style.display= "none";
+        document.getElementById("PMPts").innerHTML= PMBudget;
+        document.getElementById("PurchaseMethod").style.display= "block";
+    } //Determine the points budget for the purchase method
+    function CalculateCost() {
+        var usedPts = 0;
+        for (i = 0; i < 6; i++){
+            switch (hero.stats[i]) {
+                case 7: usedPts -= 4; break;
+                case 8: usedPts -= 2; break;
+                case 9: usedPts -= 1; break;
+                case 10: break;
+                case 11: usedPts += 1; break;
+                case 12: usedPts += 2; break;
+                case 13: usedPts += 3; break;
+                case 14: usedPts += 5; break;
+                case 15: usedPts += 7; break;
+                case 16: usedPts += 10; break;
+                case 17: usedPts += 13; break;
+                case 18: usedPts += 17; break;
+            }
+        }
+        return usedPts;
+    } // Calculate the cose of the purchase
+    function CalculateModifier(stat) {
+        return -5 + parseInt(hero.stats[stat]/2);
+    } // Calculate the stats modifier
+    function PurchaseUpdate(stat, upDown) {
+        if (hero.stats[stat] > 7 && !upDown){
+            hero.stats[stat]--;
+        } else {
+            if (hero.stats[stat] < 18 && upDown){
+                hero.stats[stat]++;
+                if (CalculateCost() > PMBudget) {
+                    hero.stats[stat]--;
+                }
+            }
+        }
+        console.log(CalculateCost());
+        var currentBudget = parseInt(PMBudget) - parseInt(CalculateCost());
+        document.getElementById("PMPts").innerHTML = currentBudget;
+        for (i = 0; i < 6; i++){
+            document.getElementById("pStatDisplay" + i).innerHTML = hero.stats[i];
+            var modifier = CalculateModifier(i);
+            if (modifier > 0){
+                modifier = "+" + modifier;
+            }
+            document.getElementById("pModifierDisplay" + i).innerHTML = modifier;
+        }
+    } //Update the stats purchase display
+    function FinalizePurchase() {
+        document.getElementById("PurchaseMethod").style.display= "none";
+        document.getElementById("Main").style.display= "block";
+    } // Finalize the the stats purchase method
+    </script>
+</head>
+
+<body>
+<script>
+    var hero = new Hero();
+    var poolDices = [3, 3, 3, 3, 3, 3];
+    var nbrDices = 6, PMBudget = 0;
+</script> <!--  Initialize global variants -->
+<h1>Welcome to Pathbuilder</h1>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+<div class="ChooseStatsMethod" id="ChooseStatsMethod">
+    <p>Choose ability score method</p>
+    <div class= "abilityScoreMethodsChoice">
+    <select id="abilityScoreMethod" onChange="DisplayDesc(this.value)">
+        <option value="standard">Standard</option>
+        <option value="classic">Classic</option>
+        <option value="heroic">Heroic</option>
+        <option value="dicePool">Dice pool</option>
+        <option value="purchase">Purchase</option>
+        <option value="manual">Manual entry</option>
+    </select>
+    <button onclick="ConfirmStatsMethod()">Confirm</button>
+    </div>
+    <div id="abilityScoreMethodDesc" class="abilityScoreMethodDesc">
+        <p>Roll 4d6, discard the lowest die result, and add the three remaining results together. Record this total and repeat the process until six numbers are generated.</p>
+        <p>Assign these totals to your ability scores as you see fit.</p>
+        <p>This method is less random than Classic and tends to create characters with above-average ability scores.</p>
+    </div>
+</div> <!-- Choose stats method -->
+<div class="StatsMethod" id="DicePoolMethod">
+    <p>Dice Pool Method</p>
+        <p>Remaining dices: <span id="DPPool">6</span></p>
+        <p>Strength: <span id="0DPDisplay">3</span> <button id="DP0Down" class="DPstrDown" onclick="DPdown(0)">-</button><button id="DPstrUp" class="DPUp" onclick="DPup(0)">+</button></p>
+        <p>Dexterity: <span id="1DPDisplay">3</span> <button id="DP1Down" class="DPdexDown" onclick="DPdown(1)">-</button><button id="DPdexUp" class="DPUp" onclick="DPup(1)">+</button></p>
+        <p>Constitution: <span id="2DPDisplay">3</span> <button id="DP2Down" class="DPconDown" onclick="DPdown(2)">-</button><button id="DPconUp" class="DPUp" onclick="DPup(2)">+</button></p>
+        <p>Intelligence: <span id="3DPDisplay">3</span> <button id="DP3Down" class="DPintDown" onclick="DPdown(3)">-</button><button id="DPintUp" class="DPUp" onclick="DPup(3)">+</button></p>
+        <p>Wisdom: <span id="4DPDisplay">3</span> <button id="DP4Down" class="DPwisDown" onclick="DPdown(4)">-</button><button id="DPwisUp" class="DPUp" onclick="DPup(4)">+</button></p>
+        <p>Charisma: <span id="5DPDisplay">3</span> <button id="DP5Down" class="DPchaDown" onclick="DPdown(5)">-</button><button id="DPchaUp" class="DPUp" onclick="DPup(5)">+</button></p>
+        <p><button id="DPAccept" disabled onclick = "RollDPStats()">Accept</button></p>
+    </div> <!-- Roll stats according to the Dice Pool Method -->
+<div class="StatsMethod" id="PMEnterBudget">
+    <p>Please enter your points budget:</p>
+    <input type="number" id="PMBudgetInput" min="1" value="15">
+    <button onclick="PurchaseMethod()">Accept</button>
+</div> <!-- Determine the points budget -->
+<div class="StatsMethod" id="PurchaseMethod">
+    <p>Purchase Method</p>
+    <p>Remaining points: <span id="PMPts"></span></p>
+    <p>strength: 
+        <button id="buttonDown0" onclick="PurchaseUpdate(0,0)">-</button>
+        <span id="pStatDisplay0">10</span>
+        <button id="buttonUp0" onclick="PurchaseUpdate(0,1)">+</button>
+        (<span id="pModifierDisplay0">-</span>)
+    </p>
+        <p>Dexterity: 
+        <button id="buttonDown1" onclick="PurchaseUpdate(1,0)">-</button>
+        <span id="pStatDisplay1">10</span>
+        <button id="buttonUp1" onclick="PurchaseUpdate(1,1)">+</button>
+        (<span id="pModifierDisplay1">-</span>)
+    </p>
+       <p>Constitution: 
+        <button id="buttonDown2" onclick="PurchaseUpdate(2,0)">-</button>
+        <span id="pStatDisplay2">10</span>
+        <button id="buttonUp2" onclick="PurchaseUpdate(2,1)">+</button>
+        (<span id="pModifierDisplay2">-</span>)
+    </p>
+        <p>Intelligence: 
+        <button id="buttonDown3" onclick="PurchaseUpdate(3,0)">-</button>
+        <span id="pStatDisplay3">10</span>
+        <button id="buttonUp3" onclick="PurchaseUpdate(3,1)">+</button>
+        (<span id="pModifierDisplay3">-</span>)
+    </p>
+        <p>Wisdom: 
+        <button id="buttonDown4" onclick="PurchaseUpdate(4,0)">-</button>
+        <span id="pStatDisplay4">10</span>
+        <button id="buttonUp4" onclick="PurchaseUpdate(4,1)">+</button>
+        (<span id="pModifierDisplay4">-</span>)
+    </p>
+        <p>Charisma: 
+        <button id="buttonDown5" onclick="PurchaseUpdate(5,0)">-</button>
+        <span id="pStatDisplay5">10</span>
+        <button id="buttonUp5" onclick="PurchaseUpdate(5,1)">+</button>
+        (<span id="pModifierDisplay5">-</span>)
+    </p>
+    <button id="purchaseAccept" onclick="FinalizePurchase()">Accept</button>
+</div>    
+<div class="StatsMethod" id="ManualEntryMethod">Manual Entry Method</div>
+<div class="AssignStats" id="AssignStats">Assign Stats</div>
+</div>
+
+<div id="main" class="main">
+    Main Screen !
+</div>
+
+<script>
+
+
+
+
+</script>
+    
+</body>
+</html>
