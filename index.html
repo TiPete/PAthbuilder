@@ -49,7 +49,7 @@
     function AssignStats(rolledStats) {
         document.getElementById("AssignStats").style.display = "block";
         console.log(rolledStats);
-    }
+    } //Assign the rolls to stats
     function StatsClassic() {
         var results= new Array(6);
         var roll= new Array(3);
@@ -85,12 +85,10 @@
                 }
             results[i]= (roll[0] + roll[1] + 6);
             }
-            console.log(results);
             AssignStats(results);
         } // Rolls stats according to the standard method   
     function DicePool() {
-        document.getElementById("DicePool").style.display = "block";
-        
+        document.getElementById("DicePool").style.display = "block";    
     } // Rolls stats according to the dice poll method   
     function DPup(stat) {
         if (nbrDices > 0){
@@ -137,6 +135,7 @@
         for (j = 0; j < 6; j++){
                 hero.stats[j] = DPRoll(poolDices[j]);
             }
+    document.getElementById("ChooseRace").style.display = "block";
     } //Roll the stats according to the Dice Pool method
     function PurchaseMethod() {
         for (i = 0; i < 6; i++){
@@ -288,7 +287,16 @@
     <button id="purchaseAccept" onclick="FinalizePurchase()">Accept</button>
 </div>    
 <div class="StatsMethod" id="ManualEntryMethod">Manual Entry Method</div>
-<div class="AssignStats" id="AssignStats">Assign Stats</div>
+
+<!-- ------------------------------------- -->
+    
+<div class="AssignStats" id="AssignStats">
+    <p>Assign Stats</p>
+</div>
+
+<!-- ------------------------------------- -->
+    
+<div class="ChooseRace" id="ChooseRace">Choose Race</div>
 </div>
 
 <div id="main" class="main">
