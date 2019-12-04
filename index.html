@@ -51,41 +51,38 @@
         console.log(rolledStats);
     } //Assign the rolls to stats
     function StatsClassic() {
-        var results= new Array(6);
         var roll= new Array(3);
         var i, j;
         for (i = 0; i < 6; i++) {
             for (j = 0; j < 3; j++){
                 roll[j]= Math.floor(Math.random() * 6) + 1;
             }
-            results[i]= (roll[0] + roll[1] + roll[2]);
+            rollResults[i]= (roll[0] + roll[1] + roll[2]);
         }
-        AssignStats(results);
+        AssignStats();
     } // Rolls stats according to the classic method
     function StatsStandard() {
-        var results= new Array(6);
         var roll= new Array(4);
         var i, j;
         for (i = 0; i < 6; i++) {
             for (j = 0; j < 4; j++){
                 roll[j]= Math.floor(Math.random() * 6) + 1;
             }
-            results.sort();
-            results[i]= (roll[1] + roll[2] + roll[3]);
+            roll.sort();
+            rollResults[i]= (roll[1] + roll[2] + roll[3]);
         }
-        AssignStats(results);
+        AssignStats();
     } // Rolls stats according to the standard method
     function StatsHeroic() {
-            var results= new Array(6);
             var roll= new Array(2);
             var i, j;
             for (i = 0; i < 6; i++) {
                 for (j = 0; j < 2; j++){
                     roll[j]= Math.floor(Math.random() * 6) + 1;
                 }
-            results[i]= (roll[0] + roll[1] + 6);
+            rollResults[i]= (roll[0] + roll[1] + 6);
             }
-            AssignStats(results);
+            AssignStats();
         } // Rolls stats according to the standard method   
     function DicePool() {
         document.getElementById("DicePool").style.display = "block";    
@@ -165,7 +162,7 @@
             }
         }
         return usedPts;
-    } // Calculate the cose of the purchase
+    } // Calculate the cost of the purchase
     function CalculateModifier(stat) {
         return -5 + parseInt(hero.stats[stat]/2);
     } // Calculate the stats modifier
@@ -194,7 +191,7 @@
     } //Update the stats purchase display
     function FinalizePurchase() {
         document.getElementById("PurchaseMethod").style.display= "none";
-        document.getElementById("Main").style.display= "block";
+        document.getElementById("ChooseRace").style.display= "block";
     } // Finalize the the stats purchase method
     </script>
 </head>
@@ -203,7 +200,7 @@
 <script>
     var hero = new Hero();
     var poolDices = [3, 3, 3, 3, 3, 3];
-    var nbrDices = 6, PMBudget = 0;
+    var nbrDices = 6, PMBudget = 0, rollResults=[0,0,0,0,0,0];
 </script> <!--  Initialize global variants -->
 <h1>Welcome to Pathbuilder</h1>
 
