@@ -48,7 +48,7 @@
     } //Activate the chosen stats rolling method  
     function AssignStats(rolledStats) {
         document.getElementById("AssignStats").style.display = "block";
-        console.log(rolledStats);
+        UpdateAssignStats();
     } //Assign the rolls to stats
     function StatsClassic() {
         var roll= new Array(3);
@@ -197,7 +197,10 @@
         } else {
             return mod;
         }
-    }
+    } // Returns the modifier with - or +
+    function UpdateAssignStats(){
+        document.getElementById("AssignStats").innerHTML = "UpdateAssignStats called";
+    } // Handle the stats assignment process
     </script>
 </head>
 
