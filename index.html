@@ -198,8 +198,8 @@
             return mod;
         }
     } // Returns the modifier with - or +
-    function UpdateAssignStats(){
-        document.getElementById("AssignStats").innerHTML = "UpdateAssignStats called";
+    function UpdateAssignStats(stat){
+        alert("UpdateAssignStats called");
     } // Handle the stats assignment process
     </script>
 </head>
@@ -296,7 +296,20 @@
 <!-- ------------------------------------- -->
     
 <div class="AssignStats" id="AssignStats">
-
+<p>
+    <span id="AssignStatName0">Strength: </span>
+    <select id="AssignStat0" onChange="UpdateAssignStat(this.value)">
+        <option value="AssignValeur0">Valeur0</option>
+        <option value="AssignValeur1">Valeur1</option>
+        <option value="AssignValeur2">Valeur2</option>
+        <option value="AssignValeur3">Valeur3</option>
+        <option value="AssignValeur4">Valeur4</option>
+        <option value="AssignValeur5">Valeur5</option>
+        <option value="AssignValeur6">Clear</option>
+    </select>
+    <span id="AssignStatModifier0"> - </span>
+</p>
+<button id="ConfirmAssignStat" disabled>Confirm</button>
 </div>
 
 <!-- ------------------------------------- -->
