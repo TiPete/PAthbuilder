@@ -198,8 +198,23 @@
             return mod;
         }
     } // Returns the modifier with - or +
-    function UpdateAssignStats(stat){
-        alert("UpdateAssignStats called");
+    function UpdateAssignStats(value, stat){
+        var dom = "";
+        var nbRestants = assignedStats.length();
+        for (i = 0; i < 6; i++){
+            switch (i){
+                case 0: dom += "Strength: :"; break;
+                case 1: dom += "Dexterity :"; break;
+                case 2: dom += "Constitution :"; break;
+                case 3: dom += "Intelligence :"; break;
+                case 4: dom += "Wisdom :"; break;
+                case 5: dom += "Charisma :"; break;
+            }
+            for (j = 0; j < nbRestants; j++){
+                // Commencer les options
+            }
+                
+        }
     } // Handle the stats assignment process
     </script>
 </head>
@@ -208,7 +223,8 @@
 <script>
     var hero = new Hero();
     var poolDices = [3, 3, 3, 3, 3, 3];
-    var nbrDices = 6, PMBudget = 0, rollResults=[0,0,0,0,0,0], assignedStats=[-1,-1,-1,-1,-1,-1];
+    var nbrDices = 6, PMBudget = 0, rollResults=[0,0,0,0,0,0], 
+        assignedStats= new Array(6);
 </script> <!--  Initialize global variants -->
 <h1>Welcome to Pathbuilder</h1>
 
@@ -297,8 +313,8 @@
     
 <div class="AssignStats" id="AssignStats">
 <p>
-    <span id="AssignStatName0">Strength: </span>
-    <select id="AssignStat0" onChange="UpdateAssignStat(this.value)">
+    Strength:
+    <select onChange="UpdateAssignStat(this.value,0)">
         <option value="AssignValeur0">Valeur0</option>
         <option value="AssignValeur1">Valeur1</option>
         <option value="AssignValeur2">Valeur2</option>
@@ -307,7 +323,7 @@
         <option value="AssignValeur5">Valeur5</option>
         <option value="AssignValeur6">Clear</option>
     </select>
-    <span id="AssignStatModifier0"> - </span>
+    
 </p>
 <button id="ConfirmAssignStat" disabled>Confirm</button>
 </div>
