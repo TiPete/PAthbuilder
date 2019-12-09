@@ -182,17 +182,22 @@
         document.getElementById("PMPts").innerHTML = currentBudget;
         for (i = 0; i < 6; i++){
             document.getElementById("pStatDisplay" + i).innerHTML = hero.stats[i];
-            var modifier = CalculateModifier(i);
-            if (modifier > 0){
-                modifier = "+" + modifier;
-            }
-            document.getElementById("pModifierDisplay" + i).innerHTML = modifier;
+            document.getElementById("pModifierDisplay" + i).innerHTML = DisplayModifier(i);
         }
     } //Update the stats purchase display
     function FinalizePurchase() {
         document.getElementById("PurchaseMethod").style.display= "none";
         document.getElementById("ChooseRace").style.display= "block";
     } // Finalize the the stats purchase method
+    function DisplayModifier(stat){
+        console.log(stat);
+        var mod = CalculateModifier(stat);
+        if (mod > 0){
+            return ("+" + mod);
+        } else {
+            return mod;
+        }
+    }
     </script>
 </head>
 
@@ -200,7 +205,7 @@
 <script>
     var hero = new Hero();
     var poolDices = [3, 3, 3, 3, 3, 3];
-    var nbrDices = 6, PMBudget = 0, rollResults=[0,0,0,0,0,0];
+    var nbrDices = 6, PMBudget = 0, rollResults=[0,0,0,0,0,0], assignedStats=[-1,-1,-1,-1,-1,-1];
 </script> <!--  Initialize global variants -->
 <h1>Welcome to Pathbuilder</h1>
 
@@ -288,7 +293,7 @@
 <!-- ------------------------------------- -->
     
 <div class="AssignStats" id="AssignStats">
-    <p>Assign Stats</p>
+
 </div>
 
 <!-- ------------------------------------- -->
