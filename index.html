@@ -46,10 +46,7 @@
             case "manual": document.getElementById("ManualEntryMethod").style.display = "block"; break;
         }
     } //Activate the chosen stats rolling method  
-    function AssignStats(rolledStats) {
-        document.getElementById("AssignStats").style.display = "block";
-        UpdateAssignStats();
-    } //Assign the rolls to stats
+
     function StatsClassic() {
         var roll= new Array(3);
         var i, j;
@@ -198,24 +195,62 @@
             return mod;
         }
     } // Returns the modifier with - or +
-    function UpdateAssignStats(value, stat){
+    function CreateAssignStats(){
         var dom = "";
-        var nbRestants = assignedStats.length();
+        var nbRestants = rollResults.length;
         for (i = 0; i < 6; i++){
             switch (i){
-                case 0: dom += "Strength: :"; break;
+                case 0: dom += "Strength :"; break;
                 case 1: dom += "Dexterity :"; break;
                 case 2: dom += "Constitution :"; break;
                 case 3: dom += "Intelligence :"; break;
                 case 4: dom += "Wisdom :"; break;
                 case 5: dom += "Charisma :"; break;
             }
+            dom += "<select onChange=\"AssignRollToStat(this.value,0)\">";
+            dom += "<option >";
             for (j = 0; j < nbRestants; j++){
-                // Commencer les options
+                dom += "<option value=\""+j+"\">"+rollResults[j]+"</option>";
             }
-                
+            dom += "<option value=\"" + 6 + "\">Clear</option>";
+            dom += "</select></p>";
         }
+        dom += "<button id=\"ConfirmAssignStat\" disabled>Confirm</button>";
+        document.getElementById("AssignStats").innerHTML = dom;
+    } // Initialize the stats assignement  
+    function UpdateAssignStats(){
+        var dom = "";
+        var nbRestants = rollResults.length;
+        for (i = 0; i < 6; i++){
+            switch (i){
+                case 0: dom += "Strength :"; break;
+                case 1: dom += "Dexterity :"; break;
+                case 2: dom += "Constitution :"; break;
+                case 3: dom += "Intelligence :"; break;
+                case 4: dom += "Wisdom :"; break;
+                case 5: dom += "Charisma :"; break;
+            }
+            dom += "<select onChange=\"AssignRollToStat(this.value)\">";
+            for (j = 0; j < nbRestants; j++){
+                dom += "<option value=\""+ j + "\">"+rollResults[j]+"</option>";
+            }
+            dom += "<option value=\"" + 6 + "\">Clear</option>";
+            dom += "</select></p>";
+        }
+        dom += "<button id=\"ConfirmAssignStat\" disabled>Confirm</button>";
+        document.getElementById("AssignStats").innerHTML = dom;
     } // Handle the stats assignment process
+    function AssignRollToStat(sel){
+        alert(sel);
+        switch (sel){
+            
+        }
+    } // Assign a roll to a stat
+    function AssignStats() {
+        document.getElementById("AssignStats").style.display = "block";
+        rollResults.sort();
+        CreateAssignStats();
+    } //Assign the rolls to stats
     </script>
 </head>
 
@@ -312,20 +347,6 @@
 <!-- ------------------------------------- -->
     
 <div class="AssignStats" id="AssignStats">
-<p>
-    Strength:
-    <select onChange="UpdateAssignStat(this.value,0)">
-        <option value="AssignValeur0">Valeur0</option>
-        <option value="AssignValeur1">Valeur1</option>
-        <option value="AssignValeur2">Valeur2</option>
-        <option value="AssignValeur3">Valeur3</option>
-        <option value="AssignValeur4">Valeur4</option>
-        <option value="AssignValeur5">Valeur5</option>
-        <option value="AssignValeur6">Clear</option>
-    </select>
-    
-</p>
-<button id="ConfirmAssignStat" disabled>Confirm</button>
 </div>
 
 <!-- ------------------------------------- -->
