@@ -214,7 +214,8 @@
                 }
                 dom += "</select></p>";
             } else {
-                dom += "<span id=\"assignedStat\"" + 1 + ">" + hero.stats[i] + "</span></p>";
+                dom += "<span id=\"assignedStat" + i + "\">" + hero.stats[i] + "</span>";
+                dom += " <button id=\"clearAssignedStat" + i + "\" onclick=\"ClearAssignedStat(" + i + ")\">Clear</button></p>";
             }
         }
         dom += "<button id=\"ConfirmAssignStat\" disabled>Confirm</button>";
@@ -230,6 +231,12 @@
         rollResults.sort();
         UpdateAssignStats();
     } //Assign the rolls to stats
+    function ClearAssignedStat(stat){
+        hero.stats[stat] = 0;
+        rollResults.push((parseInt(document.getElementById("assignedStat" + stat).innerText)));
+        rollResults.sort();
+        UpdateAssignStats();
+    } // Clear an assigned stat
     </script>
 </head>
 
