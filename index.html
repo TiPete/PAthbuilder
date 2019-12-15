@@ -186,7 +186,6 @@
         document.getElementById("ChooseRace").style.display= "block";
     } // Finalize the the stats purchase method
     function DisplayModifier(stat){
-        console.log(stat);
         var mod = CalculateModifier(stat);
         if (mod > 0){
             return ("+" + mod);
@@ -215,10 +214,15 @@
                 dom += "</select></p>";
             } else {
                 dom += "<span id=\"assignedStat" + i + "\">" + hero.stats[i] + "</span>";
+                console.log(hero.stats[i]);
                 dom += " <button id=\"clearAssignedStat" + i + "\" onclick=\"ClearAssignedStat(" + i + ")\">Clear</button></p>";
             }
         }
-        dom += "<button id=\"ConfirmAssignStat\" disabled>Confirm</button>";
+        if (nbRestants == 0){
+            dom += "<button id=\"ConfirmAssignStat\" onclick=\"FinalizeAssignStats()\">Confirm</button>";
+        } else {
+            dom += "<button id=\"ConfirmAssignStat\" disabled>Confirm</button>";
+        }
         document.getElementById("AssignStats").innerHTML = dom;
     } // Handle the stats assignment process
     function AssignRollToStat(stat, sel){
