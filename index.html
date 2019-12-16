@@ -243,7 +243,37 @@
         rollResults.sort();
         UpdateAssignStats();
     } // Clear an assigned stat
+    function StatsManualEntry(stat, value){
+        hero.stats[stat] = value;
+    } //Assign manually entered stat
+    function ConfirmManualStats(){
+        document.getElementById("ManualEntryMethod").style.display= "none";
+        document.getElementById("ChooseRace").style.display= "block";
+    } // Confirms the manual entry values
+    function FinalizeAssignStats(){
+        document.getElementById("AssignStats").style.display= "none";
+        document.getElementById("ChooseRace").style.display= "block";
+    }
+    function DisplayRaceDesc(race){
+        switch(race){
+            case 1: var descRace = "Dwarf"; break;
+            case 2: var descRace = "Elf"; break;
+            case 3: var descRace = "Gnome"; break;
+            case 4: var descRace = "Half elf"; break;
+            case 5: var descRace = "Half orc"; break;
+            case 6: var descRace = "Halfling"; break;
+            case 7: var descRace = "Human"; break;
+        }
+        console.log(descRace);
+        document.getElementById("RaceDescription").innerHTML = descRace;
+        if (race == 0){
+            document.getElementById("ConfirmRace").disabled= true;
+        } else {
+            document.getElementById("ConfirmRace").disabled= false;
+        }
+    }
     </script>
+    
 </head>
 
 <body>
@@ -333,30 +363,40 @@
         (<span id="pModifierDisplay5">-</span>)
     </p>
     <button id="purchaseAccept" onclick="FinalizePurchase()">Accept</button>
-</div>    
-
-<!-- ------------------------------------- -->    
-    
+</div> <!-- Stats purchase -->
 <div class="StatsMethod" id="ManualEntryMethod">
     Manual Entry Method
-    <p>Strength: <input type="number" id="statsManualEntry0" min="3" max="18" value="10" onchange="statManualEntry(0, this.value)"></p>
-    <p>Dexterity: <input type="number" id="statsManualEntry1" min="3" max="18" value="10" onchange="statManualEntry(1, this.value)"></p>
-    <p>Constitution: <input type="number" id="statsManualEntry2" min="3" max="18" value="10" onchange="statManualEntry(2, this.value)"></p>
-    <p>Intelligence: <input type="number" id="statsManualEntry3" min="3" max="18" value="10" onchange="statManualEntry(3, this.value)"></p>
-    <p>Wisdom: <input type="number" id="statsManualEntry4" min="3" max="18" value="10" onchange="statManualEntry(4, this.value)"></p>
-    <p>Charisma: <input type="number" id="statsManualEntry5" min="3" max="18" value="10" onchange="statManualEntry(5, this.value)"></p>
-    <button onclick="manualStatsConfirm()" disabled>Confirm</button>
-</div>
-    
+    <p>Strength: <input type="number" id="statsManualEntry0" min="3" max="18" value="10" onchange="StatManualEntry(0, this.value)"></p>
+    <p>Dexterity: <input type="number" id="statsManualEntry1" min="3" max="18" value="10" onchange="StatManualEntry(1, this.value)"></p>
+    <p>Constitution: <input type="number" id="statsManualEntry2" min="3" max="18" value="10" onchange="StatManualEntry(2, this.value)"></p>
+    <p>Intelligence: <input type="number" id="statsManualEntry3" min="3" max="18" value="10" onchange="StatManualEntry(3, this.value)"></p>
+    <p>Wisdom: <input type="number" id="statsManualEntry4" min="3" max="18" value="10" onchange="StatManualEntry(4, this.value)"></p>
+    <p>Charisma: <input type="number" id="statsManualEntry5" min="3" max="18" value="10" onchange="StatManualEntry(5, this.value)"></p>
+    <button onclick="ConfirmManualStats()">Confirm</button>
+</div> <!-- Stats manual entry -->
+<div class="AssignStats" id="AssignStats"></div> <!-- Manually enter stats -->
+
+
 <!-- ------------------------------------- -->
     
-<div class="AssignStats" id="AssignStats"></div>
-
-
-
+<div class="ChooseRace" id="ChooseRace">
+    <p>Choose Race</p>
+    <p><select onchange="DisplayRaceDesc(this.value)">
+        <option value="blank"></option>
+        <option value="1">Dwarf</option>
+        <option value="2">Elf</option>
+        <option value="3">Gnome</option>
+        <option value="4">Half Elf</option>
+        <option value="5">Half Orc</option>
+        <option value="6">Halfling</option>
+        <option value="7">Human</option>
+    </select></p>
+    <p id="RaceDescription"></p>
+    <button id="ConfirmRace" disabled>Confirm</button>
     
-<div class="ChooseRace" id="ChooseRace">Choose Race</div>
 </div>
+
+</div> <!-- Modal windows -->
 
 <div id="main" class="main">
     Main Screen !
