@@ -187,7 +187,9 @@
     } // Finalize the the stats purchase method
     function DisplayModifier(stat){
         var mod = CalculateModifier(stat);
-        if (mod > 0){
+        if (mod == 0){
+            return "-";
+        } else if (mod > 0){
             return ("+" + mod);
         } else {
             return mod;
@@ -214,7 +216,7 @@
                 dom += "</select></p>";
             } else {
                 dom += "<span id=\"assignedStat" + i + "\">" + hero.stats[i] + "</span>";
-                console.log(hero.stats[i]);
+                dom += " (" + DisplayModifier(i) + ") ";
                 dom += " <button id=\"clearAssignedStat" + i + "\" onclick=\"ClearAssignedStat(" + i + ")\">Clear</button></p>";
             }
         }
@@ -332,14 +334,26 @@
     </p>
     <button id="purchaseAccept" onclick="FinalizePurchase()">Accept</button>
 </div>    
-<div class="StatsMethod" id="ManualEntryMethod">Manual Entry Method</div>
 
+<!-- ------------------------------------- -->    
+    
+<div class="StatsMethod" id="ManualEntryMethod">
+    Manual Entry Method
+    <p>Strength: <input type="number" id="statsManualEntry0" min="3" max="18" value="10" onchange="statManualEntry(0, this.value)"></p>
+    <p>Dexterity: <input type="number" id="statsManualEntry1" min="3" max="18" value="10" onchange="statManualEntry(1, this.value)"></p>
+    <p>Constitution: <input type="number" id="statsManualEntry2" min="3" max="18" value="10" onchange="statManualEntry(2, this.value)"></p>
+    <p>Intelligence: <input type="number" id="statsManualEntry3" min="3" max="18" value="10" onchange="statManualEntry(3, this.value)"></p>
+    <p>Wisdom: <input type="number" id="statsManualEntry4" min="3" max="18" value="10" onchange="statManualEntry(4, this.value)"></p>
+    <p>Charisma: <input type="number" id="statsManualEntry5" min="3" max="18" value="10" onchange="statManualEntry(5, this.value)"></p>
+    <button onclick="manualStatsConfirm()" disabled>Confirm</button>
+</div>
+    
 <!-- ------------------------------------- -->
     
-<div class="AssignStats" id="AssignStats">
-</div>
+<div class="AssignStats" id="AssignStats"></div>
 
-<!-- ------------------------------------- -->
+
+
     
 <div class="ChooseRace" id="ChooseRace">Choose Race</div>
 </div>
