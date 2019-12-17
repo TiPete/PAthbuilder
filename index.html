@@ -9,6 +9,7 @@
     class Hero {
         constructor(){
             this.stats=[0,0,0,0,0,0];
+            this.race= -1;
         }
     } // Contains all the character's data 
     function DisplayDesc(val) {
@@ -16,7 +17,7 @@
         
         var metStandard= "<p>Roll 4d6, discard the lowest die result, and add the three remaining results together. Record this total and repeat the process until six numbers are generated.</p><p>Assign these totals to your ability scores as you see fit.</p><p>This method is less random than Classic and tends to create characters with above-average ability scores.</p>";
         
-        var metClassic= "<p>Roll 3d6 and add the dice together. Record this total and repeat the process until you generate six numbers. Assign these results to your ability scores as you see fit.</p><p>This method is quite random, and some characters will have clearly superior abilities.</p><p>This randomness can be taken one step further, with the totals applied to specific ability scores in the order they are rolled. Characters generated using this method are difficult to fit to predetermined concepts, as their scores might not support given classes or personalities, and instead are best designed around their ability scores.</p>";
+        var metClassic= "<p>Roll 3d6 and add the dice together. Record this total and repeat the process until you generate six numbers. Assign these results to your ability scores as you see fit.</p><p>This method is quite random, and some characters will have clearly superior abilities.</p>";
         
         var metHeroic= "<p>Roll 2d6 and add 6 to the sum of the dice. Record this total and repeat the process until six numbers are generated.<p></p>Assign these totals to your ability scores as you see fit.</p><p>This is less random than the Standard method and generates characters with mostly above-average scores.</p>";
         
@@ -255,14 +256,16 @@
         document.getElementById("ChooseRace").style.display= "block";
     }
     function DisplayRaceDesc(race){
+        var descRace;
+        console.log(race);
         switch(race){
-            case 1: var descRace = "Dwarf"; break;
-            case 2: var descRace = "Elf"; break;
-            case 3: var descRace = "Gnome"; break;
-            case 4: var descRace = "Half elf"; break;
-            case 5: var descRace = "Half orc"; break;
-            case 6: var descRace = "Halfling"; break;
-            case 7: var descRace = "Human"; break;
+            case 1: descRace = "Dwarf"; break;
+            case 2: descRace = "Elf"; break;
+            case 3: descRace = "Gnome"; break;
+            case 4: descRace = "Half elf"; break;
+            case 5: descRace = "Half orc"; break;
+            case 6: descRace = "Halfling"; break;
+            case 7: descRace = "Human"; break;
         }
         console.log(descRace);
         document.getElementById("RaceDescription").innerHTML = descRace;
@@ -270,7 +273,12 @@
             document.getElementById("ConfirmRace").disabled= true;
         } else {
             document.getElementById("ConfirmRace").disabled= false;
+            hero.race = --race;
         }
+    }
+    function ConfirmRace(){
+        document.getElementById("ChooseRace").style.display = "none";
+        document.getElementById("ChooseClass").style.display = "block";
     }
     </script>
     
@@ -381,8 +389,8 @@
     
 <div class="ChooseRace" id="ChooseRace">
     <p>Choose Race</p>
-    <p><select onchange="DisplayRaceDesc(this.value)">
-        <option value="blank"></option>
+    <p><select onchange="DisplayRaceDesc(parseInt(this.value))">
+        <option value="0"></option>
         <option value="1">Dwarf</option>
         <option value="2">Elf</option>
         <option value="3">Gnome</option>
@@ -392,10 +400,30 @@
         <option value="7">Human</option>
     </select></p>
     <p id="RaceDescription"></p>
-    <button id="ConfirmRace" disabled>Confirm</button>
-    
+    <button id="ConfirmRace" onclick="ConfirmRace()" disabled>Confirm</button>
 </div>
 
+<div class="ChooseClass" id="ChooseClass">
+    <p>Choose Class</p>
+    <p><select onchange="DisplayClassDesc(parseInt(this.value))">
+        <option value="0"></option>
+        <option value="1">Barbarian</option>
+        <option value="2">Bard</option>
+        <option value="3">Cleric</option>
+        <option value="4">Druid</option>
+        <option value="5">Fighter</option>
+        <option value="6">Monk</option>
+        <option value="7">Paladin</option>
+        <option value="8">Ranger</option>
+        <option value="9">Rogue</option>
+        <option value="10">Sorcerer</option>
+        <option value="11">Wizard</option>
+    </select></p>
+    <p id="ClassDescritpion"></p>
+    <button id="ConfirmClass" onclick="ConfirmClass()" disabled>Confirm</button>
+</div>
+
+    
 </div> <!-- Modal windows -->
 
 <div id="main" class="main">
