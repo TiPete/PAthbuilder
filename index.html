@@ -9,7 +9,7 @@
     class Hero {
         constructor(){
             this.stats=[0,0,0,0,0,0];
-            this.race= -1;
+            this.race = -1, this.job = -1;
         }
     } // Contains all the character's data 
     function DisplayDesc(val) {
@@ -257,7 +257,6 @@
     }
     function DisplayRaceDesc(race){
         var descRace;
-        console.log(race);
         switch(race){
             case 1: descRace = "Dwarf"; break;
             case 2: descRace = "Elf"; break;
@@ -267,7 +266,6 @@
             case 6: descRace = "Halfling"; break;
             case 7: descRace = "Human"; break;
         }
-        console.log(descRace);
         document.getElementById("RaceDescription").innerHTML = descRace;
         if (race == 0){
             document.getElementById("ConfirmRace").disabled= true;
@@ -279,6 +277,43 @@
     function ConfirmRace(){
         document.getElementById("ChooseRace").style.display = "none";
         document.getElementById("ChooseClass").style.display = "block";
+    }
+    function DisplayClassDesc(job){
+        var descClass;
+        switch (job){
+            case 1: descClass = "Barbarian"; break;
+            case 2: descClass = "Bard"; break;
+            case 3: descClass = "Cleric"; break;
+            case 4: descClass = "Druid"; break;
+            case 5: descClass = "Fighter"; break;
+            case 6: descClass = "Monk"; break;
+            case 7: descClass = "Paladin"; break;
+            case 8: descClass = "Ranger"; break;
+            case 9: descClass = "Rogue"; break;
+            case 10: descClass = "Sorcerer"; break;
+            case 11: descClass = "Wizard"; break;
+        }
+        document.getElementById("ClassDescription").innerHTML = descClass;
+        if (job == 0){
+            document.getElementById("ConfirmClass").disabled= true;
+        } else {
+            document.getElementById("ConfirmClass").disabled= false;
+            hero.job = --job;
+        }
+    }
+    function ConfirmClass(){
+        document.getElementById("ChooseClass").style.display = "none";
+        document.getElementById("myModal").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        UpdateMainScreen();
+    }
+    function UpdateMainScreen() {
+        mainDom  = "<p>-- Main screen --</P>";
+        mainDom += "<p>Stats: " + hero.stats + "</p>";
+        mainDom += "<p> Race: " + hero.race + "</p>";
+        mainDom += "<p> Class: " + hero.job + "</p>";
+        
+        document.getElementById("main").innerHTML = mainDom;
     }
     </script>
     
@@ -383,10 +418,6 @@
     <button onclick="ConfirmManualStats()">Confirm</button>
 </div> <!-- Stats manual entry -->
 <div class="AssignStats" id="AssignStats"></div> <!-- Manually enter stats -->
-
-
-<!-- ------------------------------------- -->
-    
 <div class="ChooseRace" id="ChooseRace">
     <p>Choose Race</p>
     <p><select onchange="DisplayRaceDesc(parseInt(this.value))">
@@ -419,7 +450,7 @@
         <option value="10">Sorcerer</option>
         <option value="11">Wizard</option>
     </select></p>
-    <p id="ClassDescritpion"></p>
+    <p id="ClassDescription"></p>
     <button id="ConfirmClass" onclick="ConfirmClass()" disabled>Confirm</button>
 </div>
 
@@ -427,7 +458,6 @@
 </div> <!-- Modal windows -->
 
 <div id="main" class="main">
-    Main Screen !
 </div>
 
 <script>
