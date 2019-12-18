@@ -10,7 +10,19 @@
         constructor(){
             this.stats=[0,0,0,0,0,0];
             this.race = -1, this.job = -1;
+            this.characterName= "", this.alignement= "", this.playerName= "";
+            this.characterLevel= [-1][-1], this.deity= "", this.homeland= "";
+            this.size = "", this.gender= "", this.age = -1, this.height= "";
+            this.weight = "", this.hair= "", this.eyes ="";
+            this.hp = -1, this.speed = -1, this.initiative = -1;
+            this.ac= -1, this.touchAc= -1, this.flatFootedAc= -1;
+            this.fortSave= -1, this.refSave= -1, this.willSave= -1;
+            this.bab= -1, this.spellResist= -1, this.cmb =-1, this.cmd= -1;
+            this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
         }
+        updateHeroStats(){
+            
+        } // Recalculates everything !
     } // Contains all the character's data 
     function DisplayDesc(val) {
         var desc = document.getElementById("abilityScoreMethodDesc");
@@ -174,7 +186,6 @@
                 }
             }
         }
-        console.log(CalculateCost());
         var currentBudget = parseInt(PMBudget) - parseInt(CalculateCost());
         document.getElementById("PMPts").innerHTML = currentBudget;
         for (i = 0; i < 6; i++){
@@ -311,6 +322,7 @@
     }
     
     function UpdateMainScreen() {
+        hero.updateHeroStats();
         mainDom  = "<p>-- Main screen --</P>";
         
         mainDom += "<p><b>Stats:</b><br><i>"
