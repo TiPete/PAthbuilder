@@ -244,7 +244,7 @@
         rollResults.sort();
         UpdateAssignStats();
     } // Clear an assigned stat
-    function StatsManualEntry(stat, value){
+    function StatManualEntry(stat, value){
         hero.stats[stat] = value;
     } //Assign manually entered stat
     function ConfirmManualStats(){
@@ -258,13 +258,14 @@
     function DisplayRaceDesc(race){
         var descRace;
         switch(race){
-            case 1: descRace = "Dwarf"; break;
-            case 2: descRace = "Elf"; break;
-            case 3: descRace = "Gnome"; break;
-            case 4: descRace = "Half elf"; break;
-            case 5: descRace = "Half orc"; break;
-            case 6: descRace = "Halfling"; break;
-            case 7: descRace = "Human"; break;
+            case 0: descRace = "Choose a race."; break;
+            case 1: descRace = "These short and stocky defenders of mountain fortresses are often seen as stern and humorless. Known for mining the earth\'s treasures and crafting magnificent items from ore and gemstones, they have an unrivaled affinity for the bounties of the deep earth. Dwarves also have a tendency toward traditionalism and isolation that sometimes manifests as xenophobia."; break;   
+            case 2: descRace = "Tall, noble, and often haughty, elves are long-lived and subtle masters of the wilderness. Elves excel in the arcane arts. Often they use their intrinsic link to nature to forge new spells and create wondrous items that, like their creators, seem nearly impervious to the ravages of time. A private and often introverted race, elves can give the impression they are indifferent to the plights of others."; break;
+            case 3: descRace = "Expatriates of the strange land of fey, these small folk have a reputation for flighty and eccentric behavior. Many gnomes are whimsical artisans and tinkers, creating strange devices powered by magic, alchemy, and their quirky imagination. Gnomes have an insatiable need for new experiences that often gets them in trouble."; break;
+            case 4: descRace = "Often caught between the worlds of their progenitor races, half-elves are a race of both grace and contradiction. Their dual heritage and natural gifts often create brilliant diplomats and peacemakers, but half-elves are often susceptible to an intense and even melancholic isolation, realizing that they are never truly part of elven or human society."; break;
+            case 5: descRace = "Often fierce and savage, sometimes noble and resolute, half-orcs can manifest the best and worst qualities of their parent races. Many half-orcs struggle to keep their more bestial natures in check in order to epitomize the most heroic values of humanity. Unfortunately, many outsiders see half-orcs as hopeless abominations devoid of civility, if not monsters unworthy of pity or parley."; break;
+            case 6: descRace = "Members of this diminutive race find strength in family, community, and their own innate and seemingly inexhaustible luck. While their fierce curiosity is sometimes at odds with their intrinsic common sense, halflings are eternal optimists and cunning opportunists with an incredible knack for getting out the worst situations."; break;
+            case 7: descRace = "Ambitious, sometimes heroic, and always confident, humans have an ability to work together toward common goals that makes them a force to be reckoned with. Though short-lived compared to other races, their boundless energy and drive allow them to accomplish much in their brief lifetimes."; break;
         }
         document.getElementById("RaceDescription").innerHTML = descRace;
         if (race == 0){
@@ -281,17 +282,18 @@
     function DisplayClassDesc(job){
         var descClass;
         switch (job){
-            case 1: descClass = "Barbarian"; break;
-            case 2: descClass = "Bard"; break;
-            case 3: descClass = "Cleric"; break;
-            case 4: descClass = "Druid"; break;
-            case 5: descClass = "Fighter"; break;
-            case 6: descClass = "Monk"; break;
-            case 7: descClass = "Paladin"; break;
-            case 8: descClass = "Ranger"; break;
-            case 9: descClass = "Rogue"; break;
-            case 10: descClass = "Sorcerer"; break;
-            case 11: descClass = "Wizard"; break;
+            case 0: descClass = "Choose a class."; break;
+            case 1: descClass = "The barbarian is a brutal berserker from beyond the edge of civilized lands."; break;
+            case 2: descClass = "The bard uses skill and spell alike to bolster his allies, confound his enemies, and build upon his fame."; break;
+            case 3: descClass = "A devout follower of a deity, the cleric can heal wounds, raise the dead, and call down the wrath of the gods."; break;
+            case 4: descClass = "The druid is a worshiper of all things natural—a spellcaster, a friend to animals, and a skilled shapechanger."; break;
+            case 5: descClass = "Brave and stalwart, the fighter is a master of all manner of arms and armor."; break;
+            case 6: descClass = "A student of martial arts, the monk trains his body to be his greatest weapon and defense."; break;
+            case 7: descClass = "The paladin is the knight in shining armor, a devoted follower of law and good."; break;
+            case 8: descClass = "A tracker and hunter, the ranger is a creature of the wild and of tracking down his favored foes."; break;
+            case 9: descClass = "The rogue is a thief and a scout, an opportunist capable of delivering brutal strikes against unwary foes."; break;
+            case 10: descClass = "The spellcasting sorcerer is born with an innate knack for magic and has strange, eldritch powers."; break;
+            case 11: descClass = "The wizard masters magic through constant study that gives him incredible magical power."; break;
         }
         document.getElementById("ClassDescription").innerHTML = descClass;
         if (job == 0){
@@ -307,11 +309,49 @@
         document.getElementById("main").style.display = "block";
         UpdateMainScreen();
     }
+    
     function UpdateMainScreen() {
         mainDom  = "<p>-- Main screen --</P>";
-        mainDom += "<p>Stats: " + hero.stats + "</p>";
-        mainDom += "<p> Race: " + hero.race + "</p>";
-        mainDom += "<p> Class: " + hero.job + "</p>";
+        
+        mainDom += "<p><b>Stats:</b><br><i>"
+        for (i = 0; i < 6; i++){
+            switch (i){
+                case 0: mainDom += "Strength: "; break;
+                case 1: mainDom += "Dexterity: "; break;
+                case 2: mainDom += "Constitution: "; break;
+                case 3: mainDom += "Intelligence: "; break;
+                case 4: mainDom += "Wisdom: "; break;
+                case 5: mainDom += "Charisma: "; break;
+            }
+            mainDom += hero.stats[i] + " " + DisplayModifier(i) + "<br>";
+        }
+        mainDom += "</i></p>";// Display stats
+        
+        mainDom += "<p><b>Race:</b> ";
+        switch(hero.race){
+            case 0: mainDom += "Dwarf</p>"; break;
+            case 1: mainDom += "Elf</p>"; break;
+            case 2: mainDom += "Gnome</p>"; break;
+            case 3: mainDom += "Half Elf</p>"; break;
+            case 4: mainDom += "Half Orc</p>"; break;
+            case 5: mainDom += "Halfling</p>"; break;
+            case 6: mainDom += "Human</p>"; break;
+        } // Display class
+
+        mainDom += "<p><b>Class:</b> ";
+        switch(hero.job){
+            case 0: mainDom += "Barbarian</p>"; break;
+            case 1: mainDom += "Bard</p>"; break;
+            case 2: mainDom += "Cleric</p>"; break;
+            case 3: mainDom += "Druid</p>"; break;
+            case 4: mainDom += "Fighter</p>"; break;
+            case 5: mainDom += "Monk</p>"; break;
+            case 6: mainDom += "Paladin</p>"; break;
+            case 7: mainDom += "Ranger</p>"; break;
+            case 8: mainDom += "Rogue</p>"; break;
+            case 9: mainDom += "Sorcerer</p>"; break;
+            case 10: mainDom += "Wizard</p>"; break;          
+        } // Display race
         
         document.getElementById("main").innerHTML = mainDom;
     }
@@ -430,10 +470,9 @@
         <option value="6">Halfling</option>
         <option value="7">Human</option>
     </select></p>
-    <p id="RaceDescription"></p>
+    <p id="RaceDescription">Choose a race.</p>
     <button id="ConfirmRace" onclick="ConfirmRace()" disabled>Confirm</button>
 </div>
-
 <div class="ChooseClass" id="ChooseClass">
     <p>Choose Class</p>
     <p><select onchange="DisplayClassDesc(parseInt(this.value))">
@@ -450,7 +489,7 @@
         <option value="10">Sorcerer</option>
         <option value="11">Wizard</option>
     </select></p>
-    <p id="ClassDescription"></p>
+    <p id="ClassDescription">Choose a class.</p>
     <button id="ConfirmClass" onclick="ConfirmClass()" disabled>Confirm</button>
 </div>
 
