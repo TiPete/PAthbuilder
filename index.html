@@ -19,6 +19,7 @@
             this.fortSave= -1, this.refSave= -1, this.willSave= -1;
             this.bab= -1, this.spellResist= -1, this.cmb =-1, this.cmd= -1;
             this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
+            this.nbSkills = -1;
         }
         updateHeroStats(){
             
@@ -315,6 +316,14 @@
         }
     }
     function ConfirmClass(){
+        
+        switch(hero.job){
+            case 0: // Barbarian
+                hero.hp = 12 + hero.stats[2];
+                hero.bab = 1;
+                break;
+        }
+        
         document.getElementById("ChooseClass").style.display = "none";
         document.getElementById("myModal").style.display = "none";
         document.getElementById("main").style.display = "block";
