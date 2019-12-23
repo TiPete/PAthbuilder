@@ -1,0 +1,54 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Layout test</title>
+    <link rel="stylesheet" href="css/styles.css?v=1.0">
+    <style>
+        .logo {grid-area: logo; object-fit: contain;}
+        .info {grid-area: info;}
+        .speed {grid-area: speed;}
+        .stats {grid-area: stats;}
+        .skills {grid-area: skills;}
+        .weapons {grid-area: weapons;}
+        .languages {grid-area: languages;}
+
+        .wrapper{
+            display: grid;
+            grid-template-rows: 25% 25% 25% 25%;
+            grid-template-areas:
+                "logo info info info"
+                "stats stats speed speed"
+                "stats stats skills skills"
+                "weapons weapons skills skills"
+                "weapons weapons skills skills"
+                "weapons weapons skills skills"
+                "weapons weapons languages languages";
+            grid-gap: 10px;
+            padding: 10px;
+            
+        }
+        
+        .wrapper > div {
+            border: 1px solid black;
+        }
+
+    </style>
+</head>
+
+    
+<body>
+    <div class="wrapper">
+        <!-- <div class="logo"><img src="media/Path_logo.jpg" alt="Logo" style="width: 403px; height: 125ps"></div> -->
+        <div class="logo">Logo</div>
+        <div class="info">Info</div>
+        <div class="speed">Speed</div>
+        <div class="stats">Stats</div>
+        <div class="skills">Skills</div>
+        <div class="weapons">Weapons</div>
+        <div class="languages">Languages</div>
+    </div>
+    
+
+</body>
