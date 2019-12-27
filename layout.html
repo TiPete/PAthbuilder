@@ -13,6 +13,13 @@
         .skills {grid-area: skills;}
         .weapons {grid-area: weapons;}
         .languages {grid-area: languages;}
+        .statsDisplay {grid-area: statsDisplay;}
+        .hpDisplay {grid-area: hpDisplay;}
+        .acDisplay {grid-area: acDisplay;}
+        .initiativeDisplay {grid-area: initiativeDisplay;}
+        .savesDisplay {grid-area: savesDisplay;}
+        .atteckBonus {grid-area: attackBonus;}
+        
 
         .wrapper{
             display: grid;
@@ -30,8 +37,19 @@
             
         }
         
+        .stats {
+            display:grid;
+            grid-template-rows: 20% 20% 20% 20% 20%;
+            grid-template-areas:
+                "statsDisplay hpDisplay"
+                "statsDisplay hpDisplay"
+                "statsDisplay hpDisplay"
+                "statsDisplay initiativeDisplay";
+        }
+        
         .wrapper > div {
             border: 1px solid black;
+            
         }
 
     </style>
@@ -44,7 +62,11 @@
         <div class="logo">Logo</div>
         <div class="info">Info</div>
         <div class="speed">Speed</div>
-        <div class="stats">Stats</div>
+        <div class="stats">
+            <div class="statsDisplay">StatsDisplay</div>
+            <div class="hpDisplay">HP Display</div>
+            <div class="initiativeDisplay">Initiative Display</div>
+        </div>
         <div class="skills">Skills</div>
         <div class="weapons">Weapons</div>
         <div class="languages">Languages</div>
