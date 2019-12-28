@@ -13,17 +13,17 @@
         .skills {grid-area: skills;}
         .weapons {grid-area: weapons;}
         .languages {grid-area: languages;}
-        .statsDisplay {grid-area: statsDisplay;}
+        .statsDisplay { grid-area: statsDisplay; }
         .hpDisplay {grid-area: hpDisplay;}
         .acDisplay {grid-area: acDisplay;}
         .initiativeDisplay {grid-area: initiativeDisplay;}
         .savesDisplay {grid-area: savesDisplay;}
-        .atteckBonus {grid-area: attackBonus;}
+        .attackBonus {grid-area: attackBonus;}
         
 
         .wrapper{
             display: grid;
-            grid-template-rows: 25% 25% 25% 25%;
+            grid-template-columns: 25% 25% 25% 25%;
             grid-template-areas:
                 "logo info info info"
                 "stats stats speed speed"
@@ -51,6 +51,10 @@
             border: 1px solid black;
             
         }
+        
+        th, td {
+            border: 1px solid black;
+        }
 
     </style>
 </head>
@@ -63,7 +67,66 @@
         <div class="info">Info</div>
         <div class="speed">Speed</div>
         <div class="stats">
-            <div class="statsDisplay">StatsDisplay</div>
+            <div class="statsDisplay">
+                <table>
+                    <tr>
+                        <th>Ability<br>name</th>
+                        <th>Abilityscore</th>
+                        <th>Ability modifier</th>
+                        <th>Temp adjustement</th>
+                        <th>Temp Modifier</th>
+                    </tr>
+                    <tr>
+                        <th>Str</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    <tr>
+                        <th>Dex</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    <tr>
+                        <th>Con</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    <tr>
+                        <th>Int</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    <tr>
+                        <th>Wis</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                    <tr>
+                        <th>Cha</th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                        <th> </th>
+                    </tr>
+                </table>
+
+            </div>
             <div class="hpDisplay">HP Display</div>
             <div class="initiativeDisplay">Initiative Display</div>
         </div>
@@ -73,4 +136,64 @@
     </div>
     
 
+    <div class="test">
+        <table style="width:100%">
+            <tr>
+                <th>Ability<br>name</th>
+                <th>Abilityscore</th>
+                <th>Ability modifier</th>
+                <th>Temp adjustement</th>
+                <th>Temp Modifier</th>
+            </tr>
+            <tr>
+                <td>Str</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Str</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Str</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Str</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Str</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>Str</td>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+        </table>
+    </div>
+    
 </body>
