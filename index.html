@@ -19,6 +19,47 @@
             this.bab= -1, this.spellResist= -1, this.cmb = -1, this.cmd= -1;
             this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
             this.nbSkills = -1, this.rage = -1;
+            this.skills =[
+                ["Acrobatics", 0, 2, 0, 0, false, false, false], 
+                ["Appraise", 0, 3, 0, 0, false, false, false], 
+                ["Bluff", 0, 4, 0, 0, , false, false, false], 
+                ["Climb", 0, 0, 0, 0, false, false, false], 
+                ["Craft", 0, 3, 0, 0, true, false, false], 
+                ["Craft", 0, 3, 0, 0, true, false, false],
+                ["Craft", 0, 3, 0, 0, true, false, false],
+                ["Diplomacy", 0, 5, 0, 0, false, false, false], 
+                ["Disable Device", 0, 1, 0, 0, false, true, false],
+                ["Disguise", 0, 5, 0, 0, false, false, false], 
+                ["Escape Artist", 0, 2, 0, 0, false, false, false],
+                ["Fly", 0, 2, 0, 0, false, false, false], 
+                ["Handle Animal", 0, -1, 0, 0, false, true, false],
+                ["Heal", 0, 4, 0, 0, false, false, false], 
+                ["Initimidate", 0, 5, 0, 0, false, false, false], 
+                ["Knowledge(Arcana)", 0, 3, 0, 0, false, true, false], 
+                ["Knowledge(Dungeoneering)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(Engineering)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(Geography)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(History)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(Local)", 0, 3, 0, 0, false, true, false], 
+                ["Knowledge(Nature)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(Nobility)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(Planes)", 0, 3, 0, 0, false, true, false],
+                ["Knowledge(Religion)", 0, 3, 0, 0, false, true, false],
+                ["Linguistics", 0, 3, 0, 0, false, true, false], 
+                ["Perception", 0, 4, 0, 0, false, false, false], 
+                ["Perform", 0, 5, 0, 0, true, false, false], 
+                ["Perform", 0, 5, 0, 0, true, false, false], 
+                ["Profession", 0, 4, 0, 0, true, true, false], 
+                ["Profession", 0, 4, 0, 0, true, true, false],
+                ["Ride", 0, 2, 0, 0, false, false, false], 
+                ["Sense Motive", 0, 4, 0, 0, false, false, false], 
+                ["Sleight of Hand", 0, 2, 0, 0, false, true, false], 
+                ["Spellcraft", 0, 3, 0, 0, false, true, false], 
+                ["Stealth", 0, 2, 0, 0, false, false, false], 
+                ["Survival", 0, 4, 0, 0, false, false, false], 
+                ["Swim", 0, 0, 0, 0, false, false, false], 
+                ["Use Magic Devices", 0, 5, 0, 0, false, true, false]
+            ]
         }
         updateHeroStats(){
             
@@ -357,6 +398,20 @@
             document.getElementById(i+"StatDisplay").innerHTML=hero.stats[i];
             document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
+        
+        var skillDOM = "";
+        for (i = 0; i < hero.skills.length; i ++){
+            skillDOM += hero.skills[i][0] + " - ";
+            if (hero.skills[i][6]){
+                skillDOM += "TrainedOnly";
+            }
+            else {
+                skillDOM += "Untrained";
+            }
+            skillDOM += " - <br>";
+                
+        }
+        document.getElementById("testDiv").innerHTML = skillDOM;
 
     }
     </script>
@@ -619,12 +674,7 @@
     </div>
 </div>
 
-<script>
-
-
-
-
-</script>
+<div id="testDiv"></div>
     
 </body>
 </html>
