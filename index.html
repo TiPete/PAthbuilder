@@ -11,15 +11,14 @@
             this.stats=[0,0,0,0,0,0];
             this.race = -1, this.job = -1;
             this.characterName= "", this.alignement= "", this.playerName= "";
-            this.characterLevel= [-1][-1], this.deity= "", this.homeland= "";
+            this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= "", this.homeland= "";
             this.size = "", this.gender= "", this.age = -1, this.height= "";
             this.weight = "", this.hair= "", this.eyes ="";
             this.hp = -1, this.speed = -1, this.initiative = -1;
-            this.ac= -1, this.touchAc= -1, this.flatFootedAc= -1;
-            this.fortSave= -1, this.refSave= -1, this.willSave= -1;
-            this.bab= -1, this.spellResist= -1, this.cmb =-1, this.cmd= -1;
+            this.ac= -1, this.fortSave= -1, this.refSave= -1, this.willSave= -1;
+            this.bab= -1, this.spellResist= -1, this.cmb = -1, this.cmd= -1;
             this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
-            this.nbSkills = -1;
+            this.nbSkills = -1, this.rage = -1;
         }
         updateHeroStats(){
             
@@ -315,14 +314,37 @@
             hero.job = --job;
         }
     }
+    function RollDice(nb, dice){
+        var total = 0;
+        for (i = 0; i < nb; i++) {
+            total += Math.floor(Math.random() * dice) + 1;
+        }
+        return total;      
+    } // Roll a certain number of dices
     function ConfirmClass(){
         
         switch(hero.job){
             case 0: // Barbarian
-                hero.hp = 12 + hero.stats[2];
-                hero.bab = 1;
+                hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
+                hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4;
+                hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
                 break;
+            case 1: // Bard
+                hero.hp = 8, hero.bab = 0, hero.fortSave = 0, hero.refSave = 2, hero.willSave = 2;
+                hero.money[1] = RollDice(3, 6) * 10; hero.speed = 30, hero.nbSkills = 6;
+                hero.characterLevel[1] = 1;
+                break; //Add spells
         }
+        hero.hp += hero.stats[2];
+        hero.initiative = CalculateModifier(1);
+        hero.ac = CalculateModifier(1);
+        hero.cmb = hero.bab + CalculateModifier(1);
+        hero.cmd = hero.bab + CalculateModifier(0) + CalculateModifier(1) +10;
+        hero.fortSave += CalculateModifier(2);
+        hero.refSave += CalculateModifier(1);
+        hero.willSave += CalculateModifier(4);
+        hero.nbSkills += CalculateModifier(3);
+        
         
         document.getElementById("ChooseClass").style.display = "none";
         document.getElementById("myModal").style.display = "none";
@@ -331,53 +353,66 @@
     }
     
     function UpdateMainScreen() {
-        hero.updateHeroStats();
-        mainDom  = "<p>-- Main screen --</P>";
-        
-        mainDom += "<p><b>Stats:</b><br><i>"
-        for (i = 0; i < 6; i++){
-            switch (i){
-                case 0: mainDom += "Strength: "; break;
-                case 1: mainDom += "Dexterity: "; break;
-                case 2: mainDom += "Constitution: "; break;
-                case 3: mainDom += "Intelligence: "; break;
-                case 4: mainDom += "Wisdom: "; break;
-                case 5: mainDom += "Charisma: "; break;
-            }
-            mainDom += hero.stats[i] + " " + DisplayModifier(i) + "<br>";
+        for (i= 0; i < 6; i++) {
+            document.getElementById(i+"StatDisplay").innerHTML=hero.stats[i];
+            document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
-        mainDom += "</i></p>";// Display stats
-        
-        mainDom += "<p><b>Race:</b> ";
-        switch(hero.race){
-            case 0: mainDom += "Dwarf</p>"; break;
-            case 1: mainDom += "Elf</p>"; break;
-            case 2: mainDom += "Gnome</p>"; break;
-            case 3: mainDom += "Half Elf</p>"; break;
-            case 4: mainDom += "Half Orc</p>"; break;
-            case 5: mainDom += "Halfling</p>"; break;
-            case 6: mainDom += "Human</p>"; break;
-        } // Display class
 
-        mainDom += "<p><b>Class:</b> ";
-        switch(hero.job){
-            case 0: mainDom += "Barbarian</p>"; break;
-            case 1: mainDom += "Bard</p>"; break;
-            case 2: mainDom += "Cleric</p>"; break;
-            case 3: mainDom += "Druid</p>"; break;
-            case 4: mainDom += "Fighter</p>"; break;
-            case 5: mainDom += "Monk</p>"; break;
-            case 6: mainDom += "Paladin</p>"; break;
-            case 7: mainDom += "Ranger</p>"; break;
-            case 8: mainDom += "Rogue</p>"; break;
-            case 9: mainDom += "Sorcerer</p>"; break;
-            case 10: mainDom += "Wizard</p>"; break;          
-        } // Display race
-        
-        document.getElementById("main").innerHTML = mainDom;
     }
     </script>
-    
+<style>
+    .logo {grid-area: logo; object-fit: contain;}
+    .info {grid-area: info;}
+    .speed {grid-area: speed;}
+    .stats {grid-area: stats;}
+    .skills {grid-area: skills;}
+    .weapons {grid-area: weapons;}
+    .languages {grid-area: languages;}
+    .statsDisplay { grid-area: statsDisplay; }
+    .hpDisplay {grid-area: hpDisplay;}
+    .acDisplay {grid-area: acDisplay;}
+    .initiativeDisplay {grid-area: initiativeDisplay;}
+    .savesDisplay {grid-area: savesDisplay;}
+    .attackBonus {grid-area: attackBonus;}
+
+
+    .wrapper{
+        display: grid;
+        grid-template-columns: 25% 25% 25% 25%;
+        grid-template-areas:
+            "logo info info info"
+            "stats stats speed speed"
+            "stats stats skills skills"
+            "weapons weapons skills skills"
+            "weapons weapons skills skills"
+            "weapons weapons skills skills"
+            "weapons weapons languages languages";
+        grid-gap: 10px;
+        padding: 10px;
+
+    }
+
+    .stats {
+        display:grid;
+        grid-template-rows: 20% 20% 20% 20% 20%;
+        grid-template-areas:
+            "statsDisplay hpDisplay"
+            "statsDisplay hpDisplay"
+            "statsDisplay hpDisplay"
+            "statsDisplay initiativeDisplay";
+    }
+
+    .wrapper > div {
+        border: 1px solid black;
+
+    }
+
+    .statsBox {
+        background-color: black; 
+        color: white;
+    }
+
+</style>
 </head>
 
 <body>
@@ -518,6 +553,70 @@
 </div> <!-- Modal windows -->
 
 <div id="main" class="main">
+    <div class="wrapper">
+        <!-- <div class="logo"><img src="media/Path_logo.jpg" alt="Logo" style="width: 403px; height: 125ps"></div> -->
+        <div class="logo">Logo</div>
+        <div class="info">Info</div>
+        <div class="speed">Speed</div>
+        <div class="stats">
+            <div class="statsDisplay">
+                <table class="statsDisplay" style="text-align: center; border: 1px solid black;">
+                <tr style="font-size: 12px;">
+                    <th>Ability<br>Name</th>
+                    <th>Ability<br>score</th>
+                    <th>Ability<br>modifier</th>
+                    <th>Temp<br>Adjustment</th>
+                    <th>Temp<br>Modifier</th>
+                </tr>
+                <tr>
+                    <td class="statsBox">STR</td>
+                    <td id="0StatDisplay"></td>
+                    <td id="0StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="statsBox">DEX</td>
+                    <td id="1StatDisplay"></td>
+                    <td id="1StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="statsBox">CON</td>
+                    <td id="2StatDisplay"></td>
+                    <td id="2StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="statsBox">INT</td>
+                    <td id="3StatDisplay"></td>
+                    <td id="3StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="statsBox">WIS</td>
+                    <td id="4StatDisplay"></td>
+                    <td id="4StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="statsBox">CHA</td>
+                    <td id="5StatDisplay"></td>
+                    <td id="5StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </div>
+        </div>
+        <div class="skills">Skills</div>
+        <div class="weapons">Weapons</div>
+        <div class="languages">Languages</div>
+    </div>
 </div>
 
 <script>

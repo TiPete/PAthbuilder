@@ -52,10 +52,12 @@
             
         }
         
-        .statsBox {
+        .blackBox {
             background-color: black; 
             color: white;
         }
+        
+        
 
     </style>
 </head>
@@ -67,62 +69,83 @@
         <div class="logo">Logo</div>
         <div class="info">Info</div>
         <div class="speed">Speed</div>
-        <div class="stats">Stats</div>
+        <div class="stats">
+            <div class="statsDisplay">
+                <table class="statsDisplay" style="text-align: center; border: 1px solid black;">
+                <tr style="font-size: 12px;">
+                    <th>Ability<br>Name</th>
+                    <th>Ability<br>score</th>
+                    <th>Ability<br>modifier</th>
+                    <th>Temp<br>Adjustment</th>
+                    <th>Temp<br>Modifier</th>
+                </tr>
+                <tr>
+                    <td class="blackBox">STR</td>
+                    <td id="0StatDisplay"></td>
+                    <td id="0StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="blackBox">DEX</td>
+                    <td id="1StatDisplay"></td>
+                    <td id="1StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="blackBox">CON</td>
+                    <td id="2StatDisplay"></td>
+                    <td id="2StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="blackBox">INT</td>
+                    <td id="3StatDisplay"></td>
+                    <td id="3StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="blackBox">WIS</td>
+                    <td id="4StatDisplay"></td>
+                    <td id="4StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                    <tr>
+                    <td class="blackBox">CHA</td>
+                    <td id="5StatDisplay"></td>
+                    <td id="5StatMod"></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+            </div>
+            <div class="hpDisplay">
+                <table class="statsDisplay" style="text-align: center; border: 1px solid black;">
+            <tr style="font-size: 12px;"> <th>Hit Points</th> <th>Total</th> <th>DR</th> </tr>
+            <tr> <td class="blackBox">HP</td> <td colspan="2"></td> <td></td> </tr>
+            <tr style="font-size: 12px;"><td>Wounds/current HP</td></tr>
+            <tr> <td colspan ="4"></td> </tr>
+            <tr colspan ="4" style="font-size: 12px;"><td>Nonlethal Damage</td></tr>
+            <tr> <td colspan ="4"></td> </tr>
+</table>
+            </div>
+        </div>
         <div class="skills">Skills</div>
         <div class="weapons">Weapons</div>
         <div class="languages">Languages</div>
     </div>
     
-<table class="statsDisplay" style="text-align: center">
-    <tr>
-        <th style="font-size: 12px;">Ability<br>Name</th>
-        <th style="font-size: 12px;">Ability<br>score</th>
-        <th style="font-size: 12px;">Ability<br>modifier</th>
-        <th style="font-size: 12px;">Temp<br>Adjustment</th>
-        <th style="font-size: 12px;">Temp<br>Modifier</th>
-    </tr>
-    <tr>
-        <td class="statsBox">STR</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-        <tr>
-        <td class="statsBox">DEX</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-        <tr>
-        <td class="statsBox">CON</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-        <tr>
-        <td class="statsBox">INT</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-        <tr>
-        <td class="statsBox">WIS</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
-        <tr>
-        <td class="statsBox">CHA</td>
-        <td></td>
-        <td></td>
-        <td></td>
-        <td></td>
-    </tr>
+<table class="statsDisplay" style="text-align: center; border: 1px solid black;">
+    <tr style="font-size: 12px;"> <th>Hit Points</th> <th>Total</th> <th>DR</th> </tr>
+    <tr> <td class="blackBox">HP</td> <td colspan="2"></td> <td></td> </tr>
+    <tr style="font-size: 12px;"><td>Wounds/current HP</td></tr>
+    <tr> <td colspan ="4"></td> </tr>
+    <tr colspan ="4" style="font-size: 12px;"><td>Nonlethal Damage</td></tr>
+    <tr> <td colspan ="4"></td> </tr>
 </table>
 
     
