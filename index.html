@@ -399,9 +399,9 @@
             document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
         
-        var skillDOM = "";
+        var skillDOM = "<table class=\"statsDisplay\" style=\"text-align: center; border: 1px solid black;\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
-            skillDOM += hero.skills[i][0] + " ";
+            skillDOM += "<tr><td>" + hero.skills[i][0] + "</td><td>";
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
                     skillDOM += CalculateModifier(hero.skills[i][4]) + hero.skills[i][4];
@@ -412,6 +412,7 @@
             else {
                 skillDOM += CalculateModifier(hero.skills[i][4]) + hero.skills[i][4];
             }
+            skillDOM += "</td><td>";
             switch (hero.skills[i][2]){
                 case 0: skillDOM += " =Str "; break;
                 case 1: skillDOM += " =Dex "; break;
@@ -420,6 +421,7 @@
                 case 4: skillDOM += " =Wis "; break;
                 case 5: skillDOM += " =Cha "; break;
             }
+            skillDOM += "</td><td>";
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
                     skillDOM += CalculateModifier(hero.skills[i][4]);
@@ -430,9 +432,9 @@
             else {
                 skillDOM += CalculateModifier(hero.skills[i][4]);
             }
-            skillDOM += " + " + hero.skills[i][4] + " + " + hero.skills[i][8];
-            skillDOM += "<br>";
+            skillDOM += "</td><td>" +hero.skills[i][4] + "</td><td>" + hero.skills[i][8] + "</td></tr>";     
         }
+        skillDOM += "</table>";
         document.getElementById("skillsDisplay").innerHTML = skillDOM;
 
     }
@@ -487,6 +489,10 @@
     .statsBox {
         background-color: black; 
         color: white;
+    }
+    
+    td {
+        border: 1px;
     }
 
 </style>
