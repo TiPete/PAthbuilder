@@ -398,6 +398,9 @@
         }
         UpdateMainScreen
     }
+        function AssignSkillName(skill, name) {
+        hero.skills[skill][0] = name;
+    }
     
     function UpdateMainScreen() {
         for (i= 0; i < 6; i++) {
@@ -407,7 +410,14 @@
         
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
-            skillDOM += "<tr><td>" + hero.skills[i][0] + "</td><td class=\"bottomTD\">";
+            skillDOM += "<tr><td>";
+            if (hero.skills[i][5]){
+                skillDOM += hero.skills[i][0] + ":" + "<input id=\"editSkill" + i + " type=\"text\" size=\"10\" class=\"infoDisplay\" onchange=\"AssignSkillName(" + i + ", this.value)\">";
+            } else {
+                skillDOM += hero.skills[i][0];
+            }
+                            
+            skillDOM += "</td><td class=\"bottomTD\">";
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
                     skillDOM += CalculateModifier(hero.skills[i][2]) + hero.skills[i][4];
@@ -450,82 +460,12 @@
         }
         skillDOM += "</table>";
         document.getElementById("skillsDisplay").innerHTML = skillDOM;
+        
+        
 
     }
     </script>
-<style>
-    .logo {grid-area: logo; object-fit: contain;}
-    .info {grid-area: info;}
-    .speed {grid-area: speed;}
-    .stats {grid-area: stats;}
-    .skills {grid-area: skills;}
-    .weapons {grid-area: weapons;}
-    .languages {grid-area: languages;}
-    .statsDisplay { grid-area: statsDisplay; }
-    .hpDisplay {grid-area: hpDisplay;}
-    .acDisplay {grid-area: acDisplay;}
-    .initiativeDisplay {grid-area: initiativeDisplay;}
-    .savesDisplay {grid-area: savesDisplay;}
-    .attackBonus {grid-area: attackBonus;}
 
-
-    .wrapper{
-        display: grid;
-        grid-template-columns: 25% 25% 25% 25%;
-        grid-template-areas:
-            "logo info info info"
-            "stats stats speed speed"
-            "stats stats skills skills"
-            "weapons weapons skills skills"
-            "weapons weapons skills skills"
-            "weapons weapons skills skills"
-            "weapons weapons languages languages";
-        grid-gap: 10px;
-        padding: 10px;
-
-    }
-
-    .stats {
-        display:grid;
-        grid-template-rows: 20% 20% 20% 20% 20%;
-        grid-template-areas:
-            "statsDisplay hpDisplay"
-            "statsDisplay hpDisplay"
-            "statsDisplay hpDisplay"
-            "statsDisplay initiativeDisplay";
-    }
-
-    .wrapper > div {
-        border: 1px solid black;
-
-    }
-
-    .statsBox {
-        background-color: black; 
-        color: white;
-    }
-    
-    .boxedTD {
-        border: 1px solid black;
-        text-align: center;
-    }
-    
-    .bottomTD {
-        border-bottom: 1px solid black;
-        text-align: center;
-    }
-    
-    .infoDisplay {
-        border: 0;
-        outline: 0;
-        background: transparent;
-        border-bottom: 1px solid black;
-        font-size: 12px;
-        
-    }
-
-
-</style>
 </head>
 
 <body>
