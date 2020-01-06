@@ -22,7 +22,7 @@
             this.skills =[
                 ["Acrobatics", 0, 2, 0, 0, false, false, false, 0], 
                 ["Appraise", 0, 3, 0, 0, false, false, false, 0], 
-                ["Bluff", 0, 4, 0, 0, , false, false, false, 0], 
+                ["Bluff", 0, 4, 0, 0, false, false, false, 0], 
                 ["Climb", 0, 0, 0, 0, false, false, false, 0], 
                 ["Craft", 0, 3, 0, 0, true, false, false, 0], 
                 ["Craft", 0, 3, 0, 0, true, false, false, 0],
@@ -392,6 +392,12 @@
         document.getElementById("main").style.display = "block";
         UpdateMainScreen();
     }
+    function LogChange(field, value) {
+        switch (field) {
+            case 0: hero.name = value; break;
+        }
+        UpdateMainScreen
+    }
     
     function UpdateMainScreen() {
         for (i= 0; i < 6; i++) {
@@ -399,18 +405,18 @@
             document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
         
-        var skillDOM = "<table class=\"statsDisplay\" style=\"text-align: center; border: 1px solid black;\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
+        var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
-            skillDOM += "<tr><td>" + hero.skills[i][0] + "</td><td>";
+            skillDOM += "<tr><td>" + hero.skills[i][0] + "</td><td class=\"bottomTD\">";
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
-                    skillDOM += CalculateModifier(hero.skills[i][4]) + hero.skills[i][4];
+                    skillDOM += CalculateModifier(hero.skills[i][2]) + hero.skills[i][4];
                 } else {
                     skillDOM += "0";
                 }
             }
             else {
-                skillDOM += CalculateModifier(hero.skills[i][4]) + hero.skills[i][4];
+                skillDOM += CalculateModifier(hero.skills[i][2]) + hero.skills[i][4];
             }
             skillDOM += "</td><td>";
             switch (hero.skills[i][2]){
@@ -421,7 +427,7 @@
                 case 4: skillDOM += " =Wis "; break;
                 case 5: skillDOM += " =Cha "; break;
             }
-            skillDOM += "</td><td>";
+            skillDOM += "</td><td class=\"bottomTD\">";
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
                     skillDOM += CalculateModifier(hero.skills[i][4]);
@@ -432,7 +438,15 @@
             else {
                 skillDOM += CalculateModifier(hero.skills[i][4]);
             }
-            skillDOM += "</td><td>" +hero.skills[i][4] + "</td><td>" + hero.skills[i][8] + "</td></tr>";     
+            skillDOM += "</td><td class=\"bottomTD\">";
+            if (hero.skills[i][4] != 0){
+                skillDOM += hero.skills[i][4];
+            }
+                
+            skillDOM += "</td><td class=\"bottomTD\">";
+            if (hero.skills[i][8] != 0){
+                skillDOM += hero.skills[i][8];
+            }"</td></tr>";     
         }
         skillDOM += "</table>";
         document.getElementById("skillsDisplay").innerHTML = skillDOM;
@@ -491,9 +505,25 @@
         color: white;
     }
     
-    td {
-        border: 1px;
+    .boxedTD {
+        border: 1px solid black;
+        text-align: center;
     }
+    
+    .bottomTD {
+        border-bottom: 1px solid black;
+        text-align: center;
+    }
+    
+    .infoDisplay {
+        border: 0;
+        outline: 0;
+        background: transparent;
+        border-bottom: 1px solid black;
+        font-size: 12px;
+        
+    }
+
 
 </style>
 </head>
@@ -639,11 +669,17 @@
     <div class="wrapper">
         <!-- <div class="logo"><img src="media/Path_logo.jpg" alt="Logo" style="width: 403px; height: 125ps"></div> -->
         <div class="logo">Logo</div>
-        <div class="info">Info</div>
+        <div class="info">
+            <table class="infoDisplay" style="border: none;">
+                <tr>
+                    <td><input class="infoDisplay" type="text" onchange="LogChange(0,this.value)"><br>Character name</td>
+                </tr>
+            </table>
+        </div>
         <div class="speed">Speed</div>
         <div class="stats">
             <div class="statsDisplay">
-                <table class="statsDisplay" style="text-align: center; border: 1px solid black;">
+                <table class="statsDisplay">
                 <tr style="font-size: 12px;">
                     <th>Ability<br>Name</th>
                     <th>Ability<br>score</th>
@@ -653,45 +689,45 @@
                 </tr>
                 <tr>
                     <td class="statsBox">STR</td>
-                    <td id="0StatDisplay"></td>
-                    <td id="0StatMod"></td>
-                    <td></td>
-                    <td></td>
+                    <td id="0StatDisplay" class="boxedTD"></td>
+                    <td id="0StatMod" class="boxedTD"></td>
+                    <td class="boxedTD"></td>
+                    <td class="boxedTD"></td>
                 </tr>
                     <tr>
                     <td class="statsBox">DEX</td>
-                    <td id="1StatDisplay"></td>
-                    <td id="1StatMod"></td>
-                    <td></td>
-                    <td></td>
+                    <td id="1StatDisplay" class="boxedTD"></td>
+                    <td id="1StatMod" class="boxedTD"></td>
+                    <td class="boxedTD"></td>
+                    <td class="boxedTD"></td>
                 </tr>
                     <tr>
-                    <td class="statsBox">CON</td>
-                    <td id="2StatDisplay"></td>
-                    <td id="2StatMod"></td>
-                    <td></td>
-                    <td></td>
+                    <td class="statsBox" >CON</td>
+                    <td id="2StatDisplay" class="boxedTD"></td>
+                    <td id="2StatMod" class="boxedTD"></td>
+                    <td class="boxedTD"></td>
+                    <td class="boxedTD"></td>
                 </tr>
                     <tr>
                     <td class="statsBox">INT</td>
-                    <td id="3StatDisplay"></td>
-                    <td id="3StatMod"></td>
-                    <td></td>
-                    <td></td>
+                    <td id="3StatDisplay" class="boxedTD"></td>
+                    <td id="3StatMod" class="boxedTD"></td>
+                    <td class="boxedTD"></td>
+                    <td class="boxedTD"></td>
                 </tr>
                     <tr>
                     <td class="statsBox">WIS</td>
-                    <td id="4StatDisplay"></td>
-                    <td id="4StatMod"></td>
-                    <td></td>
-                    <td></td>
+                    <td id="4StatDisplay" class="boxedTD"></td>
+                    <td id="4StatMod" class="boxedTD"></td>
+                    <td class="boxedTD"></td>
+                    <td class="boxedTD"></td>
                 </tr>
                     <tr>
                     <td class="statsBox">CHA</td>
-                    <td id="5StatDisplay"></td>
-                    <td id="5StatMod"></td>
-                    <td></td>
-                    <td></td>
+                    <td id="5StatDisplay" class="boxedTD"></td>
+                    <td id="5StatMod" class="boxedTD"></td>
+                    <td class="boxedTD"></td>
+                    <td class="boxedTD"></td>
                 </tr>
             </table>
             </div>
