@@ -20,13 +20,13 @@
             this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
             this.nbSkills = -1, this.rage = -1;
             this.skills =[
-                ["Acrobatics", 0, 2, 0, 0, false, false, false, 0], 
+                ["Acrobatics", 0, 1, 0, 0, false, false, false, 0], 
                 ["Appraise", 0, 3, 0, 0, false, false, false, 0], 
                 ["Bluff", 0, 4, 0, 0, false, false, false, 0], 
                 ["Climb", 0, 0, 0, 0, false, false, false, 0], 
-                ["Craft", 0, 3, 0, 0, true, false, false, 0], 
-                ["Craft", 0, 3, 0, 0, true, false, false, 0],
-                ["Craft", 0, 3, 0, 0, true, false, false, 0],
+                ["Craft", 0, 3, 0, 0, true, false, false, 0, ""], 
+                ["Craft", 0, 3, 0, 0, true, false, false, 0, ""],
+                ["Craft", 0, 3, 0, 0, true, false, false, 0, ""],
                 ["Diplomacy", 0, 5, 0, 0, false, false, false, 0], 
                 ["Disable Device", 0, 1, 0, 0, false, true, false, 0],
                 ["Disguise", 0, 5, 0, 0, false, false, false, 0], 
@@ -47,10 +47,10 @@
                 ["Knowledge(Religion)", 0, 3, 0, 0, false, true, false, 0],
                 ["Linguistics", 0, 3, 0, 0, false, true, false, 0], 
                 ["Perception", 0, 4, 0, 0, false, false, false, 0], 
-                ["Perform", 0, 5, 0, 0, true, false, false, 0], 
-                ["Perform", 0, 5, 0, 0, true, false, false, 0], 
-                ["Profession", 0, 4, 0, 0, true, true, false, 0], 
-                ["Profession", 0, 4, 0, 0, true, true, false, 0],
+                ["Perform", 0, 5, 0, 0, true, false, false, 0, ""], 
+                ["Perform", 0, 5, 0, 0, true, false, false, 0, ""], 
+                ["Profession", 0, 4, 0, 0, true, true, false, 0, ""], 
+                ["Profession", 0, 4, 0, 0, true, true, false, 0, ""],
                 ["Ride", 0, 2, 0, 0, false, false, false, 0], 
                 ["Sense Motive", 0, 4, 0, 0, false, false, false, 0], 
                 ["Sleight of Hand", 0, 2, 0, 0, false, true, false, 0], 
@@ -369,6 +369,7 @@
                 hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
                 hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4;
                 hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
+                hero.skills[0][7] = true;
                 break;
             case 1: // Bard
                 hero.hp = 8, hero.bab = 0, hero.fortSave = 0, hero.refSave = 2, hero.willSave = 2;
@@ -396,10 +397,21 @@
         switch (field) {
             case 0: hero.name = value; break;
         }
-        UpdateMainScreen
+        UpdateMainScreen();
     }
-        function AssignSkillName(skill, name) {
-        hero.skills[skill][0] = name;
+    function AssignSkillName(skill, name) {
+        hero.skills[skill][9] = name; UpdateMainScreen();
+    }
+    function AssignSkillRank(skill, rank) {
+        hero.skills[skill][4] = rank; UpdateMainScreen();
+    }
+    function CalculateTotalSkillModifier (classSkill, skill){
+        if (classSkill){
+            console.log(CalculateModifier(hero.skills[i][2] + (hero.skills[i][4]*3) + hero.skills[i][8]));
+            return (CalculateModifier(hero.skills[i][2] + (hero.skills[i][4]*3) + hero.skills[i][8]));
+        } else {
+            return (CalculateModifier(hero.skills[i][2] + hero.skills[i][4] + hero.skills[i][8]));
+        }
     }
     
     function UpdateMainScreen() {
@@ -412,21 +424,21 @@
         for (i = 0; i < hero.skills.length; i ++){
             skillDOM += "<tr><td>";
             if (hero.skills[i][5]){
-                skillDOM += hero.skills[i][0] + ":" + "<input id=\"editSkill" + i + " type=\"text\" size=\"10\" class=\"infoDisplay\" onchange=\"AssignSkillName(" + i + ", this.value)\">";
+                skillDOM += hero.skills[i][0] + ":" + "<input type=\"text\" size=\"10\" class=\"infoDisplay\" value=\"" + hero.skills[i][9] + "\" onchange=\"AssignSkillName(" + i + ", this.value)\">";
             } else {
                 skillDOM += hero.skills[i][0];
             }
-                            
             skillDOM += "</td><td class=\"bottomTD\">";
+            
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
-                    skillDOM += CalculateModifier(hero.skills[i][2]) + hero.skills[i][4];
+                    skillDom += CalculateTotalSkillModifier(hero.skills[i][7], i);
                 } else {
                     skillDOM += "0";
                 }
             }
             else {
-                skillDOM += CalculateModifier(hero.skills[i][2]) + hero.skills[i][4];
+                skillDOM += CalculateTotalSkillModifier(hero.skills[i][7], i);
             }
             skillDOM += "</td><td>";
             switch (hero.skills[i][2]){
@@ -440,18 +452,21 @@
             skillDOM += "</td><td class=\"bottomTD\">";
             if (hero.skills[i][6]){
                 if (hero.skills[i][4] > 0) {
-                    skillDOM += CalculateModifier(hero.skills[i][4]);
+                    skillDOM += CalculateModifier(hero.skills[i][2]);
                 } else {
                     skillDOM += "0";
                 }
             }
             else {
-                skillDOM += CalculateModifier(hero.skills[i][4]);
+                skillDOM += CalculateModifier(hero.skills[i][2]);
             }
-            skillDOM += "</td><td class=\"bottomTD\">";
+            skillDOM += "</td><td class=\"bottomTD\"><input class=\"clearDisplay\" type=\"number\" value=\"";
             if (hero.skills[i][4] != 0){
                 skillDOM += hero.skills[i][4];
             }
+            skillDOM += "\" min=\"0\" max=\"1\" onchange=\"AssignSkillRank(" + i + ", this.value)\">";
+            
+            
                 
             skillDOM += "</td><td class=\"bottomTD\">";
             if (hero.skills[i][8] != 0){
