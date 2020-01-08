@@ -10,7 +10,7 @@
         constructor(){
             this.stats=[0,0,0,0,0,0];
             this.race = -1, this.job = -1;
-            this.characterName= "", this.alignement= "", this.playerName= "";
+            this.characterName= new String(), this.alignement= -1, this.playerName= "";
             this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= "", this.homeland= "";
             this.size = "", this.gender= "", this.age = -1, this.height= "";
             this.weight = "", this.hair= "", this.eyes ="";
@@ -425,6 +425,8 @@
             document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
         
+        document.getElementById("charName").innerHTML= "<input class=\"infoDisplay\" type=\"text\" value=\"" + hero.name +"\" onchange=\"LogChange(0,this.value)\"><br>Character name"
+        
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
             skillDOM += "<tr><td>";
@@ -620,9 +622,11 @@
         <!-- <div class="logo"><img src="media/Path_logo.jpg" alt="Logo" style="width: 403px; height: 125ps"></div> -->
         <div class="logo">Logo</div>
         <div class="info">
-            <table class="infoDisplay" style="border: none;">
+            <table style="border: none;">
                 <tr>
-                    <td><input class="infoDisplay" type="text" onchange="LogChange(0,this.value)"><br>Character name</td>
+                    <td colspan="2" id="charName"></td>
+                    <td id="Alignement">Alignment</td>
+                    <td colspan="2">Player</td>
                 </tr>
             </table>
         </div>
