@@ -61,9 +61,6 @@
                 ["Use Magic Devices", 0, 5, 0, 0, false, true, false, 0]
             ]
         }
-        updateHeroStats(){
-            
-        } // Recalculates everything !
     } // Contains all the character's data 
     function DisplayDesc(val) {
         var desc = document.getElementById("abilityScoreMethodDesc");
@@ -369,7 +366,7 @@
                 hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
                 hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4;
                 hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
-                hero.skills[0][7] = true;
+                hero.skills[0][7] = true; hero.skills[3][7] = true
                 break;
             case 1: // Bard
                 hero.hp = 8, hero.bab = 0, hero.fortSave = 0, hero.refSave = 2, hero.willSave = 2;
@@ -403,14 +400,15 @@
         hero.skills[skill][9] = name; UpdateMainScreen();
     }
     function AssignSkillRank(skill, rank) {
-        hero.skills[skill][4] = rank; UpdateMainScreen();
+        hero.skills[skill][4] = rank; 
+        UpdateMainScreen();
     }
-    function CalculateTotalSkillModifier (classSkill, skill){
-        if (classSkill){
-            console.log(CalculateModifier(hero.skills[i][2] + (hero.skills[i][4]*3) + hero.skills[i][8]));
-            return (CalculateModifier(hero.skills[i][2] + (hero.skills[i][4]*3) + hero.skills[i][8]));
+    function CalculateTotalSkillModifier(skill){
+        if (hero.skills[i][6] && hero.skills[i][4] == 0){ return 0; }
+        if (hero.skills[i][7]){
+            return CalculateModifier(hero.skills[i][2]) + (hero.skills[i][4] * 3) + hero.skills[i][8];
         } else {
-            return (CalculateModifier(hero.skills[i][2] + hero.skills[i][4] + hero.skills[i][8]));
+            return CalculateModifier(hero.skills[i][2]) + hero.skills[i][4] + hero.skills[i][8];
         }
     }
     
@@ -428,19 +426,8 @@
             } else {
                 skillDOM += hero.skills[i][0];
             }
-            skillDOM += "</td><td class=\"bottomTD\">";
-            
-            if (hero.skills[i][6]){
-                if (hero.skills[i][4] > 0) {
-                    skillDom += CalculateTotalSkillModifier(hero.skills[i][7], i);
-                } else {
-                    skillDOM += "0";
-                }
-            }
-            else {
-                skillDOM += CalculateTotalSkillModifier(hero.skills[i][7], i);
-            }
-            skillDOM += "</td><td>";
+            skillDOM += "</td><td class=\"bottomTD\">" + CalculateTotalSkillModifier(i) + "</td><td>";
+
             switch (hero.skills[i][2]){
                 case 0: skillDOM += " =Str "; break;
                 case 1: skillDOM += " =Dex "; break;
@@ -460,11 +447,11 @@
             else {
                 skillDOM += CalculateModifier(hero.skills[i][2]);
             }
-            skillDOM += "</td><td class=\"bottomTD\"><input class=\"clearDisplay\" type=\"number\" value=\"";
+            skillDOM += "</td><td class=\"bottomTD skillBox\"><input class=\"clearDisplay\" type=\"number\" value=\"";
             if (hero.skills[i][4] != 0){
                 skillDOM += hero.skills[i][4];
             }
-            skillDOM += "\" min=\"0\" max=\"1\" onchange=\"AssignSkillRank(" + i + ", this.value)\">";
+            skillDOM += "\" min=\"0\" max=\"1\" onchange=\"AssignSkillRank(" + i + ", parseInt(this.value))\">";
             
             
                 
@@ -475,6 +462,7 @@
         }
         skillDOM += "</table>";
         document.getElementById("skillsDisplay").innerHTML = skillDOM;
+        document.getElementsByClassName("skillPts").innerHTML = "Skill points: " + hero.nbSkills;
         
         
 
