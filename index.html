@@ -400,7 +400,14 @@
         hero.skills[skill][9] = name; UpdateMainScreen();
     }
     function AssignSkillRank(skill, rank) {
-        hero.skills[skill][4] = rank; 
+        if (hero.skills[skill][4] < rank){
+            hero.skills[skill][4]++; hero.nbSkills--;
+        } else {
+            if (hero.skills[skill][4] > rank && hero.skills[skill][4] > 0){
+                hero.skills[skill][4]--; hero.nbSkills++;
+            }
+        }
+         
         UpdateMainScreen();
     }
     function CalculateTotalSkillModifier(skill){
@@ -451,7 +458,7 @@
             if (hero.skills[i][4] != 0){
                 skillDOM += hero.skills[i][4];
             }
-            skillDOM += "\" min=\"0\" max=\"1\" onchange=\"AssignSkillRank(" + i + ", parseInt(this.value))\">";
+            skillDOM += "\" min=\"0\" max=\"1\" title=\"Remaining skill points: " + hero.nbSkills + "\" onchange=\"AssignSkillRank(" + i + ", parseInt(this.value))\">";
             
             
                 
