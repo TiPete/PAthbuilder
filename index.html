@@ -10,7 +10,7 @@
         constructor(){
             this.stats=[0,0,0,0,0,0];
             this.race = -1, this.job = -1;
-            this.characterName= new String(), this.alignement= -1, this.playerName= "";
+            this.characterName= undefined, this.alignement= -1, this.playerName= "";
             this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= "", this.homeland= "";
             this.size = "", this.gender= "", this.age = -1, this.height= "";
             this.weight = "", this.hair= "", this.eyes ="";
@@ -62,6 +62,12 @@
             ]
         }
     } // Contains all the character's data 
+        function SetClassSkills(array) {
+        for (i= 0; i < array.length; i++){
+            hero.skills[array[i]][7] = true;
+        }
+    }
+    
     function DisplayDesc(val) {
         var desc = document.getElementById("abilityScoreMethodDesc");
         
@@ -366,7 +372,7 @@
                 hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
                 hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4;
                 hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
-                hero.skills[0][7] = true; hero.skills[3][7] = true
+                SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]);
                 break;
             case 1: // Bard
                 hero.hp = 8, hero.bab = 0, hero.fortSave = 0, hero.refSave = 2, hero.willSave = 2;
@@ -425,7 +431,17 @@
             document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
         
-        document.getElementById("charName").innerHTML= "<input class=\"infoDisplay\" type=\"text\" value=\"" + hero.name +"\" onchange=\"LogChange(0,this.value)\"><br>Character name"
+        var nameField;
+        if (hero.name == undefined) { 
+            nameField= "<input class=\"infoDisplay\" type=\"text\" onchange=\"LogChange(0,this.value)\"><br>Character name";
+        } else {
+            nameField= "<input class=\"infoDisplay\" type=\"text\" value=\"" + hero.name + "\" onchange=\"LogChange(0,this.value)\"><br>Character name";
+        }
+        console.log(nameField);
+        document.getElementById("charName").innerHTML = nameField;
+        
+        
+
         
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
