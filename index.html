@@ -447,10 +447,9 @@
         if (hero.playerName != undefined) { 
             playerField+= " value=\"" + hero.playerName + "\""; 
         }
-        //playerField += " onchange=\"LogChange(2,this.value)\"><br>Player name";
         document.getElementById("playerName").innerHTML = playerField + " onchange=\"LogChange(2,this.value)\"><br>Player Name";
         
-        var levelField= "<u>";
+        var levelField= "<span style=\"border-bottom: 1px solid; width: 100%;\">";
         switch (hero.job){
             case 0: levelField += "Barbarian"; break;
             case 1: levelField += "Bard"; break;
@@ -464,7 +463,7 @@
             case 9: levelField += "Sorcerer"; break;
             case 10: levelField += "Wizard"; break;
         }
-        document.getElementById("charLevel").innerHTML= levelField + ": 1</u><br>Character level"
+        document.getElementById("charLevel").innerHTML= levelField + ": 1</span><br>Character level"
         
         var deityField= "<input class=\"infoDisplay\" type=\"text\"";
         if (hero.deity != undefined) { 
@@ -673,12 +672,21 @@
                 <tr>
                     <td colspan="4" id="charName"></td>
                     <td colspan="3" id="alignment"></td>
-                    <td colspan="4" id="playerName"></td>
+                    <td colspan="5" id="playerName"></td>
                 </tr>
                 <tr>
-                    <td colspan="7" id="charLevel"></td>
-                    <td colspan="2" id="charDeity"></td>
-                    <td colspan="2" id="charHomeland"></td>
+                    <td colspan="6" id="charLevel"></td>
+                    <td colspan="3" id="charDeity"></td>
+                    <td colspan="3" id="charHomeland">Homeland</td>
+                </tr>
+                <tr>
+                    <td colspan="3" id="charRace">Race</td>
+                    <td colspan="1" id="charSize">Size</td>
+                    <td colspan="1" id="charGender">Gender</td>
+                    <td colspan="1" id="charAge">Age</td>
+                    <td colspan="1" id="charHeight">Height</td>
+                    <td colspan="1" id="charWeight">Weight</td>
+                    <td colspan="1" id="charEyes">Eyes</td>
                 </tr>
             </table>
         </div>
