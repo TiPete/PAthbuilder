@@ -10,8 +10,8 @@
         constructor(){
             this.stats=[0,0,0,0,0,0];
             this.race = -1, this.job = -1;
-            this.characterName= undefined, this.alignement= -1, this.playerName= "";
-            this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= "", this.homeland= "";
+            this.characterName= undefined, this.alignement= -1, this.playerName= undefined;
+            this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= undefined, this.homeland= undefined;
             this.size = "", this.gender= "", this.age = -1, this.height= "";
             this.weight = "", this.hair= "", this.eyes ="";
             this.hp = -1, this.speed = -1, this.initiative = -1;
@@ -388,7 +388,9 @@
         hero.fortSave += CalculateModifier(2);
         hero.refSave += CalculateModifier(1);
         hero.willSave += CalculateModifier(4);
+        
         hero.nbSkills += CalculateModifier(3);
+        if (hero.nbSkills < 1) { hero.nbSkills = 1; }
         
         
         document.getElementById("ChooseClass").style.display = "none";
@@ -398,7 +400,10 @@
     }
     function LogChange(field, value) {
         switch (field) {
-            case 0: hero.name = value; break;
+            case 0: hero.name= value; break;
+            case 1: hero.alignement= value; break;
+            case 2: hero.playerName= value; break
+            case 3: hero.deity= value; break;
         }
         UpdateMainScreen();
     }
@@ -431,16 +436,42 @@
             document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
         }
         
-        var nameField;
-        if (hero.name == undefined) { 
-            nameField= "<input class=\"infoDisplay\" type=\"text\" onchange=\"LogChange(0,this.value)\"><br>Character name";
-        } else {
-            nameField= "<input class=\"infoDisplay\" type=\"text\" value=\"" + hero.name + "\" onchange=\"LogChange(0,this.value)\"><br>Character name";
+        var nameField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.name != undefined) { 
+            nameField+= " value=\"" + hero.name + "\""; 
         }
-        console.log(nameField);
+        nameField += " onchange=\"LogChange(0,this.value)\"><br>Character Name";
         document.getElementById("charName").innerHTML = nameField;
         
+        var playerField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.playerName != undefined) { 
+            playerField+= " value=\"" + hero.playerName + "\""; 
+        }
+        //playerField += " onchange=\"LogChange(2,this.value)\"><br>Player name";
+        document.getElementById("playerName").innerHTML = playerField + " onchange=\"LogChange(2,this.value)\"><br>Player Name";
         
+        var levelField= "<u>";
+        switch (hero.job){
+            case 0: levelField += "Barbarian"; break;
+            case 1: levelField += "Bard"; break;
+            case 2: levelField += "Cleric"; break;
+            case 3: levelField += "Druid"; break;
+            case 4: levelField += "Fighter"; break;
+            case 5: levelField += "Monk"; break;
+            case 6: levelField += "Paladin"; break;
+            case 7: levelField += "Ranger"; break;
+            case 8: levelField += "Rogue"; break;
+            case 9: levelField += "Sorcerer"; break;
+            case 10: levelField += "Wizard"; break;
+        }
+        document.getElementById("charLevel").innerHTML= levelField + ": 1</u><br>Character level"
+        
+        var deityField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.deity != undefined) { 
+            deityField+= " value=\"" + hero.deity + "\""; 
+        }
+        deityField += " onchange=\"LogChange(3,this.value)\"><br>Deity";
+        document.getElementById("charDeity").innerHTML = deityField;
 
         
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
@@ -640,9 +671,14 @@
         <div class="info">
             <table style="border: none;">
                 <tr>
-                    <td colspan="2" id="charName"></td>
-                    <td id="Alignement">Alignment</td>
-                    <td colspan="2">Player</td>
+                    <td colspan="4" id="charName"></td>
+                    <td colspan="3" id="alignment"></td>
+                    <td colspan="4" id="playerName"></td>
+                </tr>
+                <tr>
+                    <td colspan="7" id="charLevel"></td>
+                    <td colspan="2" id="charDeity"></td>
+                    <td colspan="2" id="charHomeland"></td>
                 </tr>
             </table>
         </div>
