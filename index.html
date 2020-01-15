@@ -443,6 +443,8 @@
         nameField += " onchange=\"LogChange(0,this.value)\"><br>Character Name";
         document.getElementById("charName").innerHTML = nameField;
         
+        
+        
         var playerField= "<input class=\"infoDisplay\" type=\"text\"";
         if (hero.playerName != undefined) { 
             playerField+= " value=\"" + hero.playerName + "\""; 
@@ -668,25 +670,25 @@
         <!-- <div class="logo"><img src="media/Path_logo.jpg" alt="Logo" style="width: 403px; height: 125ps"></div> -->
         <div class="logo">Logo</div>
         <div class="info">
-            <table style="border: none;">
-                <tr>
-                    <td colspan="4" id="charName"></td>
-                    <td colspan="3" id="alignment"></td>
-                    <td colspan="5" id="playerName"></td>
+            <table>
+                <tr style="border: ">
+                    <td colspan="2" id="charName" style="width: 30%"></td>
+                    <td colspan="2" id="alignment" style="width: 20%"></td>
+                    <td colspan="3" id="playerName" style="width: 40%"></td>
                 </tr>
                 <tr>
-                    <td colspan="6" id="charLevel"></td>
-                    <td colspan="3" id="charDeity"></td>
-                    <td colspan="3" id="charHomeland">Homeland</td>
+                    <td colspan="3" id="charLevel" style="width: 50%"></td>
+                    <td colspan="2" id="charDeity" style="width: 25%"></td>
+                    <td colspan="2"id="charHomeland" style="width: 25%">Homeland</td>
                 </tr>
                 <tr>
-                    <td colspan="3" id="charRace">Race</td>
-                    <td colspan="1" id="charSize">Size</td>
-                    <td colspan="1" id="charGender">Gender</td>
-                    <td colspan="1" id="charAge">Age</td>
-                    <td colspan="1" id="charHeight">Height</td>
-                    <td colspan="1" id="charWeight">Weight</td>
-                    <td colspan="1" id="charEyes">Eyes</td>
+                    <td id="charRace" style="width: 33%">Race</td>
+                    <td id="charSize" style="width: 11%">Size</td>
+                    <td id="charGender" style="width: 11%">Gender</td>
+                    <td id="charAge" style="width: 11%">Age</td>
+                    <td id="charHeight" style="width: 11%">Height</td>
+                    <td id="charWeight" style="width: 11%">Weight</td>
+                    <td id="charEyes" style="width: 11%">Eyes</td>
                 </tr>
             </table>
         </div>
