@@ -12,7 +12,7 @@
             this.race = -1, this.job = -1;
             this.characterName= undefined, this.alignement= -1, this.playerName= undefined;
             this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= undefined, this.homeland= undefined;
-            this.size = "", this.gender= "", this.age = -1, this.height= "";
+            this.size = "", this.gender= "", this.age = "", this.height= "";
             this.weight = "", this.hair= "", this.eyes ="";
             this.hp = -1, this.speed = -1, this.initiative = -1;
             this.ac= -1, this.fortSave= -1, this.refSave= -1, this.willSave= -1;
@@ -77,7 +77,7 @@
         hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
         hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4 + CalculateModifier(3);
         hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
-        SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]);
+        SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]); 
         
         document.getElementById("ChooseStatsMethod").style.display = "none";
         document.getElementById("myModal").style.display = "none";
@@ -120,7 +120,7 @@
             case "purchase": document.getElementById("PMEnterBudget").style.display = "block"; break;
             case "manual": document.getElementById("ManualEntryMethod").style.display = "block"; break;
         }
-        
+    
     } //Activate the chosen stats rolling method 
     function StatsClassic() {
         var roll= new Array(3);
@@ -424,6 +424,8 @@
             case 2: hero.playerName= value; break
             case 3: hero.deity= value; break;
             case 4: hero.homeland= value; break;
+            case 5: hero.gender= value; break;
+            case 6: hero.age= value; break;
         }
         UpdateMainScreen();
     }
@@ -460,10 +462,7 @@
         if (hero.name != undefined) { 
             nameField+= " value=\"" + hero.name + "\""; 
         }
-        nameField += " onchange=\"LogChange(0,this.value)\"><br>Character Name";
-        document.getElementById("charName").innerHTML = nameField;
-        
-        
+        document.getElementById("charName").innerHTML = nameField + " onchange=\"LogChange(0,this.value)\"><br>Character Name";
         
         var playerField= "<input class=\"infoDisplay\" type=\"text\"";
         if (hero.playerName != undefined) { 
@@ -471,7 +470,7 @@
         }
         document.getElementById("playerName").innerHTML = playerField + " onchange=\"LogChange(2,this.value)\">Player Name";
         
-        var levelField= "<span style=\"border-bottom: 1px solid; width: 100%; display: block;\">";
+        var levelField= "";
         switch (hero.job){
             case 0: levelField += "Barbarian"; break;
             case 1: levelField += "Bard"; break;
@@ -485,21 +484,49 @@
             case 9: levelField += "Sorcerer"; break;
             case 10: levelField += "Wizard"; break;
         }
-        document.getElementById("charLevel").innerHTML= levelField + ": 1</span><br>Character level"
+        document.getElementById("charLevel").innerHTML= levelField + ": 1<br><span style=\"border-top: 1px solid; width: 100%; display: block;\">Character level</span>";
         
         var deityField= "<input class=\"infoDisplay\" type=\"text\"";
         if (hero.deity != undefined) { 
             deityField+= " value=\"" + hero.deity + "\""; 
         }
-        deityField += " onchange=\"LogChange(3,this.value)\"><br>Deity";
-        document.getElementById("charDeity").innerHTML = deityField;
+        document.getElementById("charDeity").innerHTML = deityField + " onchange=\"LogChange(3,this.value)\"><br>Deity";
 
         var homeField= "<input class=\"infoDisplay\" type=\"text\"";
         if (hero.homeland != undefined) { 
             homeField+= " value=\"" + hero.homeland + "\""; 
         }
-        homeField += " onchange=\"LogChange(4,this.value)\"><br>Homeland";
-        document.getElementById("charHomeland").innerHTML = homeField;
+        document.getElementById("charHomeland").innerHTML = homeField + " onchange=\"LogChange(4,this.value)\"><br>Homeland";
+        
+        
+        var raceField;
+        switch (hero.race){
+            case 0: raceField = "Dwarf"; break;
+            case 1: raceField = "Elf"; break;
+            case 2: raceField = "Gnome"; break;
+            case 3: raceField = "Half Elf"; break;
+            case 4: raceField = "Half Orc"; break;
+            case 5: raceField = "Halfling"; break;
+            case 6: raceField = "Human"; break;
+        }
+        document.getElementById("charRace").innerHTML = raceField + "<br><span style=\"border-top: 1px solid; width: 100%; display: block;\">Character level</span>";
+        
+        var sizeField;
+        if (hero.race == 2 || hero.race == 5) { sizeField = "Small";}
+        else {sizeField = "Medium";}
+        document.getElementById("charSize").innerHTML = sizeField + "<br><span style=\"border-top: 1px solid; width: 100%; display: block;\">Size</span>";
+        
+        var genderField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.gender != undefined) { 
+            genderField += " value=\"" + hero.gender + "\""; 
+        }
+        document.getElementById("charGender").innerHTML = genderField + " onchange=\"LogChange(5,this.value)\">Gender";
+        
+        var ageField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.age != undefined) { 
+            ageField += " value=\"" + hero.age + "\""; 
+        }
+        document.getElementById("charAge").innerHTML = ageField + " onchange=\"LogChange(6,this.value)\">Age";
 
         
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
