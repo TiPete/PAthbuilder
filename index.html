@@ -68,6 +68,25 @@
         }
     }
     
+    // **********************************************************************************
+    // Loads test data, dwarven barbarian, to delete 
+    function LoadTestData(){
+        hero.stats[0]= 16; hero.stats[1]= 14; hero.stats[2]= 14; 
+        hero.stats[3]= 8; hero.stats[4]= 6; hero.stats[5]= 10;
+        hero.race= 0; hero.job= 0;
+        hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
+        hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4 + CalculateModifier(3);
+        hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
+        SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]);
+        
+        document.getElementById("ChooseStatsMethod").style.display = "none";
+        document.getElementById("myModal").style.display = "none";
+        document.getElementById("main").style.display = "block";
+        UpdateMainScreen();
+        
+    }
+    // **********************************************************************************
+    
     function DisplayDesc(val) {
         var desc = document.getElementById("abilityScoreMethodDesc");
         
@@ -93,7 +112,6 @@
             }
     } //Display the ability score method description
     function ConfirmStatsMethod(){
-        document.getElementById("ChooseStatsMethod").style.display = "none";
         switch (document.getElementById("abilityScoreMethod").value){
             case "standard": StatsStandard(); break;
             case "classic":  StatsClassic(); break;
@@ -102,6 +120,7 @@
             case "purchase": document.getElementById("PMEnterBudget").style.display = "block"; break;
             case "manual": document.getElementById("ManualEntryMethod").style.display = "block"; break;
         }
+        
     } //Activate the chosen stats rolling method 
     function StatsClassic() {
         var roll= new Array(3);
@@ -370,7 +389,7 @@
         switch(hero.job){
             case 0: // Barbarian
                 hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
-                hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4;
+                hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, 4 + CalculateModifier(3);
                 hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
                 SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]);
                 break;
@@ -404,6 +423,7 @@
             case 1: hero.alignement= value; break;
             case 2: hero.playerName= value; break
             case 3: hero.deity= value; break;
+            case 4: hero.homeland= value; break;
         }
         UpdateMainScreen();
     }
@@ -449,9 +469,9 @@
         if (hero.playerName != undefined) { 
             playerField+= " value=\"" + hero.playerName + "\""; 
         }
-        document.getElementById("playerName").innerHTML = playerField + " onchange=\"LogChange(2,this.value)\"><br>Player Name";
+        document.getElementById("playerName").innerHTML = playerField + " onchange=\"LogChange(2,this.value)\">Player Name";
         
-        var levelField= "<span style=\"border-bottom: 1px solid; width: 100%;\">";
+        var levelField= "<span style=\"border-bottom: 1px solid; width: 100%; display: block;\">";
         switch (hero.job){
             case 0: levelField += "Barbarian"; break;
             case 1: levelField += "Bard"; break;
@@ -473,6 +493,13 @@
         }
         deityField += " onchange=\"LogChange(3,this.value)\"><br>Deity";
         document.getElementById("charDeity").innerHTML = deityField;
+
+        var homeField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.homeland != undefined) { 
+            homeField+= " value=\"" + hero.homeland + "\""; 
+        }
+        homeField += " onchange=\"LogChange(4,this.value)\"><br>Homeland";
+        document.getElementById("charHomeland").innerHTML = homeField;
 
         
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
@@ -552,6 +579,14 @@
         <option value="manual">Manual entry</option>
     </select>
     <button onclick="ConfirmStatsMethod()">Confirm</button>
+        
+<!-- ****************************************************************************** -->
+        
+    <button onclick="LoadTestData()">Load test data</button>
+        
+<!-- ****************************************************************************** -->
+        
+        
     </div>
     <div id="abilityScoreMethodDesc" class="abilityScoreMethodDesc">
         <p>Roll 4d6, discard the lowest die result, and add the three remaining results together. Record this total and repeat the process until six numbers are generated.</p>
@@ -682,13 +717,13 @@
                     <td colspan="2"id="charHomeland" style="width: 25%">Homeland</td>
                 </tr>
                 <tr>
-                    <td id="charRace" style="width: 33%">Race</td>
-                    <td id="charSize" style="width: 11%">Size</td>
-                    <td id="charGender" style="width: 11%">Gender</td>
-                    <td id="charAge" style="width: 11%">Age</td>
-                    <td id="charHeight" style="width: 11%">Height</td>
-                    <td id="charWeight" style="width: 11%">Weight</td>
-                    <td id="charEyes" style="width: 11%">Eyes</td>
+                    <td id="charRace" style="width: 20%">Race</td>
+                    <td id="charSize" style="width: 13%">Size</td>
+                    <td id="charGender" style="width: 13%">Gender</td>
+                    <td id="charAge" style="width: 13%">Age</td>
+                    <td id="charHeight" style="width: 14%">Height</td>
+                    <td id="charWeight" style="width: 14%">Weight</td>
+                    <td id="charEyes" style="width: 13%">Eyes</td>
                 </tr>
             </table>
         </div>

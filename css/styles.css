@@ -141,10 +141,11 @@
     background: transparent;
     border-bottom: 1px solid black;
     font-size: 12px;
+    width: 95%;
 }
 
 .clearDisplay {
-        border: 0;
+    border: 0;
     outline: 0;
     background: transparent;
     font-size: 12px;
