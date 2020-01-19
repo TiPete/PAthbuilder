@@ -10,15 +10,16 @@
         constructor(){
             this.stats=[0,0,0,0,0,0];
             this.race = -1, this.job = -1;
-            this.characterName= undefined, this.alignement= -1, this.playerName= undefined;
+            this.characterName= undefined, this.alignement= undefined, this.playerName= undefined;
             this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= undefined, this.homeland= undefined;
-            this.size = "", this.gender= "", this.age = "", this.height= "";
-            this.weight = "", this.hair= "", this.eyes ="";
+            this.size = undefined, this.gender= undefined, this.age = undefined, this.height= undefined;
+            this.weight = undefined, this.hair= undefined, this.eyes = undefined;
             this.hp = -1, this.speed = -1, this.initiative = -1;
             this.ac= -1, this.fortSave= -1, this.refSave= -1, this.willSave= -1;
             this.bab= -1, this.spellResist= -1, this.cmb = -1, this.cmd= -1;
             this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
             this.nbSkills = -1, this.rage = -1;
+            this.permittedAlign=[true, true, true, true, true, true, true, true, true];
             this.skills =[
                 ["Acrobatics", 0, 1, 0, 0, false, false, false, 0], 
                 ["Appraise", 0, 3, 0, 0, false, false, false, 0], 
@@ -62,11 +63,12 @@
             ]
         }
     } // Contains all the character's data 
-        function SetClassSkills(array) {
+    function SetClassSkills(array) {
         for (i= 0; i < array.length; i++){
             hero.skills[array[i]][7] = true;
         }
     }
+
     
     // **********************************************************************************
     // Loads test data, dwarven barbarian, to delete 
@@ -78,6 +80,7 @@
         hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4 + CalculateModifier(3);
         hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
         SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]); 
+        hero.permittedAlign= [false, true, true, false, true, true, false, true, true];
         
         document.getElementById("ChooseStatsMethod").style.display = "none";
         document.getElementById("myModal").style.display = "none";
@@ -112,6 +115,7 @@
             }
     } //Display the ability score method description
     function ConfirmStatsMethod(){
+        document.getElementById("ChooseStatsMethod").style.display = "none";
         switch (document.getElementById("abilityScoreMethod").value){
             case "standard": StatsStandard(); break;
             case "classic":  StatsClassic(); break;
@@ -391,7 +395,8 @@
                 hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
                 hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, 4 + CalculateModifier(3);
                 hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
-                SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]);
+                SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]); 
+                hero.permittedAlign= [false, true, true, false, true, true, false, true, true];
                 break;
             case 1: // Bard
                 hero.hp = 8, hero.bab = 0, hero.fortSave = 0, hero.refSave = 2, hero.willSave = 2;
@@ -426,6 +431,11 @@
             case 4: hero.homeland= value; break;
             case 5: hero.gender= value; break;
             case 6: hero.age= value; break;
+            case 7: hero.height= value; break;
+            case 8: hero.weight= value; break;
+            case 9: hero.hair= value; break;
+            case 10: hero.eyes= value; break;
+            case 11: hero.alignement= value; break;
         }
         UpdateMainScreen();
     }
@@ -464,6 +474,26 @@
         }
         document.getElementById("charName").innerHTML = nameField + " onchange=\"LogChange(0,this.value)\"><br>Character Name";
         
+        var alignField= "<select onChange=\"LogChange(11,this.value)\">";
+        for (i = 0; i < 9; i++){
+            if (hero.permittedAlign[i]){
+                alignField += "<option value=" + i;
+                if (hero.alignement == i) { alignField += " selected "; }
+                switch (i) {
+                    case 0: alignField += ">Lawful Good"; break;
+                    case 1: alignField += ">Neutral Good"; break;
+                    case 2: alignField += ">Chaotic Good"; break;
+                    case 3: alignField += ">Lawful Neutral"; break;
+                    case 4: alignField += ">True Neutral"; break;
+                    case 5: alignField += ">Chaotic Good"; break;
+                    case 6: alignField += ">Lawful Evil"; break;
+                    case 7: alignField += ">Neutral Evil"; break;
+                    case 8: alignField += ">Chaotic Evil"; break;
+                }
+            }
+        }
+        document.getElementById("charAlignment").innerHTML = alignField + "</option></select>";
+        
         var playerField= "<input class=\"infoDisplay\" type=\"text\"";
         if (hero.playerName != undefined) { 
             playerField+= " value=\"" + hero.playerName + "\""; 
@@ -498,7 +528,6 @@
         }
         document.getElementById("charHomeland").innerHTML = homeField + " onchange=\"LogChange(4,this.value)\"><br>Homeland";
         
-        
         var raceField;
         switch (hero.race){
             case 0: raceField = "Dwarf"; break;
@@ -527,13 +556,37 @@
             ageField += " value=\"" + hero.age + "\""; 
         }
         document.getElementById("charAge").innerHTML = ageField + " onchange=\"LogChange(6,this.value)\">Age";
+        
+        var heightField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.height != undefined) { 
+            heightField += " value=\"" + hero.height + "\""; 
+        }
+        document.getElementById("charHeight").innerHTML = heightField + " onchange=\"LogChange(7,this.value)\">Height";
+        
+        var weightField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.weight != undefined) { 
+            weightField += " value=\"" + hero.weight + "\""; 
+        }
+        document.getElementById("charWeight").innerHTML = weightField + " onchange=\"LogChange(8,this.value)\">Weight";
+        
+        var hairField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.hair != undefined) { 
+            hairField += " value=\"" + hero.hair + "\""; 
+        }
+        document.getElementById("charHair").innerHTML = hairField + " onchange=\"LogChange(9,this.value)\">Hair";
+        
+        var eyesField= "<input class=\"infoDisplay\" type=\"text\"";
+        if (hero.eyes != undefined) { 
+            eyesField += " value=\"" + hero.eyes + "\""; 
+        }
+        document.getElementById("charEyes").innerHTML = eyesField + " onchange=\"LogChange(10,this.value)\">Eyes";
 
         
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
             skillDOM += "<tr><td>";
             if (hero.skills[i][5]){
-                skillDOM += hero.skills[i][0] + ":" + "<input type=\"text\" size=\"10\" class=\"infoDisplay\" value=\"" + hero.skills[i][9] + "\" onchange=\"AssignSkillName(" + i + ", this.value)\">";
+                skillDOM += hero.skills[i][0] + ":" + "<input type=\"text\" size=\"10\" class=\"skillNameEditable\" value=\"" + hero.skills[i][9] + "\" onchange=\"AssignSkillName(" + i + ", this.value)\">";
             } else {
                 skillDOM += hero.skills[i][0];
             }
@@ -734,23 +787,24 @@
         <div class="info">
             <table>
                 <tr style="border: ">
-                    <td colspan="2" id="charName" style="width: 30%"></td>
-                    <td colspan="2" id="alignment" style="width: 20%"></td>
+                    <td colspan="3" id="charName" style="width: 30%"></td>
+                    <td colspan="2" id="charAlignment" style="width: 20%"></td>
                     <td colspan="3" id="playerName" style="width: 40%"></td>
                 </tr>
                 <tr>
                     <td colspan="3" id="charLevel" style="width: 50%"></td>
-                    <td colspan="2" id="charDeity" style="width: 25%"></td>
+                    <td colspan="3" id="charDeity" style="width: 25%"></td>
                     <td colspan="2"id="charHomeland" style="width: 25%">Homeland</td>
                 </tr>
                 <tr>
                     <td id="charRace" style="width: 20%">Race</td>
-                    <td id="charSize" style="width: 13%">Size</td>
-                    <td id="charGender" style="width: 13%">Gender</td>
-                    <td id="charAge" style="width: 13%">Age</td>
-                    <td id="charHeight" style="width: 14%">Height</td>
-                    <td id="charWeight" style="width: 14%">Weight</td>
-                    <td id="charEyes" style="width: 13%">Eyes</td>
+                    <td id="charSize" style="width: 11%">Size</td>
+                    <td id="charGender" style="width: 11%">Gender</td>
+                    <td id="charAge" style="width: 10%">Age</td>
+                    <td id="charHeight" style="width: 12%">Height</td>
+                    <td id="charWeight" style="width: 12%">Weight</td>
+                    <td id="charHair" style="width: 12%">Hair</td>
+                    <td id="charEyes" style="width: 12%">Eyes</td>
                 </tr>
             </table>
         </div>
