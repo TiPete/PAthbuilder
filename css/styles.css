@@ -1,3 +1,5 @@
+.wrapper { width: 90%; } 
+
 /* The Modal (background) */
 .modal {
   display: block; /* Shown by default */
@@ -144,6 +146,14 @@
     width: 95%;
 }
 
+.skillNameEditable{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    font-size: 12px;
+}
+
 .clearDisplay {
     border: 0;
     outline: 0;
@@ -151,7 +161,8 @@
     font-size: 12px;
 }
 
-table, th, td {
-  border: 1px solid black;
-}
+/*
+table, td {
+    border: 1px solid;
+} /*
 

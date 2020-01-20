@@ -580,8 +580,9 @@
             eyesField += " value=\"" + hero.eyes + "\""; 
         }
         document.getElementById("charEyes").innerHTML = eyesField + " onchange=\"LogChange(10,this.value)\">Eyes";
-
         
+        //document.getElementById("baseSpeed").innerHTML= "<span style=\"font-size: xx-large; text-align: left;\">" + hero.speed + "</span><span style=\"font-size: x-small; text-align: left;\">Ft.&emsp;</span><span style=\"font-size: xx-large; text-align: right;\">" + parseInt(hero.speed/5) + "</span><span style=\"font-size: x-small; text-align: right;\">Sq.</span>";
+
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
             skillDOM += "<tr><td>";
@@ -808,7 +809,30 @@
                 </tr>
             </table>
         </div>
-        <div class="speed">Speed</div>
+        <div class="speed">
+            <table width="100%">
+                <tr>
+                    <td class="statsBox" style="text-align: center">Speed<br><span style="font-size: x-small;">Land</span></td>
+                    <td colspan="2" id="baseSpeed">
+                        <div style="border: 1px black solid;">
+                            <span style="font-size: xx-large; text-align: left;">40</span>
+                            <span style="font-size: x-small; text-align: left;">Ft.&emsp;</span>
+                            <span style="font-size: xx-large; text-align: right;">8</span>
+                            <span style="font-size: x- small; text-align: right;">Sq.</span>
+                        </div>
+                        <span style="font-size: x-small; font-weight: 900;">Base Speed</span>
+                    </td>
+                    <td colspan="3" id="armorSpeed" class="boxedTD">With Armor</td>
+                    <td rowspan="2" style="width: 20%" class="boxedTD">Temp Modifiers</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="boxedTD">Fly</td>
+                    <td class="boxedTD">Swim</td>
+                    <td class="boxedTD">Climb</td>
+                    <td class="boxedTD">Burrow</td>
+                </tr>
+            </table>
+        </div>
         <div class="stats">
             <div class="statsDisplay">
                 <table class="statsDisplay">
