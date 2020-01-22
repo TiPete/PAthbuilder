@@ -14,7 +14,7 @@
             this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= undefined, this.homeland= undefined;
             this.size = undefined, this.gender= undefined, this.age = undefined, this.height= undefined;
             this.weight = undefined, this.hair= undefined, this.eyes = undefined;
-            this.hp = -1, this.speed = -1, this.initiative = -1;
+            this.hp = -1, this.speed = -1, this.flySpeed= -1; this.initiative = -1;
             this.ac= -1, this.fortSave= -1, this.refSave= -1, this.willSave= -1;
             this.bab= -1, this.spellResist= -1, this.cmb = -1, this.cmd= -1;
             this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
@@ -581,7 +581,9 @@
         }
         document.getElementById("charEyes").innerHTML = eyesField + " onchange=\"LogChange(10,this.value)\">Eyes";
         
-        //document.getElementById("baseSpeed").innerHTML= "<span style=\"font-size: xx-large; text-align: left;\">" + hero.speed + "</span><span style=\"font-size: x-small; text-align: left;\">Ft.&emsp;</span><span style=\"font-size: xx-large; text-align: right;\">" + parseInt(hero.speed/5) + "</span><span style=\"font-size: x-small; text-align: right;\">Sq.</span>";
+        document.getElementById("baseSpeed").innerHTML= "<div style=\"border: 1px black solid; text-align: center;\"><span style=\"font-size: x-large;\">" + hero.speed + "</span><span style=\"font-size: small;\">ft&emsp;</span><span style=\"font-size: x-large;\">" + parseInt(hero.speed/5) + "</span><span style=\"font-size: small;\">Sq</span></div><span style=\"font-size: small; font-weight: 900;\">Base Speed</span>";
+        
+        document.getElementById("armorSpeed").innerHTML= "<div style=\"border: 1px black solid; text-align: center;\"><span style=\"font-size: x-large;\">" + hero.speed + "</span><span style=\"font-size: small;\">ft&emsp;</span><span style=\"font-size: x-large;\">" + parseInt(hero.speed/5) + "</span><span style=\"font-size: small;\">Sq</span></div><span style=\"font-size: small; font-weight: 900; text-align: center;\">With armor</span>";
 
         var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
         for (i = 0; i < hero.skills.length; i ++){
@@ -813,23 +815,34 @@
             <table width="100%">
                 <tr>
                     <td class="statsBox" style="text-align: center">Speed<br><span style="font-size: x-small;">Land</span></td>
-                    <td colspan="2" id="baseSpeed">
-                        <div style="border: 1px black solid;">
-                            <span style="font-size: xx-large; text-align: left;">40</span>
-                            <span style="font-size: x-small; text-align: left;">Ft.&emsp;</span>
-                            <span style="font-size: xx-large; text-align: right;">8</span>
-                            <span style="font-size: x- small; text-align: right;">Sq.</span>
-                        </div>
-                        <span style="font-size: x-small; font-weight: 900;">Base Speed</span>
-                    </td>
-                    <td colspan="3" id="armorSpeed" class="boxedTD">With Armor</td>
-                    <td rowspan="2" style="width: 20%" class="boxedTD">Temp Modifiers</td>
+                    <td colspan="2" id="baseSpeed"></td>
+                    <td colspan="3" id="armorSpeed"></td>
+                    <td rowspan="2" style="width: 20%; text-align: right; vertical-align: top; font-size: small; font-weight: 900;" class="boxedTD">Temp Modifiers</td>
                 </tr>
                 <tr>
-                    <td colspan="3" class="boxedTD">Fly</td>
-                    <td class="boxedTD">Swim</td>
-                    <td class="boxedTD">Climb</td>
-                    <td class="boxedTD">Burrow</td>
+                    <td colspan="3">
+                        <div style="border: 1px black solid; text-align: center;">
+                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
+                        </div>
+                        <span style="font-size: small; font-weight: 900;">Flying Speed</span>
+                    </td>
+                    <td>
+                            <div style="border: 1px black solid; text-align: center;">
+                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
+                        </div>
+                        <span style="font-size: small; font-weight: 900;">Swim</span>
+                    </td>
+                    <td>
+                        <div style="border: 1px black solid; text-align: center;">
+                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
+                        </div>
+                        <span style="font-size: small; font-weight: 900;">Climb</span>
+                    </td>
+                    <td>                            
+                        <div style="border: 1px black solid; text-align: center;">
+                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
+                        </div>
+                        <span style="font-size: small; font-weight: 900;">Burrow</span></td>
                 </tr>
             </table>
         </div>
