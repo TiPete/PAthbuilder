@@ -1,0 +1,131 @@
+<html>
+    
+<head>
+<title>Layout test</title>
+</head>
+    
+<style>
+    
+    div{
+        display: flex;
+        margin: 2px;
+        /*border: blue 1px dotted;*/
+    }
+    div.container {
+        border: black solid 2px;
+        width: 95%;
+    }
+    div.containerElement {
+        width: 100%;
+        display: block;
+    }
+    div.subContainer{
+        width: 100%;
+        display: flex;
+    }
+
+    div.legend {
+        width: 100%;
+        display: block;
+        font-size: small;
+    }
+
+    input.fillIn{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 100%;
+    }
+    
+    img.logo{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+</style>
+    
+<script>
+    function UpdateCharacterInfo(value, stat){       
+    }
+</script>
+    
+
+<body>
+
+<div ><img class="logo" src="media/Path_logo.jpg"></div>
+<div class="container">
+    <div class="containerElement"> 
+        <div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charName" onchange="UpdateCharacterInfo(this.value, 0)">
+                <div class="legend">Character Name</div>
+            </div>
+            <div class="containerElement" style="width:20%">Character Alignment</div>
+            <div class="containerElement" style="width:45%">
+                <input class="fillIn" id="PlayerName" onchange="UpdateCharacterInfo(this.value, 1)">
+                <div class="legend">Player Name</div>
+            </div>
+        </div>
+        <div>
+            <div class="containerElement" style="width: 40%;">
+                <input class="fillIn" value="Barbarian(1)" id="charLeveL" disabled>
+                <div class="legend">Level</div>
+            </div>
+            <div class="containerElement" style="width: 30%; ">
+                <input class="fillIn" id="charDeity" onchange="UpdateCharacterInfo(this.value, 2)">
+                <div class="legend">Deity</div>
+            </div>
+            <div class="containerElement" style="width: 30%">
+                <input class="fillIn" id="charHomeland" onchange="UpdateCharacterInfo(this.value, 3)">
+                <div class="legend">Homeland</div>
+            </div>
+        </div>
+        <div>
+            <div class="containerElement" style="width:23%">
+                <input class="fillIn" value="Dwarf" id="charRace" disabled>
+                <div class="legend">Level</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" value="Medium" id="charSize" disabled>
+                <div class="legend">Size</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charGender" onchange="UpdateCharacterInfo(this.value, 4)">
+                <div class="legend">Gender</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charAge" onchange="UpdateCharacterInfo(this.value, 5)">
+                <div class="legend">Age</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charHeight" onchange="UpdateCharacterInfo(this.value, 6)">
+                <div class="legend">Height</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charWeight" onchange="UpdateCharacterInfo(this.value, 7)">
+                <div class="legend">Weight</div>
+            </div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charHair" onchange="UpdateCharacterInfo(this.value, 9)">
+                <div class="legend">Hair</div>
+            </div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charEyes" onchange="UpdateCharacterInfo(this.value, 10)">
+                <div class="legend">Eyes</div>
+            </div>
+        </div>
+    </div> 
+</div> <!-- Character information -->
+
+<div class="container">
+    <div class="subContainer">
+        <div class="containerElement" style="width: 50%;">Stats</div>
+        <div class="containerElement" style="width: 50%;">HP</div>
+    </div>
+</div> <!-- Character stats -->
+
+
+</body>
+</html>
