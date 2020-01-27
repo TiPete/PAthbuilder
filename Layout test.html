@@ -1,7 +1,7 @@
 <html>
     
 <head>
-<title>Layout test</title>
+<title>Pathbuilder v1.1</title>
 </head>
     
 <style>
@@ -10,6 +10,9 @@
         display: flex;
         margin: 2px;
         /*border: blue 1px dotted;*/
+    }
+    div.grid-container {
+        display: grid;
     }
     div.container {
         border: black solid 2px;
@@ -23,13 +26,28 @@
         width: 100%;
         display: flex;
     }
-
     div.legend {
         width: 100%;
         display: block;
         font-size: small;
     }
+    div.menu {
+        font-size: x-small;
+        text-align: center;
+    }
+    div.blackWhite {
+        border: solid black 1px;
+        background: black;
+        color: white;
+        text-align: center;
+    }
+    div.square {
+        border: solid black 1px;
+        text-align: center;
+    }
 
+    menu 
+    
     input.fillIn{
     border: 0;
     outline: 0;
@@ -54,6 +72,7 @@
 
 <body>
 
+<div class="grid-container">
 <div ><img class="logo" src="media/Path_logo.jpg"></div>
 <div class="container">
     <div class="containerElement"> 
@@ -118,14 +137,17 @@
         </div>
     </div> 
 </div> <!-- Character information -->
-
 <div class="container">
     <div class="subContainer">
-        <div class="containerElement" style="width: 50%;">Stats</div>
+        <div class="containerElement" style="width: 50%;">
+            
+
+        </div>
         <div class="containerElement" style="width: 50%;">HP</div>
     </div>
 </div> <!-- Character stats -->
-
+    
+</div> <!-- Main grid container -->
 
 </body>
 </html>
