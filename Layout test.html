@@ -14,6 +14,7 @@
     div.container {
         border: black solid 2px;
         width: 95%;
+        min-width: 880px;
     }
     div.containerElement {
         width: 100%;
@@ -35,13 +36,20 @@
     div.statsLineCell{
         display:block;
         text-align: center;
-        
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 1px;
+        margin-top: 1px;
     }
     div.whiteOnBlack{
         display:block;
         background-color: black;
         color: white;
         text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 1px;
+        margin-top: 1px;
     }
     div.emptySquare {
         border: 1px black solid;
@@ -49,9 +57,24 @@
         margin-right: 10px;
         margin-bottom: 1px;
         margin-top: 1px;
+        font-size: large;
+        display: inline-flex;
         text-align: center;
     }
 
+    button.stat{
+        height: 100%;
+        border: 0px;
+        background-color: transparent;
+    }
+    button.statDown{
+        float: left;
+    }
+    button.statUp{
+        float: right;
+    }
+
+    
     input.fillIn{
     border: 0;
     outline: 0;
@@ -69,8 +92,7 @@
 </style>
     
 <script>
-    function UpdateCharacterInfo(value, stat){       
-    }
+    function UpdateCharacterInfo(value, stat){} //Title says it all
 </script>
     
 
@@ -146,50 +168,54 @@
         <div class="containerElement" style="width: 50%;">
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="statsLineCell">ABILITY NAME</div>
-                <div style="width: 18%;">ABILITY<br>SCORE</div>
-                <div style="width: 18%;">ABILITY<br>MODIFIER</div>
-                <div style="width: 18%;">TEMP<br>ADJUSTMENT</div>
-                <div style="width: 18%;">TEMP<br>MODIFIER</div>
+                <div style="width: 18%;" class="statsLineCell">ABILITY<br>SCORE</div>
+                <div style="width: 18%;" class="statsLineCell">ABILITY<br>MODIFIER</div>
+                <div style="width: 18%;" class="statsLineCell">TEMP<br>ADJUSTMENT</div>
+                <div style="width: 18%;" class="statsLineCell">TEMP<br>MODIFIER</div>
             </div>
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="whiteOnBlack">STR<br>Strength</div>
-                <div style="width: 18%;" class="emptySquare" id="StatValue0">12</div>
+                <div style="width: 18%;" class="emptySquare">
+                    <button class="stat statdown" onchange="statChange(false, 0)">-</button>
+                    <span id="statDisplay0" style="width: 50%;">12</span>
+                    <button class="stat statUp" onchange="statChange(true, 0)">+</button>
+                </div>
                 <div style="width: 18%;" class="emptySquare" id="StatModifier0"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
             </div>
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="whiteOnBlack">DEX<br>Dexterity</div>
-                <div style="width: 18%;" class="emptySquare" id="StatValue1"></div>
-                <div style="width: 18%;" class="emptySquare" id="StatModifier0"></div>
+                <div style="width: 18%;" class="emptySquare"></div>
+                <div style="width: 18%;" class="emptySquare" id="StatModifier1"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
             </div>
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="whiteOnBlack">CON<br>Constitution</div>
-                <div style="width: 18%;" class="emptySquare" id="StatValue2"></div>
-                <div style="width: 18%;" class="emptySquare" id="StatModifier0"></div>
+                <div style="width: 18%;" class="emptySquare"></div>
+                <div style="width: 18%;" class="emptySquare" id="StatModifier2"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
             </div>
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="whiteOnBlack">INT<br>Intelligence</div>
-                <div style="width: 18%;" class="emptySquare" id="StatValue3"></div>
-                <div style="width: 18%;" class="emptySquare" id="StatModifier0"></div>
+                <div style="width: 18%;" class="emptySquare"></div>
+                <div style="width: 18%;" class="emptySquare" id="StatModifier3"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
             </div>
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="whiteOnBlack">WILL<br>Willpower</div>
-                <div style="width: 18%;" class="emptySquare" id="StatValue4"></div>
-                <div style="width: 18%;" class="emptySquare" id="StatModifier0"></div>
+                <div style="width: 18%;" class="emptySquare"></div>
+                <div style="width: 18%;" class="emptySquare" id="StatModifier4"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
             </div>
             <div style="font-size: x-small;" class="statsLine">
                 <div style="width: 28%;" class="whiteOnBlack">CHA<br>Charisma</div>
-                <div style="width: 18%;" class="emptySquare" id="StatValue5"></div>
-                <div style="width: 18%;" class="emptySquare" id="StatModifier0"></div>
+                <div style="width: 18%;" class="emptySquare"></div>
+                <div style="width: 18%;" class="emptySquare" id="StatModifier5"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
                 <div style="width: 18%;" class="emptySquare"></div>
             </div>
