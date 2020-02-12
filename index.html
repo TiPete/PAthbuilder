@@ -1,931 +1,311 @@
-<!doctype html>
-
-<html lang="en">
+<html>
+    
 <head>
-    <meta charset="utf-8">
-    <title>Pathbuilder v1.0</title>
-    <link rel="stylesheet" href="css/styles.css?v=1.0">
-<script>
-    class Hero {
-        constructor(){
-            this.stats=[0,0,0,0,0,0];
-            this.race = -1, this.job = -1;
-            this.characterName= undefined, this.alignement= undefined, this.playerName= undefined;
-            this.characterLevel= [0,0,0,0,0,0,0,0,0,0,0], this.deity= undefined, this.homeland= undefined;
-            this.size = undefined, this.gender= undefined, this.age = undefined, this.height= undefined;
-            this.weight = undefined, this.hair= undefined, this.eyes = undefined;
-            this.hp = -1, this.speed = -1, this.flySpeed= -1; this.initiative = -1;
-            this.ac= -1, this.fortSave= -1, this.refSave= -1, this.willSave= -1;
-            this.bab= -1, this.spellResist= -1, this.cmb = -1, this.cmd= -1;
-            this.money= [0,0,0,0], this.encum= 0, this.xp= 0;
-            this.nbSkills = -1, this.rage = -1;
-            this.permittedAlign=[true, true, true, true, true, true, true, true, true];
-            this.skills =[
-                ["Acrobatics", 0, 1, 0, 0, false, false, false, 0], 
-                ["Appraise", 0, 3, 0, 0, false, false, false, 0], 
-                ["Bluff", 0, 4, 0, 0, false, false, false, 0], 
-                ["Climb", 0, 0, 0, 0, false, false, false, 0], 
-                ["Craft", 0, 3, 0, 0, true, false, false, 0, ""], 
-                ["Craft", 0, 3, 0, 0, true, false, false, 0, ""],
-                ["Craft", 0, 3, 0, 0, true, false, false, 0, ""],
-                ["Diplomacy", 0, 5, 0, 0, false, false, false, 0], 
-                ["Disable Device", 0, 1, 0, 0, false, true, false, 0],
-                ["Disguise", 0, 5, 0, 0, false, false, false, 0], 
-                ["Escape Artist", 0, 2, 0, 0, false, false, false, 0],
-                ["Fly", 0, 2, 0, 0, false, false, false, 0], 
-                ["Handle Animal", 0, 5, 0, 0, false, true, false, 0],
-                ["Heal", 0, 4, 0, 0, false, false, false, 0], 
-                ["Initimidate", 0, 5, 0, 0, false, false, false, 0], 
-                ["Knowledge(Arcana)", 0, 3, 0, 0, false, true, false, 0], 
-                ["Knowledge(Dungeoneering)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(Engineering)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(Geography)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(History)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(Local)", 0, 3, 0, 0, false, true, false, 0], 
-                ["Knowledge(Nature)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(Nobility)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(Planes)", 0, 3, 0, 0, false, true, false, 0],
-                ["Knowledge(Religion)", 0, 3, 0, 0, false, true, false, 0],
-                ["Linguistics", 0, 3, 0, 0, false, true, false, 0], 
-                ["Perception", 0, 4, 0, 0, false, false, false, 0], 
-                ["Perform", 0, 5, 0, 0, true, false, false, 0, ""], 
-                ["Perform", 0, 5, 0, 0, true, false, false, 0, ""], 
-                ["Profession", 0, 4, 0, 0, true, true, false, 0, ""], 
-                ["Profession", 0, 4, 0, 0, true, true, false, 0, ""],
-                ["Ride", 0, 2, 0, 0, false, false, false, 0], 
-                ["Sense Motive", 0, 4, 0, 0, false, false, false, 0], 
-                ["Sleight of Hand", 0, 2, 0, 0, false, true, false, 0], 
-                ["Spellcraft", 0, 3, 0, 0, false, true, false, 0], 
-                ["Stealth", 0, 2, 0, 0, false, false, false, 0], 
-                ["Survival", 0, 4, 0, 0, false, false, false, 0], 
-                ["Swim", 0, 0, 0, 0, false, false, false, 0], 
-                ["Use Magic Devices", 0, 5, 0, 0, false, true, false, 0]
-            ]
-        }
-    } // Contains all the character's data 
-    function SetClassSkills(array) {
-        for (i= 0; i < array.length; i++){
-            hero.skills[array[i]][7] = true;
-        }
-    }
-
-    
-    // **********************************************************************************
-    // Loads test data, dwarven barbarian, to delete 
-    function LoadTestData(){
-        hero.stats[0]= 16; hero.stats[1]= 14; hero.stats[2]= 14; 
-        hero.stats[3]= 8; hero.stats[4]= 6; hero.stats[5]= 10;
-        hero.race= 0; hero.job= 0;
-        hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
-        hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, hero.nbSkills = 4 + CalculateModifier(3);
-        hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
-        SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]); 
-        hero.permittedAlign= [false, true, true, false, true, true, false, true, true];
-        
-        document.getElementById("ChooseStatsMethod").style.display = "none";
-        document.getElementById("myModal").style.display = "none";
-        document.getElementById("main").style.display = "block";
-        UpdateMainScreen();
-        
-    }
-    // **********************************************************************************
-    
-    function DisplayDesc(val) {
-        var desc = document.getElementById("abilityScoreMethodDesc");
-        
-        var metStandard= "<p>Roll 4d6, discard the lowest die result, and add the three remaining results together. Record this total and repeat the process until six numbers are generated.</p><p>Assign these totals to your ability scores as you see fit.</p><p>This method is less random than Classic and tends to create characters with above-average ability scores.</p>";
-        
-        var metClassic= "<p>Roll 3d6 and add the dice together. Record this total and repeat the process until you generate six numbers. Assign these results to your ability scores as you see fit.</p><p>This method is quite random, and some characters will have clearly superior abilities.</p>";
-        
-        var metHeroic= "<p>Roll 2d6 and add 6 to the sum of the dice. Record this total and repeat the process until six numbers are generated.<p></p>Assign these totals to your ability scores as you see fit.</p><p>This is less random than the Standard method and generates characters with mostly above-average scores.</p>";
-        
-        var metDicePool= "Each character has a pool of 24d6 to assign to his statistics. Before the dice are rolled, the player selects the number of dice to roll for each score, with a minimum of 3d6 for each ability.</p><p>Once the dice have been assigned, the player rolls each group and totals the result of the three highest dice. For more high-powered games, the GM should increase the total number of dice to 28.</p><p>This method generates characters of a similar power to the Standard method.</p>";
-        
-        var metPurchase= "<p>Each character receives a number of points to spend on increasing his basic attributes.</p><p>In this method, all attributes start at a base of 10. A character can increase an individual score by spending some of his points. Likewise, he can gain more points to spend on other scores by decreasing one or more of his ability scores. No score can be reduced below 7 or raised above 18 using this method</p><p>After all the points are spent, apply any racial modifiers the character might have.</p><p>The number of points you have to spend using the purchase method depends on the type of campaign you are playing. The standard value for a character is 15 points. Average nonplayer characters (NPCs) are typically built using as few as 3 points.</p><p>The purchase method emphasizes player choice and creates equally balanced characters.</p>";
-        
-        var metManualEntry= "<p>Manually enter each stat.</p>"
-        
-        switch(val) {
-            case "standard": desc.innerHTML= metStandard; break;
-            case "classic": desc.innerHTML= metClassic; break;
-            case "heroic": desc.innerHTML= metHeroic; break;
-            case "dicePool": desc.innerHTML= metDicePool; break;
-            case "purchase": desc.innerHTML= metPurchase; break;
-            case "manual": desc.innerHTML= metManualEntry; break;
-            }
-    } //Display the ability score method description
-    function ConfirmStatsMethod(){
-        document.getElementById("ChooseStatsMethod").style.display = "none";
-        switch (document.getElementById("abilityScoreMethod").value){
-            case "standard": StatsStandard(); break;
-            case "classic":  StatsClassic(); break;
-            case "heroic": StatsHeroic(); break;
-            case "dicePool": document.getElementById("DicePoolMethod").style.display = "block"; break;
-            case "purchase": document.getElementById("PMEnterBudget").style.display = "block"; break;
-            case "manual": document.getElementById("ManualEntryMethod").style.display = "block"; break;
-        }
-    
-    } //Activate the chosen stats rolling method 
-    function StatsClassic() {
-        var roll= new Array(3);
-        var i, j;
-        for (i = 0; i < 6; i++) {
-            for (j = 0; j < 3; j++){
-                roll[j]= Math.floor(Math.random() * 6) + 1;
-            }
-            rollResults[i]= (roll[0] + roll[1] + roll[2]);
-        }
-        AssignStats();
-    } // Rolls stats according to the classic method
-    function StatsStandard() {
-        var roll= new Array(4);
-        var i, j;
-        for (i = 0; i < 6; i++) {
-            for (j = 0; j < 4; j++){
-                roll[j]= Math.floor(Math.random() * 6) + 1;
-            }
-            roll.sort();
-            rollResults[i]= (roll[1] + roll[2] + roll[3]);
-        }
-        AssignStats();
-    } // Rolls stats according to the standard method
-    function StatsHeroic() {
-            var roll= new Array(2);
-            var i, j;
-            for (i = 0; i < 6; i++) {
-                for (j = 0; j < 2; j++){
-                    roll[j]= Math.floor(Math.random() * 6) + 1;
-                }
-            rollResults[i]= (roll[0] + roll[1] + 6);
-            }
-            AssignStats();
-        } // Rolls stats according to the standard method   
-    function DicePool() {
-        document.getElementById("DicePool").style.display = "block";    
-    } // Rolls stats according to the dice poll method   
-    function DPup(stat) {
-        if (nbrDices > 0){
-            poolDices[stat]++; 
-            nbrDices--; 
-        } else {
-            alert("No more dices");
-        }
-        UpdateDPDisplay(stat);
-    } // Rise the number of dices  
-    function DPdown(stat) {
-        if (poolDices[stat] > 3){
-            poolDices[stat]--; 
-            nbrDices++;  
-        } else {
-            alert("Minimum amount of dices: 3");
-        }
-        UpdateDPDisplay(stat);
-    } // Lowers the number of dices
-    function UpdateDPDisplay() {
-        document.getElementById("DPPool").innerHTML = nbrDices;
-        for (i = 0; i < 6; i++){
-            document.getElementById(i + "DPDisplay").innerHTML = poolDices[i];
-        }
-        if (nbrDices == 0){
-            document.getElementById("DPAccept").disabled = false;
-        } else {
-            document.getElementById("DPAccept").disabled = true;
-        }
-   
-    } //Update the dice pool display 
-    function RollDPStats(){
-        document.getElementById("DicePoolMethod").style.display = "none";
-        function DPRoll(nb){
-            var rolls = new Array(nb);
-            for (i = 0; i < nb; i++){
-                for (k = 0; k < nb; k++){
-                    rolls[k]=Math.floor(Math.random() * 6) + 1;
-                }
-                rolls.sort();
-                return (rolls[--nb] + rolls[--nb] + rolls[--nb]);
-            }
-        }
-        for (j = 0; j < 6; j++){
-                hero.stats[j] = DPRoll(poolDices[j]);
-            }
-    document.getElementById("ChooseRace").style.display = "block";
-    } //Roll the stats according to the Dice Pool method
-    function PurchaseMethod() {
-        for (i = 0; i < 6; i++){
-            hero.stats[i] = 10;
-        }
-        PMBudget = document.getElementById("PMBudgetInput").value;
-        document.getElementById("PMEnterBudget").style.display= "none";
-        document.getElementById("PMPts").innerHTML= PMBudget;
-        document.getElementById("PurchaseMethod").style.display= "block";
-    } //Determine the points budget for the purchase method
-    function CalculateCost() {
-        var usedPts = 0;
-        for (i = 0; i < 6; i++){
-            switch (hero.stats[i]) {
-                case 7: usedPts -= 4; break;
-                case 8: usedPts -= 2; break;
-                case 9: usedPts -= 1; break;
-                case 10: break;
-                case 11: usedPts += 1; break;
-                case 12: usedPts += 2; break;
-                case 13: usedPts += 3; break;
-                case 14: usedPts += 5; break;
-                case 15: usedPts += 7; break;
-                case 16: usedPts += 10; break;
-                case 17: usedPts += 13; break;
-                case 18: usedPts += 17; break;
-            }
-        }
-        return usedPts;
-    } // Calculate the cost of the purchase
-    function CalculateModifier(stat) {
-        return -5 + parseInt(hero.stats[stat]/2);
-    } // Calculate the stats modifier
-    function PurchaseUpdate(stat, upDown) {
-        if (hero.stats[stat] > 7 && !upDown){
-            hero.stats[stat]--;
-        } else {
-            if (hero.stats[stat] < 18 && upDown){
-                hero.stats[stat]++;
-                if (CalculateCost() > PMBudget) {
-                    hero.stats[stat]--;
-                }
-            }
-        }
-        var currentBudget = parseInt(PMBudget) - parseInt(CalculateCost());
-        document.getElementById("PMPts").innerHTML = currentBudget;
-        for (i = 0; i < 6; i++){
-            document.getElementById("pStatDisplay" + i).innerHTML = hero.stats[i];
-            document.getElementById("pModifierDisplay" + i).innerHTML = DisplayModifier(i);
-        }
-    } //Update the stats purchase display
-    function FinalizePurchase() {
-        document.getElementById("PurchaseMethod").style.display= "none";
-        document.getElementById("ChooseRace").style.display= "block";
-    } // Finalize the the stats purchase method
-    function DisplayModifier(stat){
-        var mod = CalculateModifier(stat);
-        if (mod == 0){
-            return "-";
-        } else if (mod > 0){
-            return ("+" + mod);
-        } else {
-            return mod;
-        }
-    } // Returns the modifier with - or +
-    function UpdateAssignStats(){
-        var dom = "";
-        var nbRestants = rollResults.length;
-        for (i = 0; i < 6; i++){
-            switch (i){
-                case 0: dom += "Strength :"; break;
-                case 1: dom += "Dexterity :"; break;
-                case 2: dom += "Constitution :"; break;
-                case 3: dom += "Intelligence :"; break;
-                case 4: dom += "Wisdom :"; break;
-                case 5: dom += "Charisma :"; break;
-            }
-            if (hero.stats[i] == 0){
-                dom += "<select onChange=\"AssignRollToStat(" + i +", this.value)\">";
-                dom += "<option value=\"blank\">   </option>";
-                for (j = 0; j < nbRestants; j++){
-                    dom += "<option value=\""+ j + "\">"+rollResults[j]+"</option>";
-                }
-                dom += "</select></p>";
-            } else {
-                dom += "<span id=\"assignedStat" + i + "\">" + hero.stats[i] + "</span>";
-                dom += " (" + DisplayModifier(i) + ") ";
-                dom += " <button id=\"clearAssignedStat" + i + "\" onclick=\"ClearAssignedStat(" + i + ")\">Clear</button></p>";
-            }
-        }
-        if (nbRestants == 0){
-            dom += "<button id=\"ConfirmAssignStat\" onclick=\"FinalizeAssignStats()\">Confirm</button>";
-        } else {
-            dom += "<button id=\"ConfirmAssignStat\" disabled>Confirm</button>";
-        }
-        document.getElementById("AssignStats").innerHTML = dom;
-    } // Handle the stats assignment process
-    function AssignRollToStat(stat, sel){
-        hero.stats[stat] = rollResults[sel];
-        rollResults.splice(sel, 1);
-        UpdateAssignStats();
-    } // Assign a roll to a stat
-    function AssignStats() {
-        document.getElementById("AssignStats").style.display = "block";
-        rollResults.sort();
-        UpdateAssignStats();
-    } //Assign the rolls to stats
-    function ClearAssignedStat(stat){
-        hero.stats[stat] = 0;
-        rollResults.push((parseInt(document.getElementById("assignedStat" + stat).innerText)));
-        rollResults.sort();
-        UpdateAssignStats();
-    } // Clear an assigned stat
-    function StatManualEntry(stat, value){
-        hero.stats[stat] = value;
-    } //Assign manually entered stat
-    function ConfirmManualStats(){
-        document.getElementById("ManualEntryMethod").style.display= "none";
-        document.getElementById("ChooseRace").style.display= "block";
-    } // Confirms the manual entry values
-    function FinalizeAssignStats(){
-        document.getElementById("AssignStats").style.display= "none";
-        document.getElementById("ChooseRace").style.display= "block";
-    }
-    function DisplayRaceDesc(race){
-        var descRace;
-        switch(race){
-            case 0: descRace = "Choose a race."; break;
-            case 1: descRace = "These short and stocky defenders of mountain fortresses are often seen as stern and humorless. Known for mining the earth\'s treasures and crafting magnificent items from ore and gemstones, they have an unrivaled affinity for the bounties of the deep earth. Dwarves also have a tendency toward traditionalism and isolation that sometimes manifests as xenophobia."; break;   
-            case 2: descRace = "Tall, noble, and often haughty, elves are long-lived and subtle masters of the wilderness. Elves excel in the arcane arts. Often they use their intrinsic link to nature to forge new spells and create wondrous items that, like their creators, seem nearly impervious to the ravages of time. A private and often introverted race, elves can give the impression they are indifferent to the plights of others."; break;
-            case 3: descRace = "Expatriates of the strange land of fey, these small folk have a reputation for flighty and eccentric behavior. Many gnomes are whimsical artisans and tinkers, creating strange devices powered by magic, alchemy, and their quirky imagination. Gnomes have an insatiable need for new experiences that often gets them in trouble."; break;
-            case 4: descRace = "Often caught between the worlds of their progenitor races, half-elves are a race of both grace and contradiction. Their dual heritage and natural gifts often create brilliant diplomats and peacemakers, but half-elves are often susceptible to an intense and even melancholic isolation, realizing that they are never truly part of elven or human society."; break;
-            case 5: descRace = "Often fierce and savage, sometimes noble and resolute, half-orcs can manifest the best and worst qualities of their parent races. Many half-orcs struggle to keep their more bestial natures in check in order to epitomize the most heroic values of humanity. Unfortunately, many outsiders see half-orcs as hopeless abominations devoid of civility, if not monsters unworthy of pity or parley."; break;
-            case 6: descRace = "Members of this diminutive race find strength in family, community, and their own innate and seemingly inexhaustible luck. While their fierce curiosity is sometimes at odds with their intrinsic common sense, halflings are eternal optimists and cunning opportunists with an incredible knack for getting out the worst situations."; break;
-            case 7: descRace = "Ambitious, sometimes heroic, and always confident, humans have an ability to work together toward common goals that makes them a force to be reckoned with. Though short-lived compared to other races, their boundless energy and drive allow them to accomplish much in their brief lifetimes."; break;
-        }
-        document.getElementById("RaceDescription").innerHTML = descRace;
-        if (race == 0){
-            document.getElementById("ConfirmRace").disabled= true;
-        } else {
-            document.getElementById("ConfirmRace").disabled= false;
-            hero.race = --race;
-        }
-    }
-    function ConfirmRace(){
-        document.getElementById("ChooseRace").style.display = "none";
-        document.getElementById("ChooseClass").style.display = "block";
-    }
-    function DisplayClassDesc(job){
-        var descClass;
-        switch (job){
-            case 0: descClass = "Choose a class."; break;
-            case 1: descClass = "The barbarian is a brutal berserker from beyond the edge of civilized lands."; break;
-            case 2: descClass = "The bard uses skill and spell alike to bolster his allies, confound his enemies, and build upon his fame."; break;
-            case 3: descClass = "A devout follower of a deity, the cleric can heal wounds, raise the dead, and call down the wrath of the gods."; break;
-            case 4: descClass = "The druid is a worshiper of all things natural—a spellcaster, a friend to animals, and a skilled shapechanger."; break;
-            case 5: descClass = "Brave and stalwart, the fighter is a master of all manner of arms and armor."; break;
-            case 6: descClass = "A student of martial arts, the monk trains his body to be his greatest weapon and defense."; break;
-            case 7: descClass = "The paladin is the knight in shining armor, a devoted follower of law and good."; break;
-            case 8: descClass = "A tracker and hunter, the ranger is a creature of the wild and of tracking down his favored foes."; break;
-            case 9: descClass = "The rogue is a thief and a scout, an opportunist capable of delivering brutal strikes against unwary foes."; break;
-            case 10: descClass = "The spellcasting sorcerer is born with an innate knack for magic and has strange, eldritch powers."; break;
-            case 11: descClass = "The wizard masters magic through constant study that gives him incredible magical power."; break;
-        }
-        document.getElementById("ClassDescription").innerHTML = descClass;
-        if (job == 0){
-            document.getElementById("ConfirmClass").disabled= true;
-        } else {
-            document.getElementById("ConfirmClass").disabled= false;
-            hero.job = --job;
-        }
-    }
-    function RollDice(nb, dice){
-        var total = 0;
-        for (i = 0; i < nb; i++) {
-            total += Math.floor(Math.random() * dice) + 1;
-        }
-        return total;      
-    } // Roll a certain number of dices
-    function ConfirmClass(){
-        
-        switch(hero.job){
-            case 0: // Barbarian
-                hero.hp = 12, hero.bab = 1, hero.fortSave = 2, hero.refSave = 0, hero.willSave = 0;
-                hero.money[1] = RollDice(3, 6) * 10; hero.speed = 40, 4 + CalculateModifier(3);
-                hero.characterLevel[0] = 1, hero.rage = 4 + CalculateModifier(2);
-                SetClassSkills([0,3,4,5,6,12,14,21,26,31,36,37]); 
-                hero.permittedAlign= [false, true, true, false, true, true, false, true, true];
-                break;
-            case 1: // Bard
-                hero.hp = 8, hero.bab = 0, hero.fortSave = 0, hero.refSave = 2, hero.willSave = 2;
-                hero.money[1] = RollDice(3, 6) * 10; hero.speed = 30, hero.nbSkills = 6;
-                hero.characterLevel[1] = 1;
-                break; //Add spells
-        }
-        hero.hp += hero.stats[2];
-        hero.initiative = CalculateModifier(1);
-        hero.ac = CalculateModifier(1);
-        hero.cmb = hero.bab + CalculateModifier(1);
-        hero.cmd = hero.bab + CalculateModifier(0) + CalculateModifier(1) +10;
-        hero.fortSave += CalculateModifier(2);
-        hero.refSave += CalculateModifier(1);
-        hero.willSave += CalculateModifier(4);
-        
-        hero.nbSkills += CalculateModifier(3);
-        if (hero.nbSkills < 1) { hero.nbSkills = 1; }
-        
-        
-        document.getElementById("ChooseClass").style.display = "none";
-        document.getElementById("myModal").style.display = "none";
-        document.getElementById("main").style.display = "block";
-        UpdateMainScreen();
-    }
-    function LogChange(field, value) {
-        switch (field) {
-            case 0: hero.name= value; break;
-            case 1: hero.alignement= value; break;
-            case 2: hero.playerName= value; break
-            case 3: hero.deity= value; break;
-            case 4: hero.homeland= value; break;
-            case 5: hero.gender= value; break;
-            case 6: hero.age= value; break;
-            case 7: hero.height= value; break;
-            case 8: hero.weight= value; break;
-            case 9: hero.hair= value; break;
-            case 10: hero.eyes= value; break;
-            case 11: hero.alignement= value; break;
-        }
-        UpdateMainScreen();
-    }
-    function AssignSkillName(skill, name) {
-        hero.skills[skill][9] = name; UpdateMainScreen();
-    }
-    function AssignSkillRank(skill, rank) {
-        if (hero.skills[skill][4] < rank){
-            hero.skills[skill][4]++; hero.nbSkills--;
-        } else {
-            if (hero.skills[skill][4] > rank && hero.skills[skill][4] > 0){
-                hero.skills[skill][4]--; hero.nbSkills++;
-            }
-        }
-         
-        UpdateMainScreen();
-    }
-    function CalculateTotalSkillModifier(skill){
-        if (hero.skills[i][6] && hero.skills[i][4] == 0){ return 0; }
-        if (hero.skills[i][7]){
-            return CalculateModifier(hero.skills[i][2]) + (hero.skills[i][4] * 3) + hero.skills[i][8];
-        } else {
-            return CalculateModifier(hero.skills[i][2]) + hero.skills[i][4] + hero.skills[i][8];
-        }
-    }
-    
-    function UpdateMainScreen() {
-        for (i= 0; i < 6; i++) {
-            document.getElementById(i+"StatDisplay").innerHTML=hero.stats[i];
-            document.getElementById(i+"StatMod").innerHTML=DisplayModifier(i);
-        }
-        
-        var nameField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.name != undefined) { 
-            nameField+= " value=\"" + hero.name + "\""; 
-        }
-        document.getElementById("charName").innerHTML = nameField + " onchange=\"LogChange(0,this.value)\"><br>Character Name";
-        
-        var alignField= "<select onChange=\"LogChange(11,this.value)\">";
-        for (i = 0; i < 9; i++){
-            if (hero.permittedAlign[i]){
-                alignField += "<option value=" + i;
-                if (hero.alignement == i) { alignField += " selected "; }
-                switch (i) {
-                    case 0: alignField += ">Lawful Good"; break;
-                    case 1: alignField += ">Neutral Good"; break;
-                    case 2: alignField += ">Chaotic Good"; break;
-                    case 3: alignField += ">Lawful Neutral"; break;
-                    case 4: alignField += ">True Neutral"; break;
-                    case 5: alignField += ">Chaotic Good"; break;
-                    case 6: alignField += ">Lawful Evil"; break;
-                    case 7: alignField += ">Neutral Evil"; break;
-                    case 8: alignField += ">Chaotic Evil"; break;
-                }
-            }
-        }
-        document.getElementById("charAlignment").innerHTML = alignField + "</option></select>";
-        
-        var playerField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.playerName != undefined) { 
-            playerField+= " value=\"" + hero.playerName + "\""; 
-        }
-        document.getElementById("playerName").innerHTML = playerField + " onchange=\"LogChange(2,this.value)\">Player Name";
-        
-        var levelField= "";
-        switch (hero.job){
-            case 0: levelField += "Barbarian"; break;
-            case 1: levelField += "Bard"; break;
-            case 2: levelField += "Cleric"; break;
-            case 3: levelField += "Druid"; break;
-            case 4: levelField += "Fighter"; break;
-            case 5: levelField += "Monk"; break;
-            case 6: levelField += "Paladin"; break;
-            case 7: levelField += "Ranger"; break;
-            case 8: levelField += "Rogue"; break;
-            case 9: levelField += "Sorcerer"; break;
-            case 10: levelField += "Wizard"; break;
-        }
-        document.getElementById("charLevel").innerHTML= levelField + ": 1<br><span style=\"border-top: 1px solid; width: 100%; display: block;\">Character level</span>";
-        
-        var deityField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.deity != undefined) { 
-            deityField+= " value=\"" + hero.deity + "\""; 
-        }
-        document.getElementById("charDeity").innerHTML = deityField + " onchange=\"LogChange(3,this.value)\"><br>Deity";
-
-        var homeField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.homeland != undefined) { 
-            homeField+= " value=\"" + hero.homeland + "\""; 
-        }
-        document.getElementById("charHomeland").innerHTML = homeField + " onchange=\"LogChange(4,this.value)\"><br>Homeland";
-        
-        var raceField;
-        switch (hero.race){
-            case 0: raceField = "Dwarf"; break;
-            case 1: raceField = "Elf"; break;
-            case 2: raceField = "Gnome"; break;
-            case 3: raceField = "Half Elf"; break;
-            case 4: raceField = "Half Orc"; break;
-            case 5: raceField = "Halfling"; break;
-            case 6: raceField = "Human"; break;
-        }
-        document.getElementById("charRace").innerHTML = raceField + "<br><span style=\"border-top: 1px solid; width: 100%; display: block;\">Character level</span>";
-        
-        var sizeField;
-        if (hero.race == 2 || hero.race == 5) { sizeField = "Small";}
-        else {sizeField = "Medium";}
-        document.getElementById("charSize").innerHTML = sizeField + "<br><span style=\"border-top: 1px solid; width: 100%; display: block;\">Size</span>";
-        
-        var genderField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.gender != undefined) { 
-            genderField += " value=\"" + hero.gender + "\""; 
-        }
-        document.getElementById("charGender").innerHTML = genderField + " onchange=\"LogChange(5,this.value)\">Gender";
-        
-        var ageField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.age != undefined) { 
-            ageField += " value=\"" + hero.age + "\""; 
-        }
-        document.getElementById("charAge").innerHTML = ageField + " onchange=\"LogChange(6,this.value)\">Age";
-        
-        var heightField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.height != undefined) { 
-            heightField += " value=\"" + hero.height + "\""; 
-        }
-        document.getElementById("charHeight").innerHTML = heightField + " onchange=\"LogChange(7,this.value)\">Height";
-        
-        var weightField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.weight != undefined) { 
-            weightField += " value=\"" + hero.weight + "\""; 
-        }
-        document.getElementById("charWeight").innerHTML = weightField + " onchange=\"LogChange(8,this.value)\">Weight";
-        
-        var hairField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.hair != undefined) { 
-            hairField += " value=\"" + hero.hair + "\""; 
-        }
-        document.getElementById("charHair").innerHTML = hairField + " onchange=\"LogChange(9,this.value)\">Hair";
-        
-        var eyesField= "<input class=\"infoDisplay\" type=\"text\"";
-        if (hero.eyes != undefined) { 
-            eyesField += " value=\"" + hero.eyes + "\""; 
-        }
-        document.getElementById("charEyes").innerHTML = eyesField + " onchange=\"LogChange(10,this.value)\">Eyes";
-        
-        document.getElementById("baseSpeed").innerHTML= "<div style=\"border: 1px black solid; text-align: center;\"><span style=\"font-size: x-large;\">" + hero.speed + "</span><span style=\"font-size: small;\">ft&emsp;</span><span style=\"font-size: x-large;\">" + parseInt(hero.speed/5) + "</span><span style=\"font-size: small;\">Sq</span></div><span style=\"font-size: small; font-weight: 900;\">Base Speed</span>";
-        
-        document.getElementById("armorSpeed").innerHTML= "<div style=\"border: 1px black solid; text-align: center;\"><span style=\"font-size: x-large;\">" + hero.speed + "</span><span style=\"font-size: small;\">ft&emsp;</span><span style=\"font-size: x-large;\">" + parseInt(hero.speed/5) + "</span><span style=\"font-size: small;\">Sq</span></div><span style=\"font-size: small; font-weight: 900; text-align: center;\">With armor</span>";
-
-        var skillDOM = "<table class=\"statsDisplay\"><tr style=\"font-size: 12px;\"><th>Skill names</th><th>Total<br>Bonus</th><th></th><th>Ability<br>modifier</th><th>Ranks</th><th>Misc<br>Modifier</th></tr>";
-        for (i = 0; i < hero.skills.length; i ++){
-            skillDOM += "<tr><td>";
-            if (hero.skills[i][5]){
-                skillDOM += hero.skills[i][0] + ":" + "<input type=\"text\" size=\"10\" class=\"skillNameEditable\" value=\"" + hero.skills[i][9] + "\" onchange=\"AssignSkillName(" + i + ", this.value)\">";
-            } else {
-                skillDOM += hero.skills[i][0];
-            }
-            skillDOM += "</td><td class=\"bottomTD\">" + CalculateTotalSkillModifier(i) + "</td><td>";
-
-            switch (hero.skills[i][2]){
-                case 0: skillDOM += " =Str "; break;
-                case 1: skillDOM += " =Dex "; break;
-                case 2: skillDOM += " =Con "; break;
-                case 3: skillDOM += " =Int "; break;
-                case 4: skillDOM += " =Wis "; break;
-                case 5: skillDOM += " =Cha "; break;
-            }
-            skillDOM += "</td><td class=\"bottomTD\">";
-            if (hero.skills[i][6]){
-                if (hero.skills[i][4] > 0) {
-                    skillDOM += CalculateModifier(hero.skills[i][2]);
-                } else {
-                    skillDOM += "0";
-                }
-            }
-            else {
-                skillDOM += CalculateModifier(hero.skills[i][2]);
-            }
-            skillDOM += "</td><td class=\"bottomTD skillBox\"><input class=\"clearDisplay\" type=\"number\" value=\"";
-            if (hero.skills[i][4] != 0){
-                skillDOM += hero.skills[i][4];
-            }
-            skillDOM += "\" min=\"0\" max=\"1\" title=\"Remaining skill points: " + hero.nbSkills + "\" onchange=\"AssignSkillRank(" + i + ", parseInt(this.value))\">";
-            
-            
-                
-            skillDOM += "</td><td class=\"bottomTD\">";
-            if (hero.skills[i][8] != 0){
-                skillDOM += hero.skills[i][8];
-            }"</td></tr>";     
-        }
-        skillDOM += "</table>";
-        document.getElementById("skillsDisplay").innerHTML = skillDOM;
-        document.getElementsByClassName("skillPts").innerHTML = "Skill points: " + hero.nbSkills;
-        
-        
-
-    }
-    </script>
-
+<title>Layout test</title>
 </head>
+    
+<style>
+    div{
+        display: flex;
+        margin: 2px;
+        /*border: blue 1px dotted;*/
+    }
+    div.container {
+        border: black solid 2px;
+        width: 95%;
+        min-width: 880px;
+    }
+    div.containerElement {
+        width: 100%;
+        display: block;
+    }
+    div.subContainer{
+        width: 100%;
+        display: flex;
+    }
+    div.legend {
+        width: 100%;
+        display: block;
+        font-size: small;
+    }
+    div.statsLine {
+        display: flex;
+        width:100%;
+    }
+
+    button.statButton{
+        outline: none;
+        display: flex;
+        border: 0px;
+    }
+    .statButton.up {
+        float: right;
+    }
+    .statButton.down{
+        float: left;  
+    }
+
+    div.bordered{
+        border: 1px dotted blue;
+    }
+
+    button.stat{
+        height: 100%;
+        border: 0px;
+        background-color: transparent;
+    }
+    button.statDown{
+        float: left;
+    }
+    button.statUp{
+        float: right;
+    }
+
+    td.whiteOnBlack{
+        background-color: black;
+        color: white;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 1px;
+        margin-top: 1px;
+    }
+    td.emptySquare {
+        border: black 1px solid;
+        text-align: center;
+    }
+    td.legend{
+        width: 100%;
+        display: block;
+        font-size: x-small;
+        text-align: center;
+    }
+    
+    th.statsLineCell{
+        font-size: small;
+        font-weight: 300; 
+    }
+    
+    input.fillIn{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 100%;
+    }
+    
+    img.logo{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+    
+<script>
+    var stats=[0,0,0,0,0,0]
+    function UpdateCharacterInfo(value, stat){} //Title says it all
+    function StatChange(stat, upDown){
+        if (upDown) {
+            stats[stat]++;
+        } else {
+            stats[stat]--;
+        }
+        document.getElementById("statDisplay"+stat).innerHTML= stats[stat];
+    } //Change stat value
+</script>
+    
 
 <body>
-<script>
-    var hero = new Hero();
-    var poolDices = [3, 3, 3, 3, 3, 3];
-    var nbrDices = 6, PMBudget = 0, rollResults=[0,0,0,0,0,0], 
-        assignedStats= new Array(6);
-</script> <!--  Initialize global variants -->
-<h1>Welcome to Pathbuilder</h1>
 
+<div ><img class="logo" src="media/Path_logo.jpg"></div>
+<div class="container" id="charInfo">
+    <div class="containerElement" id="info"> 
+        <div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charName" onchange="UpdateCharacterInfo(this.value, 0)">
+                <div class="legend">Character Name</div>
+            </div>
+            <div class="containerElement" style="width:20%">Character Alignment</div>
+            <div class="containerElement" style="width:45%">
+                <input class="fillIn" id="PlayerName" onchange="UpdateCharacterInfo(this.value, 1)">
+                <div class="legend">Player Name</div>
+            </div>
+        </div>
+        <div>
+            <div class="containerElement" style="width: 40%;">
+                <input class="fillIn" value="Barbarian(1)" id="charLeveL" disabled>
+                <div class="legend">Level</div>
+            </div>
+            <div class="containerElement" style="width: 30%; ">
+                <input class="fillIn" id="charDeity" onchange="UpdateCharacterInfo(this.value, 2)">
+                <div class="legend">Deity</div>
+            </div>
+            <div class="containerElement" style="width: 30%">
+                <input class="fillIn" id="charHomeland" onchange="UpdateCharacterInfo(this.value, 3)">
+                <div class="legend">Homeland</div>
+            </div>
+        </div>
+        <div>
+            <div class="containerElement" style="width:23%">
+                <input class="fillIn" value="Dwarf" id="charRace" disabled>
+                <div class="legend">Level</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" value="Medium" id="charSize" disabled>
+                <div class="legend">Size</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charGender" onchange="UpdateCharacterInfo(this.value, 4)">
+                <div class="legend">Gender</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charAge" onchange="UpdateCharacterInfo(this.value, 5)">
+                <div class="legend">Age</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charHeight" onchange="UpdateCharacterInfo(this.value, 6)">
+                <div class="legend">Height</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charWeight" onchange="UpdateCharacterInfo(this.value, 7)">
+                <div class="legend">Weight</div>
+            </div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charHair" onchange="UpdateCharacterInfo(this.value, 9)">
+                <div class="legend">Hair</div>
+            </div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charEyes" onchange="UpdateCharacterInfo(this.value, 10)">
+                <div class="legend">Eyes</div>
+            </div>
+        </div>
+    </div> 
+</div> <!-- Character information -->
 
-<!-- The Modal -->
-<div id="myModal" class="modal">
-<div class="ChooseStatsMethod" id="ChooseStatsMethod">
-    <p>Choose ability score method</p>
-    <div class= "abilityScoreMethodsChoice">
-    <select id="abilityScoreMethod" onChange="DisplayDesc(this.value)">
-        <option value="standard">Standard</option>
-        <option value="classic">Classic</option>
-        <option value="heroic">Heroic</option>
-        <option value="dicePool">Dice pool</option>
-        <option value="purchase">Purchase</option>
-        <option value="manual">Manual entry</option>
-    </select>
-    <button onclick="ConfirmStatsMethod()">Confirm</button>
-        
-<!-- ****************************************************************************** -->
-        
-    <button onclick="LoadTestData()">Load test data</button>
-        
-<!-- ****************************************************************************** -->
-        
-        
-    </div>
-    <div id="abilityScoreMethodDesc" class="abilityScoreMethodDesc">
-        <p>Roll 4d6, discard the lowest die result, and add the three remaining results together. Record this total and repeat the process until six numbers are generated.</p>
-        <p>Assign these totals to your ability scores as you see fit.</p>
-        <p>This method is less random than Classic and tends to create characters with above-average ability scores.</p>
-    </div>
-</div> <!-- Choose stats method -->
-<div class="StatsMethod" id="DicePoolMethod">
-    <p>Dice Pool Method</p>
-        <p>Remaining dices: <span id="DPPool">6</span></p>
-        <p>Strength: <span id="0DPDisplay">3</span> <button id="DP0Down" class="DPstrDown" onclick="DPdown(0)">-</button><button id="DPstrUp" class="DPUp" onclick="DPup(0)">+</button></p>
-        <p>Dexterity: <span id="1DPDisplay">3</span> <button id="DP1Down" class="DPdexDown" onclick="DPdown(1)">-</button><button id="DPdexUp" class="DPUp" onclick="DPup(1)">+</button></p>
-        <p>Constitution: <span id="2DPDisplay">3</span> <button id="DP2Down" class="DPconDown" onclick="DPdown(2)">-</button><button id="DPconUp" class="DPUp" onclick="DPup(2)">+</button></p>
-        <p>Intelligence: <span id="3DPDisplay">3</span> <button id="DP3Down" class="DPintDown" onclick="DPdown(3)">-</button><button id="DPintUp" class="DPUp" onclick="DPup(3)">+</button></p>
-        <p>Wisdom: <span id="4DPDisplay">3</span> <button id="DP4Down" class="DPwisDown" onclick="DPdown(4)">-</button><button id="DPwisUp" class="DPUp" onclick="DPup(4)">+</button></p>
-        <p>Charisma: <span id="5DPDisplay">3</span> <button id="DP5Down" class="DPchaDown" onclick="DPdown(5)">-</button><button id="DPchaUp" class="DPUp" onclick="DPup(5)">+</button></p>
-        <p><button id="DPAccept" disabled onclick = "RollDPStats()">Accept</button></p>
-    </div> <!-- Roll stats according to the Dice Pool Method -->
-<div class="StatsMethod" id="PMEnterBudget">
-    <p>Please enter your points budget:</p>
-    <input type="number" id="PMBudgetInput" min="1" value="15">
-    <button onclick="PurchaseMethod()">Accept</button>
-</div> <!-- Determine the points budget -->
-<div class="StatsMethod" id="PurchaseMethod">
-    <p>Purchase Method</p>
-    <p>Remaining points: <span id="PMPts"></span></p>
-    <p>strength: 
-        <button id="buttonDown0" onclick="PurchaseUpdate(0,0)">-</button>
-        <span id="pStatDisplay0">10</span>
-        <button id="buttonUp0" onclick="PurchaseUpdate(0,1)">+</button>
-        (<span id="pModifierDisplay0">-</span>)
-    </p>
-        <p>Dexterity: 
-        <button id="buttonDown1" onclick="PurchaseUpdate(1,0)">-</button>
-        <span id="pStatDisplay1">10</span>
-        <button id="buttonUp1" onclick="PurchaseUpdate(1,1)">+</button>
-        (<span id="pModifierDisplay1">-</span>)
-    </p>
-       <p>Constitution: 
-        <button id="buttonDown2" onclick="PurchaseUpdate(2,0)">-</button>
-        <span id="pStatDisplay2">10</span>
-        <button id="buttonUp2" onclick="PurchaseUpdate(2,1)">+</button>
-        (<span id="pModifierDisplay2">-</span>)
-    </p>
-        <p>Intelligence: 
-        <button id="buttonDown3" onclick="PurchaseUpdate(3,0)">-</button>
-        <span id="pStatDisplay3">10</span>
-        <button id="buttonUp3" onclick="PurchaseUpdate(3,1)">+</button>
-        (<span id="pModifierDisplay3">-</span>)
-    </p>
-        <p>Wisdom: 
-        <button id="buttonDown4" onclick="PurchaseUpdate(4,0)">-</button>
-        <span id="pStatDisplay4">10</span>
-        <button id="buttonUp4" onclick="PurchaseUpdate(4,1)">+</button>
-        (<span id="pModifierDisplay4">-</span>)
-    </p>
-        <p>Charisma: 
-        <button id="buttonDown5" onclick="PurchaseUpdate(5,0)">-</button>
-        <span id="pStatDisplay5">10</span>
-        <button id="buttonUp5" onclick="PurchaseUpdate(5,1)">+</button>
-        (<span id="pModifierDisplay5">-</span>)
-    </p>
-    <button id="purchaseAccept" onclick="FinalizePurchase()">Accept</button>
-</div> <!-- Stats purchase -->
-<div class="StatsMethod" id="ManualEntryMethod">
-    Manual Entry Method
-    <p>Strength: <input type="number" id="statsManualEntry0" min="3" max="18" value="10" onchange="StatManualEntry(0, this.value)"></p>
-    <p>Dexterity: <input type="number" id="statsManualEntry1" min="3" max="18" value="10" onchange="StatManualEntry(1, this.value)"></p>
-    <p>Constitution: <input type="number" id="statsManualEntry2" min="3" max="18" value="10" onchange="StatManualEntry(2, this.value)"></p>
-    <p>Intelligence: <input type="number" id="statsManualEntry3" min="3" max="18" value="10" onchange="StatManualEntry(3, this.value)"></p>
-    <p>Wisdom: <input type="number" id="statsManualEntry4" min="3" max="18" value="10" onchange="StatManualEntry(4, this.value)"></p>
-    <p>Charisma: <input type="number" id="statsManualEntry5" min="3" max="18" value="10" onchange="StatManualEntry(5, this.value)"></p>
-    <button onclick="ConfirmManualStats()">Confirm</button>
-</div> <!-- Stats manual entry -->
-<div class="AssignStats" id="AssignStats"></div> <!-- Manually enter stats -->
-<div class="ChooseRace" id="ChooseRace">
-    <p>Choose Race</p>
-    <p><select onchange="DisplayRaceDesc(parseInt(this.value))">
-        <option value="0"></option>
-        <option value="1">Dwarf</option>
-        <option value="2">Elf</option>
-        <option value="3">Gnome</option>
-        <option value="4">Half Elf</option>
-        <option value="5">Half Orc</option>
-        <option value="6">Halfling</option>
-        <option value="7">Human</option>
-    </select></p>
-    <p id="RaceDescription">Choose a race.</p>
-    <button id="ConfirmRace" onclick="ConfirmRace()" disabled>Confirm</button>
-</div>
-<div class="ChooseClass" id="ChooseClass">
-    <p>Choose Class</p>
-    <p><select onchange="DisplayClassDesc(parseInt(this.value))">
-        <option value="0"></option>
-        <option value="1">Barbarian</option>
-        <option value="2">Bard</option>
-        <option value="3">Cleric</option>
-        <option value="4">Druid</option>
-        <option value="5">Fighter</option>
-        <option value="6">Monk</option>
-        <option value="7">Paladin</option>
-        <option value="8">Ranger</option>
-        <option value="9">Rogue</option>
-        <option value="10">Sorcerer</option>
-        <option value="11">Wizard</option>
-    </select></p>
-    <p id="ClassDescription">Choose a class.</p>
-    <button id="ConfirmClass" onclick="ConfirmClass()" disabled>Confirm</button>
-</div>
-
-    
-</div> <!-- Modal windows -->
-
-<div id="main" class="main">
-    <div class="wrapper">
-        <!-- <div class="logo"><img src="media/Path_logo.jpg" alt="Logo" style="width: 403px; height: 125ps"></div> -->
-        <div class="logo">Logo</div>
-        <div class="info">
-            <table>
+<div class="container" id="charStats">
+    <div class="subContainer">
+        <div style="width: 50%;">
+            <table style="width: 100%; heighy: 100%; border-spacing: 5px;">
                 <tr>
-                    <td colspan="3" id="charName" style="width: 30%"></td>
-                    <td colspan="2" id="charAlignment" style="width: 20%"></td>
-                    <td colspan="3" id="playerName" style="width: 40%"></td>
+                    <th class="statsLineCell" style="width: 20%;">ABILITY<br>NAME</th>
+                    <th class="statsLineCell" style="width: 20%;">ABILITY<br>SCORE</th>
+                    <th class="statsLineCell" style="width: 15%;">ABILITY<br>MODIFIER</th>
+                    <th class="statsLineCell" style="width: 15%;">TEMP<br>ADJUST</th>
+                    <th class="statsLineCell" style="width: 15%;">TEMP<br>MODIFIER</th>           
                 </tr>
                 <tr>
-                    <td colspan="3" id="charLevel" style="width: 50%"></td>
-                    <td colspan="3" id="charDeity" style="width: 25%"></td>
-                    <td colspan="2"id="charHomeland" style="width: 25%">Homeland</td>
+                    <td class="whiteOnBlack">STR<br>Strength</td>
+                    <td class="emptySquare" >
+                        <button class="statButton down" onclick="StatChange(0,false)">-</button>
+                        <span id="statDisplay0"></span>
+                        <button class="statButton up" onclick="StatChange(0,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier0"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
                 </tr>
                 <tr>
-                    <td id="charRace" style="width: 20%">Race</td>
-                    <td id="charSize" style="width: 11%">Size</td>
-                    <td id="charGender" style="width: 11%">Gender</td>
-                    <td id="charAge" style="width: 10%">Age</td>
-                    <td id="charHeight" style="width: 12%">Height</td>
-                    <td id="charWeight" style="width: 12%">Weight</td>
-                    <td id="charHair" style="width: 12%">Hair</td>
-                    <td id="charEyes" style="width: 12%">Eyes</td>
+                    <td class="whiteOnBlack">DEX<br>Dexterity</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" onclick="StatChange(1,false)">-</button>
+                        <span id="statDisplay1"></span>
+                        <button class="statButton up" onclick="StatChange(1,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier1"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">CON<br>Constitution</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" onclick="StatChange(2,false)">-</button>
+                        <span id="statDisplay2"></span>
+                        <button class="statButton up" onclick="StatChange(2,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier2"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">INT<br>Intelligence</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" onclick="StatChange(3,false)">-</button>
+                        <span id="statDisplay3"></span>
+                        <button class="statButton up" onclick="StatChange(3,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier3"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">WIS<br>Wisdom</td>
+                    <td class="emptySquare" id="statDisplay4">
+                        <button class="statButton down" onclick="StatChange(4,false)">-</button>
+                        <span id="statDisplay4"></span>
+                        <button class="statButton up" onclick="StatChange(4,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier4"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">CHA<br>Charisma</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" onclick="StatChange(5,false)">-</button>
+                        <span id="statDisplay5"></span>
+                        <button class="statButton up" onclick="StatChange(5,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier5"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
                 </tr>
             </table>
         </div>
-        <div class="speed">
-            <table width="100%">
-                <tr>
-                    <td class="statsBox" style="text-align: center">Speed<br><span style="font-size: x-small;">Land</span></td>
-                    <td colspan="2" id="baseSpeed"></td>
-                    <td colspan="3" id="armorSpeed"></td>
-                    <td rowspan="2" style="width: 20%; text-align: right; vertical-align: top; font-size: small; font-weight: 900;" class="boxedTD">Temp Modifiers</td>
+        <div style="width: 50%;">
+            <table style="width: 100%; height: 100%; border-spacing: 5px;">
+                <tr style="height: 15%;">
+                    <td class="whiteOnBlack" colspan= "2" style="width: 25%;">HP<br>Hit Points</td>
+                    <td class="emptySquare" colspan="4" style="width: 50%;"></td>
+                    <td class="emptySquare" style="width: 25%; text-align: left; vertical-align: top; font-size: x-small;">DR</td>
                 </tr>
-                <tr>
-                    <td colspan="3">
-                        <div style="border: 1px black solid; text-align: center;">
-                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
-                        </div>
-                        <span style="font-size: small; font-weight: 900;">Flying Speed</span>
-                    </td>
-                    <td>
-                            <div style="border: 1px black solid; text-align: center;">
-                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
-                        </div>
-                        <span style="font-size: small; font-weight: 900;">Swim</span>
-                    </td>
-                    <td>
-                        <div style="border: 1px black solid; text-align: center;">
-                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
-                        </div>
-                        <span style="font-size: small; font-weight: 900;">Climb</span>
-                    </td>
-                    <td>                            
-                        <div style="border: 1px black solid; text-align: center;">
-                            <span style="font-size: x-large;">&emsp;</span><span style="font-size: small;">ft&emsp;</span>
-                        </div>
-                        <span style="font-size: small; font-weight: 900;">Burrow</span></td>
+                <tr style="height: 8%;">
+                    <td colspan="7" style="vertical-align: bottom;">Wounds/Current HP</td>
                 </tr>
-            </table>
-        </div>
-        <div class="stats">
-            <div class="statsDisplay">
-                <table class="statsDisplay">
-                <tr style="font-size: 12px;">
-                    <th>Ability<br>Name</th>
-                    <th>Ability<br>score</th>
-                    <th>Ability<br>modifier</th>
-                    <th>Temp<br>Adjustment</th>
-                    <th>Temp<br>Modifier</th>
-                    <td rowspan="7" style="width: 100%; border: 1px blue solid">
-                        <table>
-                            <tr>
-                                <td colspan= "1" class="statsBox">HP</td>
-                                <td colspan= "3" class="boxedTD" id="totalHP">Total HP</td>
-                                <td colspan= "1"class="boxedTD">DR</td>
+                <tr style="height: 30%;">
+                    <td class="emptySquare" colspan="7"></td>
+                </tr>
+                <tr style="height: 8%;">
+                    <td colspan="7" style="vertical-align: bottom;">Nonlethal damage</td>
+                </tr>
+                <tr style="height: 25%;">
+                    <td class="emptySquare" colspan="7"></td>
+                </tr>
+                <tr style="height: 15%;">
+                    <td class="whiteOnBlack" colspan="2">INITIATIVE<br>Modifier</td>
+                    <td colspan="5">
+                        <table style="width: 100%; height: 100%;">
+                            <tr style="height: 90%;">
+                                <td class="emptySquare" style="width: 30%;"></td>
+                                <td style="width: 5%; text-align: center;">=</td>
+                                <td class="emptySquare" style="width: 30%;"></td>
+                                <td style="width: 5%; text-align: center;">+</td>
+                                <td class="emptySquare" style="width: 30%;"></td>
                             </tr>
-                            <tr>
-                                <td class="boxedTD" colspan= "5" style="height: 33%;">Wounds\current HP</td>
-                            </tr>
-                            <tr>
-                                <td class="statsBox" colspan= "2">Initiative</td>
-                                <td class="boxedTD">Total</td>
-                                <td class="boxedTD">Dex Mod</td>
-                                <td class="boxedTD">Misc Mod</td>
+                            <tr style="height: 10%;">
+                                <td class="legend">TOTAL</td>
+                                <td></td>
+                                <td class="legend">DEX MODIFIER</td>
+                                <td></td>
+                                <td class="legend">MISC MODIFIER</td>
                             </tr>
                         </table>
                     </td>
                 </tr>
-                <tr>
-                    <td class="statsBox">STR</td>
-                    <td id="0StatDisplay" class="boxedTD"></td>
-                    <td id="0StatMod" class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                </tr>
-                    <tr>
-                    <td class="statsBox">DEX</td>
-                    <td id="1StatDisplay" class="boxedTD"></td>
-                    <td id="1StatMod" class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                </tr>
-                    <tr>
-                    <td class="statsBox" >CON</td>
-                    <td id="2StatDisplay" class="boxedTD"></td>
-                    <td id="2StatMod" class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                </tr>
-                    <tr>
-                    <td class="statsBox">INT</td>
-                    <td id="3StatDisplay" class="boxedTD"></td>
-                    <td id="3StatMod" class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                </tr>
-                    <tr>
-                    <td class="statsBox">WIS</td>
-                    <td id="4StatDisplay" class="boxedTD"></td>
-                    <td id="4StatMod" class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                </tr>
-                    <tr>
-                    <td class="statsBox">CHA</td>
-                    <td id="5StatDisplay" class="boxedTD"></td>
-                    <td id="5StatMod" class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                    <td class="boxedTD"></td>
-                </tr>
             </table>
-            </div>
         </div>
-        <div class="skills" id="skillsDisplay"></div>
-        <div class="weapons">Weapons</div>
-        <div class="languages">Languages</div>
     </div>
-</div>
+</div> <!-- Character stats -->
 
-<div id="testDiv"></div>
-    
+
 </body>
 </html>
