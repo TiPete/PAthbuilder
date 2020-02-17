@@ -33,6 +33,16 @@
         display: flex;
         width:100%;
     }
+    div.whiteOnBlack{
+        display: block;
+        background-color: black;
+        color: white;  
+        text-align: center;
+    }
+    div.line {
+        display: block;
+    }
+    
 
     button.statButton{
         outline: none;
@@ -87,7 +97,8 @@
         border-bottom: solid black 1px;
         text-align: center;
     }
-    td { border: blue dotted 1px;}
+    
+    /* td { border: blue dotted 1px;} */
 
     
     th.statsLineCell{
@@ -525,10 +536,19 @@
 </div> <!-- Combat stats -->
 
 <div class="container" id="skills">
+    <div class="whiteOnBlack">SKILLS</div>
+    <div class="legend line">
+        <span style="width: 35%;">Skill Names</span>
+        <span style="width: 10%;">Total<br>Bonus</span>
+        <span style="width: 10%;"></span>
+        <span style="width: 10%;">Ability<br>Mod.</span>
+        <span style="width: 5%;"></span>
+        <span style="width: 15%;">Ranks</span>
+        <span style="width: 5%;"></span>
+        <span style="width: 10%;">Misc.<br>Mod.</span>
+        
+    </div>
     <table style="width: 100%;">
-        <tr>
-            <td class="whiteOnBlack" colspan="8">SKILLS</td>
-        </tr>
         <tr>
             <td class="legend" style="width: 35%;">Skill Names</td>
             <td class="legend" style="width: 10%;">Total<br>Bonus</td>
