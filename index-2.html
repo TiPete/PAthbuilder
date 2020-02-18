@@ -1,0 +1,584 @@
+<html>
+    
+<head>
+<title>Layout test</title>
+</head>
+    
+<style>
+    div{
+        display: flex;
+        margin: 2px;
+        /*border: blue 1px dotted;*/
+    }
+    div.container {
+        display: block;
+        border: black solid 2px;
+        width: 95%;
+        min-width: 725px;
+    }
+    div.containerElement {
+        width: 100%;
+        display: block;
+    }
+    div.subContainer{
+        width: 100%;
+        display: flex;
+    }
+    div.legend {
+        width: 100%;
+        display: block;
+        font-size: small;
+    }
+    div.statsLine {
+        display: flex;
+        width:100%;
+    }
+    div.whiteOnBlack{
+        display: block;
+        background-color: black;
+        color: white;  
+        text-align: center;
+    }
+    div.line {
+        display: block;
+    }
+    
+
+    button.statButton{
+        outline: none;
+        display: flex;
+        border: 0px;
+    }
+    .statButton.up {
+        float: right;
+    }
+    .statButton.down{
+        float: left;  
+    }
+
+    div.bordered{
+        border: 1px dotted blue;
+    }
+
+    button.stat{
+        height: 100%;
+        border: 0px;
+        background-color: transparent;
+        border-color: transparent;
+    }
+    button.statDown{
+        float: left;
+    }
+    button.statUp{
+        float: right;
+    }
+
+    td.whiteOnBlack{
+        background-color: black;
+        color: white;
+        text-align: center;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 1px;
+        margin-top: 1px;
+    }
+    td.emptySquare {
+        border: black 1px solid;
+        text-align: center;
+    }
+    td.legend{
+        font-size: x-small;
+        text-align: center;
+    }
+    td.sign{
+        text-align: center;
+    }
+    td.underline{
+        border-bottom: solid black 1px;
+        text-align: center;
+    }
+    
+    /* td { border: blue dotted 1px;} */
+
+    
+    th.statsLineCell{
+        font-size: small;
+        font-weight: 300; 
+    }
+    
+    input.fillIn{
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    width: 100%;
+    }
+    
+    img.logo{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>
+    
+<script>
+    class Hero {
+        constructor (){
+            // stat[score][bonus]
+            this.stats= [[10, -2], [10, 1], [10, 0], [10, 0], [10, 0], [10, 0]];
+            
+            /* Skill breakdown
+                0 = name
+                1 = related stat
+                2 = rank
+                3 = misc. mod
+                4 = editable name (true until changed)
+                5 = trained only (bool)
+                6 = Class skill (bool)
+            */
+            this.skills = [
+                ["Acrobatics", 1, 0, 0, false, false, false],
+                ["Appraise", 3, 0, 0, false, false, false],
+                ["Bluff", 5, 0, 0, false, false, false],
+                ["Climb", 0, 0, 0, false, false, false],
+                ["Craft", 3, 0, 0, true, false, false],
+                ["Craft", 3, 0, 0, true, false, false],
+                ["Craft", 3, 0, 0, true, false, false],
+                ["Diplomacy", 5, 0, 0, false, false, false],
+                ["Disable Device*", 1, 0, 0, false, true, false],
+                ["Disguise", 5, 0, 0, false, false, false],
+                ["Escape Artist", 1, 0, 0, false, false, false],
+                ["Fly", 1, 0, 0, false, false, false],
+                ["Handle Animal*", 5, 0, 0, false, true, false],
+                ["Heal", 4, 0, 0, false, false, false],
+                ["Intimidate", 5, 0, 0, false, false, false],
+                ["Knowledge(Arcana)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Dungeonneering)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Engineering)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Geography)*", 3, 0, 0, false, true, false],
+                ["Knowledge(History)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Local)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Nature)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Nobility)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Planes)*", 3, 0, 0, false, true, false],
+                ["Knowledge(Religion)*", 3, 0, 0, false, true, false],
+                ["Linguistices*", 3, 0, 0, false, true, false],
+                ["Perception", 4, 0, 0, false, false, false],
+                ["Perform", 5, 0, 0, true, false, false],
+                ["Perform", 5, 0, 0, true, false, false],
+                ["Profession*", 4, 0, 0, true, true, false],
+                ["Profession*", 4, 0, 0, true, true, false],
+                ["Ride", 1, 0, 0, false, false, false],
+                ["Spellcraft*", 3, 0, 0, false, true, false],
+                ["Stealth", 1, 0, 0, false, false, false],
+                ["Survival", 4, 0, 0, false, false, false],
+                ["Use Magic Device*", 5, 0, 0, false, true, false]];
+        }
+    }
+    
+    function UpdateCharacterInfo(value, stat){} //Title says it all
+    function StatChange(stat, upDown){
+        if (upDown && hero.stats[stat][0] < 18) {
+            hero.stats[stat][0]++;
+        }
+        if (!upDown && hero.stats[stat][0] > 3){
+            hero.stats[stat][0]--;
+        }
+        UpdateMainSheet();
+    } //Change stat value
+    
+    function UpdateMainSheet() {
+        
+        //Update Stats Display
+        for (i = 0; i < 6; i++){
+            if (hero.stats[i][0] == 3) { 
+                document.getElementById("statDownButton"+i).disabled= true; 
+            } else {
+                document.getElementById("statDownButton"+i).disabled= false;
+            }
+            if (hero.stats[i][0] == 18) { 
+                document.getElementById("statUpButton"+i).disabled= true; 
+            } else {
+                document.getElementById("statUpButton"+i).disabled= false;
+            }
+            document.getElementById("statDisplay"+i).innerHTML= hero.stats[i][0] + hero.stats[i][1];
+        }
+        
+        //Update skills section /
+        var skillsDom= "";
+        //for (i = 0; i < hero.skills.length; ) {}
+    }
+    function SkillRankChange (skill, upDown){
+        if (!upDown && hero.skills[2] > 0) { hero.skills[2]--;}
+        else { hero.skills[2]++; }
+        UpdateMainSheet();    
+    }
+</script>
+    
+
+<body>
+<script>
+    var hero = new Hero();
+
+</script> <!-- Initialization -->
+
+<div ><img class="logo" src="media/Path_logo.jpg"></div>
+<div class="container" id="charInfo">
+    <div class="containerElement" id="info"> 
+        <div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charName" onchange="UpdateCharacterInfo(this.value, 0)">
+                <div class="legend">Character Name</div>
+            </div>
+            <div class="containerElement" style="width:20%">Character Alignment</div>
+            <div class="containerElement" style="width:45%">
+                <input class="fillIn" id="PlayerName" onchange="UpdateCharacterInfo(this.value, 1)">
+                <div class="legend">Player Name</div>
+            </div>
+        </div>
+        <div>
+            <div class="containerElement" style="width: 40%;">
+                <input class="fillIn" value="Barbarian(1)" id="charLeveL" disabled>
+                <div class="legend">Level</div>
+            </div>
+            <div class="containerElement" style="width: 30%; ">
+                <input class="fillIn" id="charDeity" onchange="UpdateCharacterInfo(this.value, 2)">
+                <div class="legend">Deity</div>
+            </div>
+            <div class="containerElement" style="width: 30%">
+                <input class="fillIn" id="charHomeland" onchange="UpdateCharacterInfo(this.value, 3)">
+                <div class="legend">Homeland</div>
+            </div>
+        </div>
+        <div>
+            <div class="containerElement" style="width:23%">
+                <input class="fillIn" value="Dwarf" id="charRace" disabled>
+                <div class="legend">Level</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" value="Medium" id="charSize" disabled>
+                <div class="legend">Size</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charGender" onchange="UpdateCharacterInfo(this.value, 4)">
+                <div class="legend">Gender</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charAge" onchange="UpdateCharacterInfo(this.value, 5)">
+                <div class="legend">Age</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charHeight" onchange="UpdateCharacterInfo(this.value, 6)">
+                <div class="legend">Height</div>
+            </div>
+            <div class="containerElement" style="width:11%">
+                <input class="fillIn" id="charWeight" onchange="UpdateCharacterInfo(this.value, 7)">
+                <div class="legend">Weight</div>
+            </div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charHair" onchange="UpdateCharacterInfo(this.value, 9)">
+                <div class="legend">Hair</div>
+            </div>
+            <div class="containerElement" style="width:35%">
+                <input class="fillIn" id="charEyes" onchange="UpdateCharacterInfo(this.value, 10)">
+                <div class="legend">Eyes</div>
+            </div>
+        </div>
+    </div> 
+</div> <!-- Character information -->
+
+<div class="container" id="charStats">
+    <div class="subContainer">
+        <div style="width: 50%;">
+            <table style="width: 100%; heighy: 100%; border-spacing: 5px;">
+                <tr>
+                    <th class="statsLineCell" style="width: 20%;">ABILITY<br>NAME</th>
+                    <th class="statsLineCell" style="width: 20%;">ABILITY<br>SCORE</th>
+                    <th class="statsLineCell" style="width: 15%;">ABILITY<br>MODIFIER</th>
+                    <th class="statsLineCell" style="width: 15%;">TEMP<br>ADJUST</th>
+                    <th class="statsLineCell" style="width: 15%;">TEMP<br>MODIFIER</th>           
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">STR<br>Strength</td>
+                    <td class="emptySquare" >
+                        <button class="statButton down" id="statDownButton0" onclick="StatChange(0,false)">-</button>
+                        <span id="statDisplay0"></span>
+                        <button class="statButton up" id="statUpButton0" onclick="StatChange(0,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier0"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">DEX<br>Dexterity</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" id="statDownButton1" onclick="StatChange(1,false)">-</button>
+                        <span id="statDisplay1"></span>
+                        <button class="statButton up" id="statUpButton1" onclick="StatChange(1,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier1"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">CON<br>Constitution</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" id="statDownButton2" onclick="StatChange(2,false)">-</button>
+                        <span id="statDisplay2"></span>
+                        <button class="statButton up" id="statUpButton2" onclick="StatChange(2,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier2"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">INT<br>Intelligence</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" id="statDownButton3" onclick="StatChange(3,false)">-</button>
+                        <span id="statDisplay3"></span>
+                        <button class="statButton up" id="statUpButton3" onclick="StatChange(3,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier3"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">WIS<br>Wisdom</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" id="statDownButton4" onclick="StatChange(4,false)">-</button>
+                        <span id="statDisplay4"></span>
+                        <button class="statButton up" id="statUpButton4" onclick="StatChange(4,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier4"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+                <tr>
+                    <td class="whiteOnBlack">CHA<br>Charisma</td>
+                    <td class="emptySquare">
+                        <button class="statButton down" id="statDownButton5" onclick="StatChange(5,false)">-</button>
+                        <span id="statDisplay5"></span>
+                        <button class="statButton up" id="statUpButton5" onclick="StatChange(5,true)">+</button>
+                    </td>
+                    <td class="emptySquare" id="statModifier5"></td>
+                    <td class="emptySquare"></td>
+                    <td class="emptySquare"></td>
+                </tr>
+            </table>
+        </div>
+        <div style="width: 50%;">
+            <table style="width: 100%; height: 100%; border-spacing: 5px;">
+                <tr style="height: 15%;">
+                    <td class="whiteOnBlack" colspan= "2" style="width: 25%;">HP<br>Hit Points</td>
+                    <td class="emptySquare" colspan="4" style="width: 50%;"></td>
+                    <td class="emptySquare" style="width: 25%; text-align: left; vertical-align: top; font-size: x-small;">DR</td>
+                </tr>
+                <tr style="height: 8%;">
+                    <td colspan="7" style="vertical-align: bottom;">Wounds/Current HP</td>
+                </tr>
+                <tr style="height: 30%;">
+                    <td class="emptySquare" colspan="7"></td>
+                </tr>
+                <tr style="height: 8%;">
+                    <td colspan="7" style="vertical-align: bottom;">Nonlethal damage</td>
+                </tr>
+                <tr style="height: 25%;">
+                    <td class="emptySquare" colspan="7"></td>
+                </tr>
+                <tr style="height: 15%;">              
+                    <td colspan="7">
+                    <table style="width: 100%; height: 100%;">
+                        <tr style="height: 90%;">
+                            <td class="whiteOnBlack" colspan="2">INITIATIVE<br>Modifier</td>
+                            <td class="emptySquare" style="width: 30%;"></td>
+                            <td style="width: 5%; text-align: center;">=</td>
+                            <td class="emptySquare" style="width: 30%;"></td>
+                            <td style="width: 5%; text-align: center;">+</td>
+                            <td class="emptySquare" style="width: 30%;"></td>
+                        </tr>
+                        <tr style="height: 10%;">
+                            <td colspan="2"></td>
+                            <td class="legend">TOTAL</td>
+                            <td></td>
+                            <td class="legend">DEX<br>MODIFIER</td>
+                            <td></td>
+                            <td class="legend">MISC<br>MODIFIER</td>
+                        </tr>
+                    </table>
+                </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div> <!-- Character stats -->
+
+<div class="container" id="combatStats">
+    <table style="width: 100%">
+        <tr>
+            <td class="whiteOnBlack" rowspan="2" style="width: 12%">AC<br>Armor Class</td>
+            <td class="emptySquare" style="width: 8%"></td>
+            <td class="sign" style="width: 8%;"> = 10 + </td>
+            <td class="emptySquare" style="width: 8%"></td><td class="sign"> + </td>
+            <td class="emptySquare" style="width: 8%"></td><td class="sign"> + </td>
+            <td class="emptySquare" style="width: 8%"></td><td class="sign"> + </td>
+            <td class="emptySquare" style="width: 8%"></td><td class="sign"> + </td>
+            <td class="emptySquare" style="width: 8%"></td><td class="sign"> + </td>
+            <td class="emptySquare" style="width: 8%"></td><td class="sign"> + </td>
+            <td class="emptySquare" style="width: 8%"></td>
+        </tr>
+        <tr>
+            <td class="legend">TOTAL</td>
+            <td></td><td class="legend">ARMOR<br>BONUS</td>
+            <td></td><td class="legend">SHIELD<br>BONUS</td>
+            <td></td><td class="legend">DEX<br>MODIFIER</td>
+            <td></td><td class="legend">SIZE<br>MODIFIER</td>
+            <td></td><td class="legend">NATURAL<br>ARMOR</td>
+            <td></td><td class="legend">DEFLECTION<br>MODIFIER</td>
+            <td></td><td class="legend">MISC<br>MODIFIER</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width: 100%;">
+        <tr>
+            <td class="legend" style="width: 15%">SAVING THROWS</td>
+            <td class="legend" style="width: 8%">TOTAL</td><td style="width: 3%"></td>
+            <td class="legend" style="width: 8%">BASE<br>SAVE</td><td style="width: 3%"></td>
+            <td class="legend" style="width: 8%">ABILITY<br>MODIFIER</td><td style="width: 3%"></td>
+            <td class="legend" style="width: 8%">MAGIC<br>MODIFIER</td><td style="width: 3%"></td>
+            <td class="legend" style="width: 8%">MISC<br>MODIFIER</td><td style="width: 3%"></td>
+            <td class="legend" style="width: 8%">TEMPORARY<br>MODIFIER</td>
+            <td class="emptySquare" rowspan="4" style="width: 19%">MODIFIERS</td>
+        </tr>
+        <tr>
+            <td class="whiteOnBlack">FORTITUDE<br>(Constitution)</td>
+            <td class="emptySquare"></td><td class="sign">=</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td>
+        </tr>
+        <tr>
+            <td class="whiteOnBlack">REFLEX<br>(Dexterity)</td>
+            <td class="emptySquare"></td><td class="sign">=</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td>
+        </tr>
+        <tr>
+            <td class="whiteOnBlack">WILL<br>(Wisdom)</td>
+            <td class="emptySquare"></td><td class="sign">=</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td><td class="sign">+</td>
+            <td class="emptySquare"></td>
+        </tr>
+    </table>
+    <br>
+    <table style="width: 100%;">
+        <tr>
+            <td  style="width: 5%"></td>
+            <td class="whiteOnBlack" style="width: 35%">BASE ATTACK BONUS</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td style="width: 5%"></td>
+            <td class="whiteOnBlack" style="width: 25%">SPELL RESISTANCE</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td  style="width: 5%"></td>
+        </tr>
+    </table>
+    <br>
+    <table style="width: 100%">
+        <tr>
+            <td class="whiteOnBlack" style="width: 25%">CMB</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">=</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">+</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">+</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="emptySquare" rowspan="2" style="width: 20%">Modifier</td>
+        </tr>
+        <tr>
+            <td></td><td class="legend">TOTAL</td>
+            <td></td><td class="legend">BASE ATTACK<br>BONUS</td>
+            <td></td><td class="legend">STRENGTH<br>MODIFIER</td>
+            <td></td><td class="legend">SIZE<br>MODIFIER</td>
+        </tr>
+    </table>
+    <br>
+    <table>
+        <tr>
+            <td class="whiteOnBlack" style="width: 25%">CMD</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">=</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">+</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">+</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">+</td>
+            <td class="emptySquare" style="width: 10%"></td>
+            <td class="sign" style="width: 5%">+ 10</td>
+        </tr>
+        <tr>
+            <td></td><td class="legend">TOTAL</td>
+            <td></td><td class="legend">BASE ATTACK<br>BONUS</td>
+            <td></td><td class="legend">STRENGTH<br>MODIFIER</td>
+            <td></td><td class="legend">DEXTERITY<br>MODIFIER</td>
+            <td></td><td class="legend">SIZE<br>MODIFIER</td>
+        </tr>
+    </table>
+
+</div> <!-- Combat stats -->
+
+<div class="container" id="skills">
+    <div class="whiteOnBlack">SKILLS</div>
+    <div class="legend line">
+        <span style="width: 35%;">Skill Names</span>
+        <span style="width: 10%;">Total<br>Bonus</span>
+        <span style="width: 10%;"></span>
+        <span style="width: 10%;">Ability<br>Mod.</span>
+        <span style="width: 5%;"></span>
+        <span style="width: 15%;">Ranks</span>
+        <span style="width: 5%;"></span>
+        <span style="width: 10%;">Misc.<br>Mod.</span>
+        
+    </div>
+    <table style="width: 100%;">
+        <tr>
+            <td class="legend" style="width: 35%;">Skill Names</td>
+            <td class="legend" style="width: 10%;">Total<br>Bonus</td>
+            <td style="width: 10%;"></td>
+            <td class="legend" style="width: 10%;">Ability<br>Mod.</td>
+            <td style="width: 5%;"></td>
+            <td class="legend" style="width: 15%;">Ranks</td>
+            <td style="width: 5%;"></td>
+            <td class="legend" style="width: 10%;">Misc.<br>Mod.</td>
+        </tr>
+        <tr>
+            <td id="skillName0">Acrobatics</td>
+            <td id="skillTotal0" class="underline"></td>
+            <td id="skillAttribute0" Style="text-align: center;">=DEX</td>
+            <td id="skillModifier0" class="underline"></td>
+            <td class="legend">+</td>
+            <td class="underline">
+                <button class="statButton down" onclick="SkillRankChange(0,false)">-</button>
+                <span id="skillRankDisplay0"></span>
+                <button class="statButton up" onclick="SkillRankChange(0,true)">+</button>
+            </td>
+            <td class="legend">+</td>
+            <td class="underline"></td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    UpdateMainSheet();
+</script>
+    
+</body>
+</html>
