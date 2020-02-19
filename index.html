@@ -3,29 +3,13 @@
 
 <head>
     <meta charset='UTF-8'/>
-    <title>Responsive Design</title>
+    <title>Pathbuilder v3.0</title>
     <link rel='stylesheet' href='styles.css'/>
 </head>
   
 <style>
     
-    .infoElement { border: blue dotted 1px; }
-    
-    .charName { grid-area: charName; }
-    .charAlign { grid-area: charAlign; }
-    .playName { grid-area: playName; }
-    .charLevel { grid-area: charLevel; }
-    .charDeity { grid-area: charDeity; }
-    .charHome { grid-area: charHome; }
-    .charRace { grid-area: charRace; }
-    .charSize { grid-area: charSize; }
-    .charGend { grid-area: charGend; }
-    .charAge { grid-area: charAge; }
-    .charHeight { grid-area: charHeight; }
-    .charWeight { grid-area: charWeight; }
-    .charHair { grid-area: charHair; }
-    .charEyes { grid-area: charEyes; }
-    
+    /*div { border: blue dotted 1px; }
     
     /* Remettre a 400px (500?) */
     @media only screen and (max-width: 600px){
@@ -58,27 +42,93 @@
                 'charRace charSize charGend charAge charHeight charWeight charHair charEyes';
         }
     }
+    
+    .blackOnWhite {
+        background-color: 
+        black; color: white; 
+    }
+    .blackOnWhite > .title { 
+        font-weight: 400; 
+        font-size: normal;
+    }
+    .blackOnWhite > .subTitle { 
+        font-weight: 200; 
+        font-size: small; 
+    }
+    
+    .box {
+        text-align: center;
+        font-size: large;
+        border: black solid 1px;
+        text-align: center;
+        align-content: center;
+    }
+    .legend {
+        font-weight: 200; 
+        font-size: small; 
+    }
 
 </style>
   
 <body>
-<div class="min-container">
+<div class="main-container">
+    
     <div class="info-container">
-        <div class="infoElement charName">Character name</div>
-        <div class="infoElement charAlign">Character alignment</div>
-        <div class="infoElement playName">Player name</div>
-        <div class="infoElement charLevel">Character level</div>
-        <div class="infoElement charDeity">Character deity</div>
-        <div class="infoElement charHome">Homeland</div>
-        <div class="infoElement charRace">Race</div>
-        <div class="infoElement charSize">Size</div>
-        <div class="infoElement charGend">Gender</div>
-        <div class="infoElement charAge">Age</div>
-        <div class="infoElement charHeight">Height</div>
-        <div class="infoElement charWeight">Weight</div>
-        <div class="infoElement charHair">Hair</div>
-        <div class="infoElement charEyes">Eyes</div>
+        <style> 
+            .charName { grid-area: charName; }
+            .charAlign { grid-area: charAlign; }
+            .playName { grid-area: playName; }
+            .charLevel { grid-area: charLevel; }
+            .charDeity { grid-area: charDeity; }
+            .charHome { grid-area: charHome; }
+            .charRace { grid-area: charRace; }
+            .charSize { grid-area: charSize; }
+            .charGend { grid-area: charGend; }
+            .charAge { grid-area: charAge; }
+            .charHeight { grid-area: charHeight; }
+            .charWeight { grid-area: charWeight; }
+            .charHair { grid-area: charHair; }
+            .charEyes { grid-area: charEyes; }
+        </style> <!-- info-container elements -->
+        <div class="charName">Character name</div>
+        <div class="icharAlign">Character alignment</div>
+        <div class="playName">Player name</div>
+        <div class="charLevel">Character level</div>
+        <div class="charDeity">Character deity</div>
+        <div class="charHome">Homeland</div>
+        <div class="charRace">Race</div>
+        <div class="charSize">Size</div>
+        <div class="icharGend">Gender</div>
+        <div class="charAge">Age</div>
+        <div class="charHeight">Height</div>
+        <div class="charWeight">Weight</div>
+        <div class="charHair">Hair</div>
+        <div class="charEyes">Eyes</div>
     </div>
+    
+    <div class="speed-container" >
+        <style>
+            .baseSpeedTitle { grid-area: baseSpeedTitle; }
+            .baseBaseSpeed { grid-area: baseBaseSpeed; }
+            /baseSpeedLegend {grid-area: baseSpeedLegend; }
+        </style>
+        <div style="display: grid; grid-template-areas: 'baseSpeedTitle baseBaseSpeed' 'baseSpeedTitle baseBaseSpeed'; grid-gap: 15px;">
+        <div id="baseSpeedTitle" class="blackOnWhite box">
+                <span class="title">Speed</span><br><span class="subTitle">Land</span>
+            </div> 
+        <div id="baseBaseSpeed" style="display: block;">
+                <div class="box">
+                    <span id="baseSpeedFt" style="font-size: x-large;">30</span>
+                    <span style="font-size: small;">Ft.</span>
+                    <span id="baseSpeedSq" style="font-size: x-large;">5</span>
+                    <span style="font-size: small;">Sq.</span>
+                </div>
+            <div id="baseSpeedLegend" class="legend" style="text-align: center;">Base speed</div>
+                  
+        </div>
+         
+            </div>
+    </div><!-- speed-container element -->
     
 </div>
 </body>
