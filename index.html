@@ -66,6 +66,8 @@
     .legend {
         font-weight: 200; 
         font-size: small; 
+        text-align: center;
+        vertical-align: bottom;
     }
 
 </style>
@@ -174,10 +176,20 @@
     
     <div class="stats-container">
         <!-- ------------------------------------------------------------- -->
-        <div class="stat-container">
+        <div class="stat-container" style="width: 50%;">
+            <style>
+            </style>
+            <div class="legend" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 5px; grid-auto-flow: row;">
+                <div class="legend">ABILITY NAME</div> <div class="legend">ABILITY SCORE</div> 
+                <div class="legend">ABILITY<br>MODIFIER</div> <div class="legend">TEMP<br>ADJUSTMENT</div> 
+                <div class="legend">TEMP<br>MODIFIER</div>
+                <div class="blackOnWhite"><span class="title">STR</span><br><span class="subTitle">Strength</span></div>
+                
+                
+            </div>
         </div>
         <!-- ------------------------------------------------------------- -->
-        <div class="hp-container"></div>
+        <div class="hp-container" style="width: 50%;"></div>
     </div>
     
 </div><!-- Main container -->
