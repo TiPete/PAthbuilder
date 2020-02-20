@@ -9,7 +9,7 @@
   
 <style>
     
-    /*div { border: blue dotted 1px; }
+    /*div { border: blue dotted 1px; width = 100%; }
     
     /* Remettre a 400px (500?) */
     @media only screen and (max-width: 600px){
@@ -72,7 +72,7 @@
   
 <body>
 <div class="main-container">
-    
+
     <div class="info-container" style="display: none;">
         <style> 
             .charName { grid-area: charName; }
@@ -105,31 +105,82 @@
         <div class="charHair">Hair</div>
         <div class="charEyes">Eyes</div>
     </div>
-    
-    <div class="landSpeed-container" >
+        
+    <div class="speed-container" style="display: none;" >
         <style>
-            .baseSpeedTitle { grid-row-start: 1; grid-row-end: 2; }
-            .baseBaseSpeed { grid-column-start: 2; }
-            .baseSpeedLegend { grid-column-start: 2; }
+            #baseSpeedTitle { grid-column: 1; }
+            #baseBaseSpeed { grid-column: 2 / span 2; }
+            #withArmorSpeed { grid-column: 4 / span 2; }
+            #speedTempMod { grid-column: 6 / span 2; grid-row: 1 / span 2;}
+            #flySpeed { grid-column: 1 / span 2; }
         </style>
-        <div style="display: grid; grid-template-columns: auto auto; grid-gap: 15px;">
-        <div id="baseSpeedTitle" class="blackOnWhite box">
+        <div style="display: grid; grid-template-columns: auto fr fr fr fr fr fr; grid-gap: 5px;">
+            <div id="baseSpeedTitle" class="blackOnWhite box">
                 <span class="title">Speed</span><br><span class="subTitle">Land</span>
             </div> 
-        <div id="baseBaseSpeed" style="display: block;">
+            <div id="baseBaseSpeed">
                 <div class="box">
                     <span id="baseSpeedFt" style="font-size: x-large;">30</span>
-                    <span style="font-size: small;">Ft.</span>
+                    <span style="font-size: small;">Ft.&nbsp;</span>
                     <span id="baseSpeedSq" style="font-size: x-large;">5</span>
                     <span style="font-size: small;">Sq.</span>
                 </div>
-            <div id="baseSpeedLegend" class="legend" style="text-align: center;">Base speed</div>
-            <div id="spacer"></div>      
-        </div>
-         
+                <div id="baseSpeedLegend" class="legend" style="text-align: center;">Base speed</div>
             </div>
-    </div><!-- landSpeed-container element -->
-    
+            <div id="withArmorSpeed">
+                <div class="box">
+                        <span id="armorSpeedFt" style="font-size: x-large;">30</span>
+                        <span style="font-size: small;">Ft.&nbsp;</span>
+                        <span id="armorSpeedSq" style="font-size: x-large;">5</span>
+                        <span style="font-size: small;">Sq.</span>
+                </div>
+                <div class="legend" style="text-align: center;">With Armor</div>
+            </div>
+            <div id="speedTempMod" class="box" style="font-size: small; text-align: left;">Temp Modifier</div>
+            <div id="flySpeed">
+                <div class="box">
+                    <span id="flySpeedFt" style="font-size: x-large;"></span>
+                    <span style="font-size: small;">Ft.&nbsp;</span>
+                    <span id="maneuvrabilty" style="font-size: x-large;"></span>
+                    <span style="font-size: small;">Sq.</span>
+                </div>
+                <div class="legend" style="text-align: center;">Fly&nbsp;Maneuverability</div>
+            </div>
+            <div id="swimSpeed">
+                <div class="box">
+                    <span id="swimSpeedFt" style="font-size: x-large;"></span>
+                    <span style="font-size: small;">Ft.</span>
+                </div>
+                <div class="legend" style="text-align: center;">Swim speed</div>
 </div>
+            <div id="climbSpeed">
+                <div class="box">
+                        <span id="climbSpeedFt" style="font-size: x-large;"></span>
+                        <span style="font-size: small;">Ft.</span>
+                </div>
+                <div class="legend" style="text-align: center;">Climb speed</div>
+</div>
+            <div id="burrowSpeed">
+                <div class="box">
+                        <span id="burrowSpeedFt" style="font-size: x-large;"></span>
+                        <span style="font-size: small;">Ft.</span>
+                </div>
+                <div class="legend" style="text-align: center;">Burrow speed</div>
+            </div>
+        </div>
+
+         
+    </div>
+    
+    <div class="stats-container">
+        <!-- ------------------------------------------------------------- -->
+        <div class="stat-container">
+        </div>
+        <!-- ------------------------------------------------------------- -->
+        <div class="hp-container"></div>
+    </div>
+    
+</div><!-- Main container -->
+    
 </body>
 </html>
