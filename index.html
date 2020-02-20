@@ -73,7 +73,7 @@
 <body>
 <div class="main-container">
     
-    <div class="info-container">
+    <div class="info-container" style="display: none;">
         <style> 
             .charName { grid-area: charName; }
             .charAlign { grid-area: charAlign; }
@@ -106,13 +106,13 @@
         <div class="charEyes">Eyes</div>
     </div>
     
-    <div class="speed-container" >
+    <div class="landSpeed-container" >
         <style>
-            .baseSpeedTitle { grid-area: baseSpeedTitle; }
-            .baseBaseSpeed { grid-area: baseBaseSpeed; }
-            /baseSpeedLegend {grid-area: baseSpeedLegend; }
+            .baseSpeedTitle { grid-row-start: 1; grid-row-end: 2; }
+            .baseBaseSpeed { grid-column-start: 2; }
+            .baseSpeedLegend { grid-column-start: 2; }
         </style>
-        <div style="display: grid; grid-template-areas: 'baseSpeedTitle baseBaseSpeed' 'baseSpeedTitle baseBaseSpeed'; grid-gap: 15px;">
+        <div style="display: grid; grid-template-columns: auto auto; grid-gap: 15px;">
         <div id="baseSpeedTitle" class="blackOnWhite box">
                 <span class="title">Speed</span><br><span class="subTitle">Land</span>
             </div> 
@@ -124,11 +124,11 @@
                     <span style="font-size: small;">Sq.</span>
                 </div>
             <div id="baseSpeedLegend" class="legend" style="text-align: center;">Base speed</div>
-                  
+            <div id="spacer"></div>      
         </div>
          
             </div>
-    </div><!-- speed-container element -->
+    </div><!-- landSpeed-container element -->
     
 </div>
 </body>
