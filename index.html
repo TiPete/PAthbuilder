@@ -44,8 +44,8 @@
     }
     
     .blackOnWhite {
-        background-color: 
-        black; color: white; 
+        background-color: black; color: white; 
+        border: black solid 1px;
     }
     .blackOnWhite > .title { 
         font-weight: 400; 
@@ -57,21 +57,44 @@
     }
     
     .box {
-        text-align: center;
+        display:flex;
+        border: solid black 1px;
         font-size: large;
-        border: black solid 1px;
-        text-align: center;
-        align-content: center;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%;
     }
+
     .legend {
         font-weight: 200; 
         font-size: small; 
         text-align: center;
         vertical-align: bottom;
     }
+    
+    button.leftButton {
+        background: transparent;
+        border: none;
+        border: none;
+        float: left;
+    }
+        button.rightButton {
+        background: transparent;
+        border: none;
+        border: none;
+        float: right;
+    }
 
 </style>
-  
+
+<script>
+
+function UpdateStat(upDown, stat) {} //Update a stat. false=down, true=up    
+
+</script>
+    
+    
 <body>
 <div class="main-container">
 
@@ -169,27 +192,108 @@
                 </div>
                 <div class="legend" style="text-align: center;">Burrow speed</div>
             </div>
-        </div>
-
-         
+        </div>  
     </div>
     
-    <div class="stats-container">
-        <!-- ------------------------------------------------------------- -->
-        <div class="stat-container" style="width: 50%;">
-            <style>
-            </style>
-            <div class="legend" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 5px; grid-auto-flow: row;">
-                <div class="legend">ABILITY NAME</div> <div class="legend">ABILITY SCORE</div> 
-                <div class="legend">ABILITY<br>MODIFIER</div> <div class="legend">TEMP<br>ADJUSTMENT</div> 
-                <div class="legend">TEMP<br>MODIFIER</div>
-                <div class="blackOnWhite"><span class="title">STR</span><br><span class="subTitle">Strength</span></div>
+    <div class="stats-container" style="display: inline-flex;">
+        <div class="stat-container" style="width: 50%; height: 100%; ">
+            <div class="legend" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 5px; grid-auto-flow: row;  padding: 2px;">
                 
+                <!-- Legend -->
+                <div class="legend">ABILITY NAME</div> <div class="legend">ABILITY SCORE</div> 
+                <div class="legend">ABILITY<br>MODIFIER</div> <div class="legend">TEMP<br>ADJUST.</div> 
+                <div class="legend">TEMP<br>MODIFIER</div>
+                
+                <!-- Strength -->
+                <div class="blackOnWhite"><span class="tite">STR</span><br><span class="subTitle">Strength</span></div>
+                <div class="box" id="statsDisplay0">
+                    <button class="leftButton" onclick="UpdateStat(false, 0)">-</button>
+                    <span id="statsDisplay0">10</span>
+                    <button class="rightButton" onclick="UpdateStat(true, 0)">+</button>
+                </div>
+                <div class="box" id="modifierDisplay0"></div>
+                <div class="box"></div> <div class="box"></div>
+                
+                <!-- Dexterity -->
+                <div class="blackOnWhite"><span class="tite">DEX</span><br><span class="subTitle">Dexterity</span></div>
+                <div class="box" id="statsDisplay1">
+                    <button class="leftButton" onclick="UpdateStat(false, 1)">-</button>
+                    <span id="statsDisplay1">10</span>
+                    <button class="rightButton" onclick="UpdateStat(true, 1)">+</button>
+                </div>
+                <div class="box" id="modifierDisplay1"></div>
+                <div class="box"></div> <div class="box"></div>
+                
+                <!-- Constitution -->
+                <div class="blackOnWhite"><span class="tite">CON</span><br><span class="subTitle">Constitution</span></div>
+                <div class="box" id="statsDisplay2">
+                    <button class="leftButton" onclick="UpdateStat(false, 2)">-</button>
+                    <span id="statsDisplay2">10</span>
+                    <button class="rightButton" onclick="UpdateStat(true, 2)">+</button>
+                </div>
+                <div class="box" id="modifierDisplay2"></div>
+                <div class="box"></div> <div class="box"></div>
+                
+                <!-- Intelligence -->
+                <div class="blackOnWhite"><span class="tite">INT</span><br><span class="subTitle">Intelligence</span></div>
+                <div class="box" id="statsDisplay3">
+                    <button class="leftButton" onclick="UpdateStat(false, 3)">-</button>
+                    <span id="statsDisplay3">10</span>
+                    <button class="rightButton" onclick="UpdateStat(true, 3)">+</button>
+                </div>
+                <div class="box" id="modifierDisplay3"></div>
+                <div class="box"></div> <div class="box"></div>
+                
+                <!-- Willpower -->
+                <div class="blackOnWhite"><span class="tite">Will</span><br><span class="subTitle">Willpower</span></div>
+                <div class="box" id="statsDisplay4">
+                    <button class="leftButton" onclick="UpdateStat(false, 4)">-</button>
+                    <span id="statsDisplay4">10</span>
+                    <button class="rightButton" onclick="UpdateStat(true, 4)">+</button>
+                </div>
+                <div class="box" id="modifierDisplay4"></div>
+                <div class="box"></div> <div class="box"></div>
+                
+                <!-- Charisma -->
+                <div class="blackOnWhite"><span class="tite">CHA</span><br><span class="subTitle">Charisma</span></div>
+                <div class="box" id="statsDisplay5">
+                    <button class="leftButton" onclick="UpdateStat(false, 5)">-</button>
+                    <span id="statsDisplay5">10</span>
+                    <button class="rightButton" onclick="UpdateStat(true, 5)">+</button>
+                </div>
+                <div class="box" id="modifierDisplay3"></div>
+                <div class="box"></div> <div class="box"></div>
                 
             </div>
+        </div> <!-- Stats diplay -->
+        
+        <div class="hp-container" style="width: 50%; height: 100%;  padding: 2px;"> 
+            <div class="legend" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 5px; grid-auto-flow: row;"> 
+            <style>
+                #HPTitle { grid-column: 1; }
+                #HPTotal { grid-column: 2 / span 2; }
+                #HPDR { grid-column: 4 / span 2; }
+                #HPWounds { grid-row: 2 / span 3; grid-column: 1 / span 5; }
+                #HPNonLethal { grid-row: 5; grid-column: 1 / span 5; }
+                #HPInitBox { grid-column: 1 / span 5; }
+            </style>
+            <div class="blackOnWhite" id="HPTitle">
+                <span class="tite">HP</span><br><span class="subTitle">Hit Points</span>
+            </div>
+            <div class="box" id="HPTotal">Total</div>
+            <div class="box" id="HPDR">DR</div>
+            <div class="box" id="HPWounds">Wounds/currentHP</div>
+            <div class="box" id="HPNonLethal">Non Lethal Damage</div>
+            <div class="" id="HPInitBox" style="display: grid; grid-template-columns: 40% 5% 15% 5% 15% 5% 15%; grid-auto-flow: row;">
+                <div class="blackOnWhite">
+                    <span class="title">INITIATIVE</span><br><span class="subTitle">Modifier</span></div>
+                <div style="display: flex; vertical-align: middle; margin: auto;">=</div><div class="box" id="InitTotal"></div>
+                <div>+</div><div class="box" id="InitDexModifier"></div>
+                <div>+</div><div class="box" id="InitMiscModifier"></div>
+            </div>
         </div>
-        <!-- ------------------------------------------------------------- -->
-        <div class="hp-container" style="width: 50%;"></div>
+    </div>
+    
     </div>
     
 </div><!-- Main container -->
