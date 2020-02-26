@@ -6,28 +6,10 @@
     <title>Pathbuilder v3.0</title>
     <link rel='stylesheet' href='styles.css'/>
 </head>
+      
+<style>
+    
 
-<style>
-    
-    /* --- Main container ---*/
-    .info  { grid-area: info; } .speed { grid-area: speed; } .stats { grid-area: stats; } 
-    .combatStats { grid-area: combatStats; } .weapons { grid-area: weapons; } 
-    .languages { grid-area: languages; } .skills { grid-area: skills; } .ACItems { grid-area: ACItems;}
-    .gear { grid-area: gear;} .weight { grid-area: weight;} .money { grid-area: money;}
-    .feats { grid-area: feats;} .specialAbilities { grid-area: specialAbilities;}
-    .experiencePoints { grid-area: experiencePoints;} .spells { grid-area: spells;}
-    
-    /* --- Info container --- */
-    .charName { grid-area: charName; } .align { grid-area: align; } .player { grid-area: player; }
-    .charLevel { grid-area: charLevel; } .deity { grid-area: deity; } .homeland { grid-area: homeland; }
-    .race { grid-area: race; } .size { grid-area: size; } .gender { grid-area: gender; }
-    .age { grid-area: age; } .height { grid-area: height; } .hair { grid-area: hair; } 
-    .eyes { grid-area: eyes; }
-    
-</style>    
-    
-<style>
-    
 
 
     /* Remettre a 400px (500?) */
@@ -36,50 +18,46 @@
             display: block;
         }
         .info {
-            display: grid;
-            grid-template-areas: 
-                'charName align' 'player player' 'charLevel charLevel' 'deity deity'
-                'homeland homeland' 'race size' 'gender age' 'height weight' 'hair eyes';
+            display: block;
         }
+        .speed {
+            display: block;
+        }
+        
+        .main-container { display: block; }
+        .subMain > div { margin: 5px; }
+        
         
     }
     @media only screen and (min-width: 501px) and (max-width: 960px) {
         .main-container {
             display: grid;
             grid-template-areas: 
-            'info info info' 'stats stats speed' 'stats stats skills' 'combatStats combatStats skills'
-            'weapons  weapons skills' 'weapons weapons languages' 'ACItems ACItems ACItems'
-            'feats feats spells' 'specialAbilities specialAbilities spells' 'gear gear spells'
-            'weight  weight spells' 'money money spells' 'money money spells'            'experiencePoints experiencePoints spells';
+            'info info info' 'stats stats speed' 'stats stats skills' 'combatStats combatStats skills' 'weapons  weapons skills' 'weapons weapons languages' 'ACItems ACItems ACItems' 'feats feats spells' 'specialAbilities specialAbilities spells' 'gear gear spells' 'weight  weight spells' 'money money spells' 'money money spells' 'experiencePoints experiencePoints spells';
             
         }
         .info {
             display: grid;
             grid-template-areas: 
-                'charName charName charName align align' 
-                'player player player player player' 
-                'charLevel charLevel charLevel charLevel charLevel'
-                'deity deity deity homeland homeland'
-                'race race size gender age'
-                'height height weight hair eyes';
+                'charName charName charName align align' 'player player player player player' 'charLevel charLevel charLevel charLevel charLevel' 'deity deity deity homeland homeland' 'race race size gender age' 'height height weight hair eyes';
+        }
+        .speed {
+            display: grid;
+            grid-template-areas: 
+                'speedTitle baseSpeed baseSpeed withArmorSpeed withArmorSpeed tempModifSpeed' 
+                'flySpeed flySpeed swimSpeed climbSpeed burrowSpeed tempModifSpeed';
+        }
+        .stats {
+            display: grid;
+            grid-template-areas: 'statsStats statsHP';
         }
     }
+    
     @media only screen and (min-width: 961px){ 
         .main-container {
             display: grid;
             grid-template-areas: 
-            'info info info info' 
-            'stats stats speed speed'
-            'stats stats skills skills'
-            'combatStats combatStats skills skills'
-            'weapons  weapons skills skills'
-            'weapons weapons languages languages'
-            'ACItems ACItems ACItems spells'
-            'gear feats feats spells'
-            'gear specialAbilities specialAbilities spells'
-            'weight specialAbilities specialAbilities spells'   
-            'money specialAbilities specialAbilities spells'
-            'money experiencePoints experiencePoints spells';
+            'info info info info' 'stats stats speed speed' 'stats stats skills skills' 'combatStats combatStats skills skills' 'weapons  weapons skills skills' 'weapons weapons languages languages' 'ACItems ACItems ACItems spells' 'gear feats feats spells' 'gear specialAbilities specialAbilities spells' 'weight specialAbilities specialAbilities spells' 'money specialAbilities specialAbilities spells' 'money experiencePoints experiencePoints spells';
             
         }
         .info {
@@ -89,6 +67,16 @@
                 'charLevel charLevel charLevel charLevel charLevel deity deity deity homeland homeland'
                 'race race race size gender age height weight hair eyes'
         }
+        .speed {
+            display: grid;
+            grid-template-areas: 
+                'speedTitle baseSpeed baseSpeed withArmorSpeed withArmorSpeed tempModifSpeed' 
+                'flySpeed flySpeed swimSpeed climbSpeed burrowSpeed tempModifSpeed';
+        }
+        .stats {
+            display: grid;
+            grid-template-areas: 'statsStats statsHP';
+        }
     }
     
     .main { 
@@ -97,21 +85,74 @@
         padding: 10px 10px;
     }
     .subMain  { 
-        grid-gap: 5px;
-        text-align: center;
-    }
-    .info > div { 
         border: darkgray dotted 1px;
         grid-gap: 5px;
         text-align: center;
     }
+    .info{ 
+        grid-gap: 5px;
+        text-align: center;
+    }
+    .statsBlock{
+        display:inline-grid;
+        grid: repeat(7, 1fr) / repeat(5, 1fr);
+        grid-gap: 5px;
+    }
+    .whiteOnBlack {
+        background-color: black;
+        color: white;
+    }
+    .boxed {
+        
+        vertical-align: middle;
+        border: black solid 1px;
+        
+    }
+    .legend {
+        font-size: small;
+        text-align: center;
+    }
+    
+    .stats.subMain > div { border: blue dotted 1px; }
 
 </style>
   
 <body>
-<div class="main-container main" style="height: 1000px;">
+<div class="main-container main"`>
+    <style>
+        .info  { grid-area: info; } 
+        .speed { grid-area: speed; } 
+        .stats { grid-area: stats; } 
+        .combatStats { grid-area: combatStats; } 
+        .weapons { grid-area: weapons; } 
+        .languages { grid-area: languages; } 
+        .skills { grid-area: skills; } 
+        .ACItems { grid-area: ACItems;}
+        .gear { grid-area: gear;} 
+        .weight { grid-area: weight;} 
+        .money { grid-area: money;}
+        .feats { grid-area: feats;} 
+        .specialAbilities { grid-area: specialAbilities;}
+        .experiencePoints { grid-area: experiencePoints;} 
+        .spells { grid-area: spells;}
+    </style>
 
     <div class="info subMain">
+        <style>
+            .charName { grid-area: charName; } 
+            .align { grid-area: align; } 
+            .player { grid-area: player; } 
+            .charLevel { grid-area: charLevel; } 
+            .deity { grid-area: deity; } 
+            .homeland { grid-area: homeland; }
+            .race { grid-area: race; } 
+            .size { grid-area: size; } 
+            .gender { grid-area: gender; }
+            .age { grid-area: age; } 
+            .height { grid-area: height; } 
+            .hair { grid-area: hair; } 
+            .eyes { grid-area: eyes; }
+        </style>
         <div class="charName" id="charName">Character Name</div>
         <div class="align" id="align">Alignment</div>
         <div class="player" id="player">Player</div>       
@@ -126,13 +167,83 @@
         <div class="weight" id="weight">Weight</div>
         <div class="hair" id="hair">Hair</div>
         <div class="eyes" id="eyes">Eyes</div>  
+    </div> <!-- Character infos -->
+    <div class="speed subMain">
+        <style>
+            .speedTitle { grid-area: speedTitle; }
+            .baseSpeed { grid-area: baseSpeed; }
+            .withArmorSpeed { grid-area: withArmorSpeed; }
+            .tempModifSpeed { grid-area: tempModifSpeed; }
+            .flySpeed { grid-area: flySpeed; }
+            .swimSpeed { grid-area: swimSpeed; }
+            .climbSpeed { grid-area: climbSpeed; }
+            .burrowSpeed { grid-area: burrowSpeed; }
+        </style>
+        <div class="speedTitle">Title</div>
+        <div class="baseSpeed">Base speed</div>
+        <div class="withArmorSpeed">With armor</div>
+        <div class="tempModifSpeed">Temp modif.</div>
+        <div class="flySpeed">Fly speed</div>
+        <div class="swimSpeed">Swim speed</div>
+        <div class="climbSpeed">Climb speed</div>
+        <div class="burrowSpeed">Burrow speed</div>
+    </div> <!-- Speed infos -->
+    
+    <div class="stats subMain">
+        <style>
+            .statsStats { grid-area: statsStats; }
+            .statsHP { grid-area: statsHP; }
+        </style>
+        <div class="statsStats statsBlock">
+             
+            
+            <div class="legend">ABILITY<br>NAME</div>
+            <div class="legend">ABILITY<br>SCORE</div>
+            <div class="legend">ABILITY<br>MODIFIER</div> 
+            <div class="legend">TEMP<br>ADJUST.</div> 
+            <div class="legend">TEMP<br>MODIFIER</div>
+            
+            
+            <div class="whiteOnBlack">STR<br><span style="font-size: small;">STRENGTH</span></div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div>
+            
+            <div class="whiteOnBlack">DEX<br><span style="font-size: small;">DEXTERITY</span></div>
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div>
+            
+            <div class="whiteOnBlack">CON<br><span style="font-size: small;">CONSTITUTION</span></div>
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div>
+    
+            <div class="whiteOnBlack">INT<br><span style="font-size: small;">INTELLIGENCE</span></div>
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div>
+    
+            <div class="whiteOnBlack">WILL<br><span style="font-size: small;">WILLPOWER</span></div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div>
+        
+            <div class="whiteOnBlack">CHA<br><span style="font-size: small;">CHARISMA</span></div>
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div> 
+            <div class="boxed">1</div>
+        
+        </div>
+        <div class="statsHP">HP</div>
     </div>
     
-    
-    
-    
-    <div class="speed subMain">Speed</div>
-    <div class="stats subMain">Stats</div>
     <div class="combatStats subMain">Combat stats</div>
     <div class="weapons subMain">Weapons</div>
     <div class="skills subMain">Skills</div>
