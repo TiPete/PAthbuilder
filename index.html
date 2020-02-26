@@ -6,295 +6,145 @@
     <title>Pathbuilder v3.0</title>
     <link rel='stylesheet' href='styles.css'/>
 </head>
-  
+
 <style>
     
-    /*div { border: blue dotted 1px; width = 100%; }
+    /* --- Main container ---*/
+    .info  { grid-area: info; } .speed { grid-area: speed; } .stats { grid-area: stats; } 
+    .combatStats { grid-area: combatStats; } .weapons { grid-area: weapons; } 
+    .languages { grid-area: languages; } .skills { grid-area: skills; } .ACItems { grid-area: ACItems;}
+    .gear { grid-area: gear;} .weight { grid-area: weight;} .money { grid-area: money;}
+    .feats { grid-area: feats;} .specialAbilities { grid-area: specialAbilities;}
+    .experiencePoints { grid-area: experiencePoints;} .spells { grid-area: spells;}
     
-    /* Remettre a 400px (500?) */
-    @media only screen and (max-width: 600px){
-        .info-container{
-            display: grid;
-            border: black solid 1px;
-            grid-template-areas: 'charName charName' 'charAlign charAlign' 'playName playName' 'charLevel charLevel' 'charDeity charDeity' 'charHome charHome' 'charRace charSize' 'charGend charAge' 'charHeight charWeight' 'charHair charEyes';
-        }
-    }
-    @media only screen and (min-width: 601px) and (max-width: 960px) {
-        .info-container{
-            display: grid;
-            border: black solid 1px;
-            grid-template-areas: 
-                'charName charName charName charAlign' 
-                'playName playName playName playName' 
-                'charLevel charLevel charLevel charLevel' 
-                'charDeity charDeity charHome charHome'
-                'charRace charSize charGend charAge' 
-                'charHeight charWeight charHair charEyes';
-        }
-    }
-    @media only screen and (min-width: 961px){
-        .info-container{
-            display: grid;
-            border: black solid 1px;
-            grid-template-areas: 
-                'charName charName charName charAlign playName playName playName playName' 
-                'charLevel charLevel charLevel charLevel charDeity charDeity charHome charHome'
-                'charRace charSize charGend charAge charHeight charWeight charHair charEyes';
-        }
-    }
+    /* --- Info container --- */
+    .charName { grid-area: charName; } .align { grid-area: align; } .player { grid-area: player; }
+    .charLevel { grid-area: charLevel; } .deity { grid-area: deity; } .homeland { grid-area: homeland; }
+    .race { grid-area: race; } .size { grid-area: size; } .gender { grid-area: gender; }
+    .age { grid-area: age; } .height { grid-area: height; } .hair { grid-area: hair; } 
+    .eyes { grid-area: eyes; }
     
-    .blackOnWhite {
-        background-color: black; color: white; 
-        border: black solid 1px;
-    }
-    .blackOnWhite > .title { 
-        font-weight: 400; 
-        font-size: normal;
-    }
-    .blackOnWhite > .subTitle { 
-        font-weight: 200; 
-        font-size: small; 
-    }
+</style>    
     
-    .box {
-        display:flex;
-        border: solid black 1px;
-        font-size: large;
-        align-items: center;
-        justify-content: center;
-        height: 100%;
-        width: 100%;
-    }
+<style>
+    
 
-    .legend {
-        font-weight: 200; 
-        font-size: small; 
-        text-align: center;
-        vertical-align: bottom;
+
+    /* Remettre a 400px (500?) */
+    @media only screen and (max-width: 500px){
+        .main-container {
+            display: block;
+        }
+        .info {
+            display: grid;
+            grid-template-areas: 
+                'charName align' 'player player' 'charLevel charLevel' 'deity deity'
+                'homeland homeland' 'race size' 'gender age' 'height weight' 'hair eyes';
+        }
+        
+    }
+    @media only screen and (min-width: 501px) and (max-width: 960px) {
+        .main-container {
+            display: grid;
+            grid-template-areas: 
+            'info info info' 'stats stats speed' 'stats stats skills' 'combatStats combatStats skills'
+            'weapons  weapons skills' 'weapons weapons languages' 'ACItems ACItems ACItems'
+            'feats feats spells' 'specialAbilities specialAbilities spells' 'gear gear spells'
+            'weight  weight spells' 'money money spells' 'money money spells'            'experiencePoints experiencePoints spells';
+            
+        }
+        .info {
+            display: grid;
+            grid-template-areas: 
+                'charName charName charName align align' 
+                'player player player player player' 
+                'charLevel charLevel charLevel charLevel charLevel'
+                'deity deity deity homeland homeland'
+                'race race size gender age'
+                'height height weight hair eyes';
+        }
+    }
+    @media only screen and (min-width: 961px){ 
+        .main-container {
+            display: grid;
+            grid-template-areas: 
+            'info info info info' 
+            'stats stats speed speed'
+            'stats stats skills skills'
+            'combatStats combatStats skills skills'
+            'weapons  weapons skills skills'
+            'weapons weapons languages languages'
+            'ACItems ACItems ACItems spells'
+            'gear feats feats spells'
+            'gear specialAbilities specialAbilities spells'
+            'weight specialAbilities specialAbilities spells'   
+            'money specialAbilities specialAbilities spells'
+            'money experiencePoints experiencePoints spells';
+            
+        }
+        .info {
+            display: grid;
+            grid-template-areas: 
+                'charName charName charName align align player player player player player' 
+                'charLevel charLevel charLevel charLevel charLevel deity deity deity homeland homeland'
+                'race race race size gender age height weight hair eyes'
+        }
     }
     
-    button.leftButton {
-        background: transparent;
-        border: none;
-        border: none;
-        float: left;
+    .main { 
+        border: black dotted 1px; 
+        grid-gap: 5px;
+        padding: 10px 10px;
     }
-        button.rightButton {
-        background: transparent;
-        border: none;
-        border: none;
-        float: right;
+    .subMain  { 
+        grid-gap: 5px;
+        text-align: center;
+    }
+    .info > div { 
+        border: darkgray dotted 1px;
+        grid-gap: 5px;
+        text-align: center;
     }
 
 </style>
-
-<script>
-
-function UpdateStat(upDown, stat) {} //Update a stat. false=down, true=up    
-
-</script>
-    
-    
+  
 <body>
-<div class="main-container">
+<div class="main-container main" style="height: 1000px;">
 
-    <div class="info-container" style="display: none;">
-        <style> 
-            .charName { grid-area: charName; }
-            .charAlign { grid-area: charAlign; }
-            .playName { grid-area: playName; }
-            .charLevel { grid-area: charLevel; }
-            .charDeity { grid-area: charDeity; }
-            .charHome { grid-area: charHome; }
-            .charRace { grid-area: charRace; }
-            .charSize { grid-area: charSize; }
-            .charGend { grid-area: charGend; }
-            .charAge { grid-area: charAge; }
-            .charHeight { grid-area: charHeight; }
-            .charWeight { grid-area: charWeight; }
-            .charHair { grid-area: charHair; }
-            .charEyes { grid-area: charEyes; }
-        </style> <!-- info-container elements -->
-        <div class="charName">Character name</div>
-        <div class="icharAlign">Character alignment</div>
-        <div class="playName">Player name</div>
-        <div class="charLevel">Character level</div>
-        <div class="charDeity">Character deity</div>
-        <div class="charHome">Homeland</div>
-        <div class="charRace">Race</div>
-        <div class="charSize">Size</div>
-        <div class="icharGend">Gender</div>
-        <div class="charAge">Age</div>
-        <div class="charHeight">Height</div>
-        <div class="charWeight">Weight</div>
-        <div class="charHair">Hair</div>
-        <div class="charEyes">Eyes</div>
-    </div>
-        
-    <div class="speed-container" style="display: none;" >
-        <style>
-            #baseSpeedTitle { grid-column: 1; }
-            #baseBaseSpeed { grid-column: 2 / span 2; }
-            #withArmorSpeed { grid-column: 4 / span 2; }
-            #speedTempMod { grid-column: 6 / span 2; grid-row: 1 / span 2;}
-            #flySpeed { grid-column: 1 / span 2; }
-        </style>
-        <div style="display: grid; grid-template-columns: auto fr fr fr fr fr fr; grid-gap: 5px;">
-            <div id="baseSpeedTitle" class="blackOnWhite box">
-                <span class="title">Speed</span><br><span class="subTitle">Land</span>
-            </div> 
-            <div id="baseBaseSpeed">
-                <div class="box">
-                    <span id="baseSpeedFt" style="font-size: x-large;">30</span>
-                    <span style="font-size: small;">Ft.&nbsp;</span>
-                    <span id="baseSpeedSq" style="font-size: x-large;">5</span>
-                    <span style="font-size: small;">Sq.</span>
-                </div>
-                <div id="baseSpeedLegend" class="legend" style="text-align: center;">Base speed</div>
-            </div>
-            <div id="withArmorSpeed">
-                <div class="box">
-                        <span id="armorSpeedFt" style="font-size: x-large;">30</span>
-                        <span style="font-size: small;">Ft.&nbsp;</span>
-                        <span id="armorSpeedSq" style="font-size: x-large;">5</span>
-                        <span style="font-size: small;">Sq.</span>
-                </div>
-                <div class="legend" style="text-align: center;">With Armor</div>
-            </div>
-            <div id="speedTempMod" class="box" style="font-size: small; text-align: left;">Temp Modifier</div>
-            <div id="flySpeed">
-                <div class="box">
-                    <span id="flySpeedFt" style="font-size: x-large;"></span>
-                    <span style="font-size: small;">Ft.&nbsp;</span>
-                    <span id="maneuvrabilty" style="font-size: x-large;"></span>
-                    <span style="font-size: small;">Sq.</span>
-                </div>
-                <div class="legend" style="text-align: center;">Fly&nbsp;Maneuverability</div>
-            </div>
-            <div id="swimSpeed">
-                <div class="box">
-                    <span id="swimSpeedFt" style="font-size: x-large;"></span>
-                    <span style="font-size: small;">Ft.</span>
-                </div>
-                <div class="legend" style="text-align: center;">Swim speed</div>
-</div>
-            <div id="climbSpeed">
-                <div class="box">
-                        <span id="climbSpeedFt" style="font-size: x-large;"></span>
-                        <span style="font-size: small;">Ft.</span>
-                </div>
-                <div class="legend" style="text-align: center;">Climb speed</div>
-</div>
-            <div id="burrowSpeed">
-                <div class="box">
-                        <span id="burrowSpeedFt" style="font-size: x-large;"></span>
-                        <span style="font-size: small;">Ft.</span>
-                </div>
-                <div class="legend" style="text-align: center;">Burrow speed</div>
-            </div>
-        </div>  
+    <div class="info subMain">
+        <div class="charName" id="charName">Character Name</div>
+        <div class="align" id="align">Alignment</div>
+        <div class="player" id="player">Player</div>       
+        <div class="charLevel" id="charLevel">Character level</div>
+        <div class="deity" id="deity">Deity</div>  
+        <div class="homeland" id="homeland">Homeland</div>
+        <div class="race" id="race">Race</div>  
+        <div class="size" id="size">Size</div>
+        <div class="gender" id="gender">Gender</div>  
+        <div class="age" id="age">Age</div>
+        <div class="height" id="height">Height</div>  
+        <div class="weight" id="weight">Weight</div>
+        <div class="hair" id="hair">Hair</div>
+        <div class="eyes" id="eyes">Eyes</div>  
     </div>
     
-    <div class="stats-container" style="display: inline-flex;">
-        <div class="stat-container" style="width: 50%; height: 100%; ">
-            <div class="legend" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 5px; grid-auto-flow: row;  padding: 2px;">
-                
-                <!-- Legend -->
-                <div class="legend">ABILITY NAME</div> <div class="legend">ABILITY SCORE</div> 
-                <div class="legend">ABILITY<br>MODIFIER</div> <div class="legend">TEMP<br>ADJUST.</div> 
-                <div class="legend">TEMP<br>MODIFIER</div>
-                
-                <!-- Strength -->
-                <div class="blackOnWhite"><span class="tite">STR</span><br><span class="subTitle">Strength</span></div>
-                <div class="box" id="statsDisplay0">
-                    <button class="leftButton" onclick="UpdateStat(false, 0)">-</button>
-                    <span id="statsDisplay0">10</span>
-                    <button class="rightButton" onclick="UpdateStat(true, 0)">+</button>
-                </div>
-                <div class="box" id="modifierDisplay0"></div>
-                <div class="box"></div> <div class="box"></div>
-                
-                <!-- Dexterity -->
-                <div class="blackOnWhite"><span class="tite">DEX</span><br><span class="subTitle">Dexterity</span></div>
-                <div class="box" id="statsDisplay1">
-                    <button class="leftButton" onclick="UpdateStat(false, 1)">-</button>
-                    <span id="statsDisplay1">10</span>
-                    <button class="rightButton" onclick="UpdateStat(true, 1)">+</button>
-                </div>
-                <div class="box" id="modifierDisplay1"></div>
-                <div class="box"></div> <div class="box"></div>
-                
-                <!-- Constitution -->
-                <div class="blackOnWhite"><span class="tite">CON</span><br><span class="subTitle">Constitution</span></div>
-                <div class="box" id="statsDisplay2">
-                    <button class="leftButton" onclick="UpdateStat(false, 2)">-</button>
-                    <span id="statsDisplay2">10</span>
-                    <button class="rightButton" onclick="UpdateStat(true, 2)">+</button>
-                </div>
-                <div class="box" id="modifierDisplay2"></div>
-                <div class="box"></div> <div class="box"></div>
-                
-                <!-- Intelligence -->
-                <div class="blackOnWhite"><span class="tite">INT</span><br><span class="subTitle">Intelligence</span></div>
-                <div class="box" id="statsDisplay3">
-                    <button class="leftButton" onclick="UpdateStat(false, 3)">-</button>
-                    <span id="statsDisplay3">10</span>
-                    <button class="rightButton" onclick="UpdateStat(true, 3)">+</button>
-                </div>
-                <div class="box" id="modifierDisplay3"></div>
-                <div class="box"></div> <div class="box"></div>
-                
-                <!-- Willpower -->
-                <div class="blackOnWhite"><span class="tite">Will</span><br><span class="subTitle">Willpower</span></div>
-                <div class="box" id="statsDisplay4">
-                    <button class="leftButton" onclick="UpdateStat(false, 4)">-</button>
-                    <span id="statsDisplay4">10</span>
-                    <button class="rightButton" onclick="UpdateStat(true, 4)">+</button>
-                </div>
-                <div class="box" id="modifierDisplay4"></div>
-                <div class="box"></div> <div class="box"></div>
-                
-                <!-- Charisma -->
-                <div class="blackOnWhite"><span class="tite">CHA</span><br><span class="subTitle">Charisma</span></div>
-                <div class="box" id="statsDisplay5">
-                    <button class="leftButton" onclick="UpdateStat(false, 5)">-</button>
-                    <span id="statsDisplay5">10</span>
-                    <button class="rightButton" onclick="UpdateStat(true, 5)">+</button>
-                </div>
-                <div class="box" id="modifierDisplay3"></div>
-                <div class="box"></div> <div class="box"></div>
-                
-            </div>
-        </div> <!-- Stats diplay -->
-        
-        <div class="hp-container" style="width: 50%; height: 100%;  padding: 2px;"> 
-            <div class="legend" style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr; grid-gap: 5px; grid-auto-flow: row;"> 
-            <style>
-                #HPTitle { grid-column: 1; }
-                #HPTotal { grid-column: 2 / span 2; }
-                #HPDR { grid-column: 4 / span 2; }
-                #HPWounds { grid-row: 2 / span 3; grid-column: 1 / span 5; }
-                #HPNonLethal { grid-row: 5; grid-column: 1 / span 5; }
-                #HPInitBox { grid-column: 1 / span 5; }
-            </style>
-            <div class="blackOnWhite" id="HPTitle">
-                <span class="tite">HP</span><br><span class="subTitle">Hit Points</span>
-            </div>
-            <div class="box" id="HPTotal">Total</div>
-            <div class="box" id="HPDR">DR</div>
-            <div class="box" id="HPWounds">Wounds/currentHP</div>
-            <div class="box" id="HPNonLethal">Non Lethal Damage</div>
-            <div class="" id="HPInitBox" style="display: grid; grid-template-columns: 40% 5% 15% 5% 15% 5% 15%; grid-auto-flow: row;">
-                <div class="blackOnWhite">
-                    <span class="title">INITIATIVE</span><br><span class="subTitle">Modifier</span></div>
-                <div style="display: flex; vertical-align: middle; margin: auto;">=</div><div class="box" id="InitTotal"></div>
-                <div>+</div><div class="box" id="InitDexModifier"></div>
-                <div>+</div><div class="box" id="InitMiscModifier"></div>
-            </div>
-        </div>
-    </div>
     
-    </div>
+    
+    
+    <div class="speed subMain">Speed</div>
+    <div class="stats subMain">Stats</div>
+    <div class="combatStats subMain">Combat stats</div>
+    <div class="weapons subMain">Weapons</div>
+    <div class="skills subMain">Skills</div>
+    <div class="languages subMain">Languages</div>
+    <div class="ACItems subMain">AC Items</div> 
+    <div class="gear subMain">Gear</div>
+    <div class="weight subMain">Weight</div>
+    <div class="money subMain">Money</div>
+    <div class="feats subMain">Feats</div>
+    <div class="specialAbilities subMain">Special Abilities</div>
+    <div class="experiencePoints subMain">Experience Points</div>
+    <div class="spells subMain">Spells</div>
     
 </div><!-- Main container -->
     
