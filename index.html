@@ -93,9 +93,14 @@
         grid-gap: 5px;
         text-align: center;
     }
-    .statsBlock{
+    .statsStats{
         display:inline-grid;
         grid: repeat(7, 1fr) / repeat(5, 1fr);
+        grid-gap: 5px;
+    }
+    .statsHP {
+        display: inline-grid;
+        grid: repeat(5, 1fr) / repeat(5, 1fr);
         grid-gap: 5px;
     }
     .whiteOnBlack {
@@ -114,6 +119,7 @@
     }
     
     .stats.subMain > div { border: blue dotted 1px; }
+
 
 </style>
   
@@ -194,9 +200,8 @@
             .statsStats { grid-area: statsStats; }
             .statsHP { grid-area: statsHP; }
         </style>
-        <div class="statsStats statsBlock">
+        <div class="statsStats">
              
-            
             <div class="legend">ABILITY<br>NAME</div>
             <div class="legend">ABILITY<br>SCORE</div>
             <div class="legend">ABILITY<br>MODIFIER</div> 
@@ -241,7 +246,16 @@
             <div class="boxed">1</div>
         
         </div>
-        <div class="statsHP">HP</div>
+        <div class="statsHP" >
+            <div class="whiteOnBlack">HP</div>
+            <div class="boxed" style="grid-area: 1 / 2 / 1 / 4;">Total</div>
+            <div class="boxed" style="grid-area: 1 / 4 / 2 / 6;">DR</div>
+            <div class="boxed" style="grid-area: 2 / 1 / 4 / 6;">Wounds</div>
+            <div class="boxed" style="grid-area: 4 / 1 / 4 / 6;">Non Lethal</div>
+            <div class="boxed" style="grid-area: 5 / 1 / 5 / 6; diplay: grid;">
+                <div class="whiteOnBlack">Initiative</div>
+            </div>
+        </div>
     </div>
     
     <div class="combatStats subMain">Combat stats</div>
