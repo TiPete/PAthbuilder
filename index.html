@@ -88,6 +88,7 @@
         border: darkgray dotted 1px;
         grid-gap: 5px;
         text-align: center;
+        margin: 5px;
     }
     .info{ 
         grid-gap: 5px;
@@ -117,9 +118,6 @@
         font-size: small;
         text-align: center;
     }
-    
-    .stats.subMain > div { border: blue dotted 1px; }
-
 
 </style>
   
@@ -246,7 +244,7 @@
             <div class="boxed">1</div>
         
         </div>
-        <div class="statsHP" >
+        <div class="statsHP" style="width: 100%; min-width: 200px;">
             <div class="whiteOnBlack">HP</div>
             <div class="boxed" style="grid-area: 1 / 2 / 1 / 4;">Total</div>
             <div class="boxed" style="grid-area: 1 / 4 / 2 / 6;">DR</div>
@@ -258,7 +256,20 @@
         </div>
     </div>
     
-    <div class="combatStats subMain">Combat stats</div>
+    <div class="combatStats subMain">
+        <div style="border: 1px dotted blue;">
+            <style>
+            </style>
+            <div class="AC">
+                <div class="ACTitle whiteOnBlack">AC<br><span style="font-size: small;">Armor Class</span></div>
+                <div class="total boxed" id="ACTotal">10</div>
+            </div>
+        </div>
+        <div>Saves</div>
+        <div>BAB/CMB/CMD</div>
+    </div>
+    
+    
     <div class="weapons subMain">Weapons</div>
     <div class="skills subMain">Skills</div>
     <div class="languages subMain">Languages</div>
