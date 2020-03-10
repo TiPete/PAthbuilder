@@ -290,11 +290,13 @@
         <style>
             .ACTotal { grid-area: ACTotal; }
             .ACBreakdown { grid-area: ACBreakdown; }
+            .saves { grid-area: saves; }
+            .babCMBmcd { grid-area: babCMBmcd; }
         </style>
         <div class="AC-container">
             <div class="ACTotal">         
-                <div class="whiteOnBlack">AC<br><span style="font-size: small;">Hit Points</span></div>
-                <div class="boxed" id="ACTotal">10</div>
+                <div class="whiteOnBlack">AC<br><span style="font-size: small;">Armor Class</span></div>
+                <div class="boxed" id="ACTotal"></div>
                 <div>=</div><div></div><div></div><div></div>
             </div>
             <div class="ACBreakdown">
@@ -316,7 +318,12 @@
                 <div class="legend">Misc.<br>Modifier</div>
             </div>
         </div>
-        <div class="saves">Saves</div>
+        <div class="saves">
+            <div class="whiteOnBlack">Touch<br><span style="font-size: small;">ArmorClass</span></div>
+            <div class="boxed" id="touchAC">10</div>
+            <div class="whiteOnBlack">Flat Footed<br><span style="font-size: small;">ArmorClass</span></div>
+            <div class="boxed" id="flatFootAC">10</div>
+        </div>
         <div class="babCMBmcd">BAB/CMB/CMD</div>
     </div>
     
