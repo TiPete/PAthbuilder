@@ -8,106 +8,22 @@
 </head>
       
 <style>
-    
-    grid {
-        grid-gap: 5px;
+    body {
+        background-color: lightgrey;
     }
-
-    /* Remettre a 400px (500?) */
-    @media only screen and (max-width: 500px){
-        .main-container {
-            display: block;
-        }
-        .info {
-            display: block;
-        }
-        .speed {
-            display: block;
-        }      
-        .main-container { display: block; }
-        .AC-container {
-            display: block;
-        }
-        .ACTotal {
-            width: 50%;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-        
-        .subMain > div { margin: 5px; }
-        
-        
-    }
-    @media only screen and (min-width: 501px) and (max-width: 960px) {
-        .main-container {
-            display: grid;
-            grid-template-areas: 
-            'info info info' 'stats stats speed' 'stats stats skills' 'combatStats combatStats skills' 'weapons  weapons skills' 'weapons weapons languages' 'ACItems ACItems ACItems' 'feats feats spells' 'specialAbilities specialAbilities spells' 'gear gear spells' 'weight  weight spells' 'money money spells' 'money money spells' 'experiencePoints experiencePoints spells';
-            
-        }
-        .info {
-            display: grid;
-            grid-template-areas: 
-                'charName charName charName align align' 'player player player player player' 'charLevel charLevel charLevel charLevel charLevel' 'deity deity deity homeland homeland' 'race race size gender age' 'height height weight hair eyes';
-        }
-        .speed {
-            display: grid;
-            grid-template-areas: 
-                'speedTitle baseSpeed baseSpeed withArmorSpeed withArmorSpeed tempModifSpeed' 
-                'flySpeed flySpeed swimSpeed climbSpeed burrowSpeed tempModifSpeed';
-        }
-        .stats {
-            display: grid;
-            grid-template-areas: 'statsStats statsHP';
-        }
-        .AC-container {
-            display: grid;
-            grid-template-areas: 'ACTotal ACBreakdown'
-        }
-    }
-    
-    @media only screen and (min-width: 961px){ 
-        .main-container {
-            display: grid;
-            grid-template-areas: 
-            'info info info info' 'stats stats speed speed' 'stats stats skills skills' 'combatStats combatStats skills skills' 'weapons  weapons skills skills' 'weapons weapons languages languages' 'ACItems ACItems ACItems spells' 'gear feats feats spells' 'gear specialAbilities specialAbilities spells' 'weight specialAbilities specialAbilities spells' 'money specialAbilities specialAbilities spells' 'money experiencePoints experiencePoints spells';
-            
-        }
-        .info {
-            display: grid;
-            grid-template-areas: 
-                'charName charName charName align align player player player player player' 
-                'charLevel charLevel charLevel charLevel charLevel deity deity deity homeland homeland'
-                'race race race size gender age height weight hair eyes'
-        }
-        .speed {
-            display: grid;
-            grid-template-areas: 
-                'speedTitle baseSpeed baseSpeed withArmorSpeed withArmorSpeed tempModifSpeed' 
-                'flySpeed flySpeed swimSpeed climbSpeed burrowSpeed tempModifSpeed';
-        }
-        .stats {
-            display: grid;
-            grid-template-areas: 'statsStats statsHP';
-        }
-        .AC-container {
-            display: grid;
-            grid-template-areas: 'ACTotal ACBreakdown'
-        }
-    }
-    
-    .main { 
+        .main { 
         border: black dotted 1px; 
         grid-gap: 5px;
         padding: 10px 10px;
     }
+    
     .subMain  { 
-        border: darkgray dotted 1px;
+        border-radius: 10px;
+        border: darkgrey 1px solid;
+        padding: 5px;
+        background-color: white;
         grid-gap: 5px;
         text-align: center;
-        margin: 5px;
     }
     .info{ 
         grid-gap: 5px;
@@ -146,6 +62,112 @@
         grid-template-columns: repeat(15, auto);
         grid-gap: 5px; 
     }
+    .sitAC {
+        display: grid;
+        grid-gap: 5px;
+    }
+
+
+    /* Remettre a 400px (500?) */
+    @media only screen and (max-width: 500px){
+        .main-container {
+            display: block;
+        }
+        .info {
+            display: block;
+        }
+        .speed {
+            display: block;
+        }      
+        .main-container { display: block; }
+        .AC-container {
+            display: inline-block;
+        }
+        .AC-container > div {
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        .sitAC {
+            grid-template-areas: 
+                'touchAC1 touchAC2 flatFootAC1 flatFootAC2'
+                'ACModifiers ACModifiers ACModifiers ACModifiers';
+        }
+        .ACTotal {
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .subMain > div { margin: 5px; }
+        
+        
+    }
+    @media only screen and (min-width: 501px) and (max-width: 960px) {
+        .main-container {
+            display: grid;
+            grid-template-areas: 
+            'info info info' 'stats stats speed' 'stats stats skills' 'combatStats combatStats skills' 'weapons  weapons skills' 'weapons weapons languages' 'ACItems ACItems ACItems' 'feats feats spells' 'specialAbilities specialAbilities spells' 'gear gear spells' 'weight  weight spells' 'money money spells' 'money money spells' 'experiencePoints experiencePoints spells';
+            
+        }
+        .info {
+            display: grid;
+            grid-template-areas: 
+                'charName charName charName align align' 'player player player player player' 'charLevel charLevel charLevel charLevel charLevel' 'deity deity deity homeland homeland' 'race race size gender age' 'height height weight hair eyes';
+        }
+        .speed {
+            display: grid;
+            grid-template-areas: 
+                'speedTitle baseSpeed baseSpeed withArmorSpeed withArmorSpeed tempModifSpeed' 
+                'flySpeed flySpeed swimSpeed climbSpeed burrowSpeed tempModifSpeed';
+        }
+        .stats {
+            display: grid;
+            grid-template-areas: 'statsStats statsHP';
+        }
+        .sitAC {
+            display: grid;
+            grid-template-areas: 'touchAC1 touchAC2 flatFootAC1 flatFootAC2 ACModifiers ACModifiers ACModifiers';
+        }
+        .AC-container {
+            display: block;
+            grid-gap: 5px;
+        }
+    }
+    
+    @media only screen and (min-width: 961px){ 
+        .main-container {
+            display: grid;
+            grid-template-areas: 
+            'info info info info' 'stats stats speed speed' 'stats stats skills skills' 'combatStats combatStats skills skills' 'weapons  weapons skills skills' 'weapons weapons languages languages' 'ACItems ACItems ACItems spells' 'gear feats feats spells' 'gear specialAbilities specialAbilities spells' 'weight specialAbilities specialAbilities spells' 'money specialAbilities specialAbilities spells' 'money experiencePoints experiencePoints spells';
+            
+        }
+        .info {
+            display: grid;
+            grid-template-areas: 
+                'charName charName charName align align player player player player player' 
+                'charLevel charLevel charLevel charLevel charLevel deity deity deity homeland homeland'
+                'race race race size gender age height weight hair eyes'
+        }
+        .speed {
+            display: grid;
+            grid-template-areas: 
+                'speedTitle baseSpeed baseSpeed withArmorSpeed withArmorSpeed tempModifSpeed' 
+                'flySpeed flySpeed swimSpeed climbSpeed burrowSpeed tempModifSpeed';
+        }
+        .stats {
+            display: grid;
+            grid-template-areas: 'statsStats statsHP';
+        }
+        .AC-container {
+            display: grid;
+            
+        }
+    }
+    
+    
+
 
 
 
@@ -221,8 +243,7 @@
         <div class="swimSpeed">Swim speed</div>
         <div class="climbSpeed">Climb speed</div>
         <div class="burrowSpeed">Burrow speed</div>
-    </div> <!-- Speed infos -->
-    
+    </div> <!-- Speed infos --> 
     <div class="stats subMain">
         <style>
             .statsStats { grid-area: statsStats; }
@@ -238,37 +259,37 @@
             
             
             <div class="whiteOnBlack">STR<br><span style="font-size: small;">STRENGTH</span></div> 
-            <div class="boxed">1</div> 
+            <div class="boxed"></div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div>
             
             <div class="whiteOnBlack">DEX<br><span style="font-size: small;">DEXTERITY</span></div>
-            <div class="boxed">1</div> 
+            <div class="boxed"></div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div>
             
             <div class="whiteOnBlack">CON<br><span style="font-size: small;">CONSTITUTION</span></div>
-            <div class="boxed">1</div> 
+            <div class="boxed"></div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div>
     
             <div class="whiteOnBlack">INT<br><span style="font-size: small;">INTELLIGENCE</span></div>
-            <div class="boxed">1</div> 
+            <div class="boxed"></div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div>
     
             <div class="whiteOnBlack">WILL<br><span style="font-size: small;">WILLPOWER</span></div> 
-            <div class="boxed">1</div> 
+            <div class="boxed"></div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div>
         
             <div class="whiteOnBlack">CHA<br><span style="font-size: small;">CHARISMA</span></div>
-            <div class="boxed">1</div> 
+            <div class="boxed"></div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div> 
             <div class="boxed">1</div>
@@ -290,13 +311,15 @@
         <style>
             .ACTotal { grid-area: ACTotal; }
             .ACBreakdown { grid-area: ACBreakdown; }
+            .sitAC { grid-area: sitAC; }
+            .ACModifiers { grid-area: ACModifiers; }
             .saves { grid-area: saves; }
             .babCMBmcd { grid-area: babCMBmcd; }
         </style>
         <div class="AC-container">
             <div class="ACTotal">         
                 <div class="whiteOnBlack">AC<br><span style="font-size: small;">Armor Class</span></div>
-                <div class="boxed" id="ACTotal"></div>
+                <div class="boxed" id="ACTotal"> 10 </div>
                 <div>=</div><div></div><div></div><div></div>
             </div>
             <div class="ACBreakdown">
@@ -317,12 +340,24 @@
                 <div class="legend">Deflec.<br>Bonus</div><div></div>
                 <div class="legend">Misc.<br>Modifier</div>
             </div>
+            <div class="sitAC">
+                <style>
+                    .touchAC1 { grid-area: touchAC1; }
+                    .touchAC2 { grid-area: touchAC2; }
+                    .flatFootAC1 { grid-area: flatFootAC1; }
+                    .flatFootAC2 { grid-area: flatFootAC2; }
+                    
+                </style>
+                <div class="whiteOnBlack touchAC1">Touch<br><span style="font-size: small;">ArmorClass</span></div>
+                <div class="boxed touchAC2" id="touchAC">10</div>
+                <div class="whiteOnBlack flatFootAC1">Flat Footed<br><span style="font-size: small;">ArmorClass</span></div>
+                <div class="boxed flatFootAC2" id="flatFootAC">10</div>
+                <div class="ACModifiers boxed">Modifiers</div>
+            </div>
+
         </div>
-        <div class="saves">
-            <div class="whiteOnBlack">Touch<br><span style="font-size: small;">ArmorClass</span></div>
-            <div class="boxed" id="touchAC">10</div>
-            <div class="whiteOnBlack">Flat Footed<br><span style="font-size: small;">ArmorClass</span></div>
-            <div class="boxed" id="flatFootAC">10</div>
+
+        <div class="saves">Saves
         </div>
         <div class="babCMBmcd">BAB/CMB/CMD</div>
     </div>
