@@ -9,11 +9,11 @@
       
 <style>
     body {
-        background-color: lightgrey;
+        background-color: darkslategrey;
     }
-        .main { 
+    .main { 
         border: black dotted 1px; 
-        grid-gap: 5px;
+        grid-gap: 10px;
         padding: 10px 10px;
     }
     
@@ -52,6 +52,22 @@
         font-size: small;
         text-align: center;
     }
+    .savesMain {
+        display:inline-grid;
+        grid: repeat(4, 1fr) / repeat(12, auto);
+        grid-gap: 5px;
+    }
+    
+    .AC-container {
+            display: grid;
+            grid-gap: 5px;
+            grid-template-areas: 
+                'ACTotal ACBreakdown ACBreakdown'
+                'sitAC sitAC sitAC'
+                'saves saves saves'
+                'babCMBmcd babCMBmcd babCMBmcd';
+        }
+    
     .ACTotal {
         display: grid; 
         grid-template-columns: repeat(3, auto);
@@ -64,6 +80,12 @@
     }
     .sitAC {
         display: grid;
+        grid-template-areas: 'touchAC1 touchAC2 flatFootAC1 flatFootAC2 ACModifiers ACModifiers ACModifiers';
+        grid-gap: 5px;
+    }
+    .saves {
+        display: grid;
+        grid-template-areas: 'savesMain savesMain savesModifiers';
         grid-gap: 5px;
     }
 
@@ -88,9 +110,8 @@
             margin-bottom: 5px;
         }
         .sitAC {
-            grid-template-areas: 
-                'touchAC1 touchAC2 flatFootAC1 flatFootAC2'
-                'ACModifiers ACModifiers ACModifiers ACModifiers';
+            display: grid;
+            grid-template-areas: 'touchAC1 touchAC2 flatFootAC1 flatFootAC2' 'ACModifiers ACModifiers ACModifiers ACModifiers';
         }
         .ACTotal {
             width: 50%;
@@ -126,14 +147,6 @@
             display: grid;
             grid-template-areas: 'statsStats statsHP';
         }
-        .sitAC {
-            display: grid;
-            grid-template-areas: 'touchAC1 touchAC2 flatFootAC1 flatFootAC2 ACModifiers ACModifiers ACModifiers';
-        }
-        .AC-container {
-            display: block;
-            grid-gap: 5px;
-        }
     }
     
     @media only screen and (min-width: 961px){ 
@@ -160,10 +173,7 @@
             display: grid;
             grid-template-areas: 'statsStats statsHP';
         }
-        .AC-container {
-            display: grid;
-            
-        }
+
     }
     
     
@@ -356,8 +366,46 @@
             </div>
 
         </div>
-
-        <div class="saves">Saves
+            
+        <div class="saves">
+            <style>
+                .savesMain { grid-area: savesMain; }
+                .savesModifiers { grid-area: savesModifiers; }
+            </style>
+            <div class="savesMain" style="width: 100%;">
+                <div class="legend">SAVING<br>THROWS</div>
+                <div class="legend">TOTAL</div><div></div>
+                <div class="legend">BASE<br>SAVE</div><div></div>
+                <div class="legend">ABILITY<br>MODIF.</div><div></div>
+                <div class="legend">MAGIC<br>MODIF.</div><div></div>
+                <div class="legend">MISC<br>MODIF.</div><div></div>
+                <div class="legend">TEMP.<br>MODIF.</div>
+                
+                <div class="whiteOnBlack">FORTITUDE<br><span style="font-size: small;">(Constitution)</span></div>
+                <div class="boxed" id="saveTotal1"></div><div>=</div>
+                <div class="boxed" id="baseSave1"></div><div>+</div>
+                <div class="boxed" id="abilityModSave1"></div><div>+</div>
+                <div class="boxed" id="magicModSave1"></div><div>+</div>
+                <div class="boxed" id="miscModSave1"></div><div>+</div>
+                <div class="boxed" id="miscModSave1"></div>
+                
+                <div class="whiteOnBlack">REFLEX<br><span style="font-size: small;">(Dexterity)</span></div>
+                <div class="boxed" id="saveTotal2"></div><div>=</div>
+                <div class="boxed" id="baseSave2"></div><div>+</div>
+                <div class="boxed" id="abilityModSave2"></div><div>+</div>
+                <div class="boxed" id="magicModSave2"></div><div>+</div>
+                <div class="boxed" id="miscModSave2"></div><div>+</div>
+                <div class="boxed" id="miscModSave2"></div>
+                
+                <div class="whiteOnBlack">WILL<br><span style="font-size: small;">(Wisdom)</span></div>
+                <div class="boxed" id="saveTotal3"></div><div>=</div>
+                <div class="boxed" id="baseSave3"></div><div>+</div>
+                <div class="boxed" id="abilityModSave3"></div><div>+</div>
+                <div class="boxed" id="magicModSave3"></div><div>+</div>
+                <div class="boxed" id="miscModSave3"></div><div>+</div>
+                <div class="boxed" id="miscModSave3"></div>
+            </div>
+            <div class="savesModifiers boxed">Modifiers</div>
         </div>
         <div class="babCMBmcd">BAB/CMB/CMD</div>
     </div>
