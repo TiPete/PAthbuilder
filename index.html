@@ -31,7 +31,7 @@
     }
     .statsStats{
         display:inline-grid;
-        grid: repeat(7, 1fr) / repeat(5, 1fr);
+        grid: repeat(7, auto) / repeat(5, 1fr);
         grid-gap: 5px;
     }
     .statsHP {
@@ -49,45 +49,124 @@
         
     }
     .legend {
-        font-size: small;
+        font-size: x-small;
         text-align: center;
     }
-    .savesMain {
-        display:inline-grid;
-        grid: repeat(4, 1fr) / repeat(12, auto);
-        grid-gap: 5px;
+    .underlined {
+        border-bottom: 1px solid black;
+        width: 100%;
     }
     
+    input.underline {
+        border: none;
+        border-bottom: solid 1px black
+    }
+    
+    .savesMain {
+        display:inline-grid;
+        grid: repeat(4, auto) / repeat(12, auto);
+        grid-gap: 2px;
+    }
+    .combatStats {
+        display: inline-block;
+    }
+    .combatStats > div {
+        margin: 2px;
+    }
     .AC-container {
             display: grid;
-            grid-gap: 5px;
+            grid-gap: 2px;
             grid-template-areas: 
                 'ACTotal ACBreakdown ACBreakdown'
                 'sitAC sitAC sitAC'
                 'saves saves saves'
                 'babCMBmcd babCMBmcd babCMBmcd';
         }
-    
     .ACTotal {
         display: grid; 
         grid-template-columns: repeat(3, auto);
-        grid-gap: 5px; 
+        grid-gap: 2px; 
     }
     .ACBreakdown {
         display: grid; 
         grid-template-columns: repeat(15, auto);
-        grid-gap: 5px; 
+        grid-gap: 2px; 
     }
     .sitAC {
         display: grid;
         grid-template-areas: 'touchAC1 touchAC2 flatFootAC1 flatFootAC2 ACModifiers ACModifiers ACModifiers';
-        grid-gap: 5px;
+        grid-gap: 2px;
     }
     .saves {
         display: grid;
         grid-template-areas: 'savesMain savesMain savesModifiers';
-        grid-gap: 5px;
+        grid-gap: 2px;
     }
+    .babCMBmcd {
+        display: grid; 
+        grid-gap: 5px; 
+    }
+    .babSpellResistance {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 2px;
+    }
+
+    .CMB {
+        display: grid;
+        grid-template-columns: auto auto;
+        grid-gap: 2px;
+    }
+    .CMBBreakDown {
+        display: grid;
+        grid: repeat(2, auto) / repeat(8, auto);
+        grid-gap: 2px;
+    }
+    .CMDBreakdown {
+        display: grid;
+        grid: repeat(2, auto) / repeat(11, auto);
+        grid-gap: 2px;
+    }
+    
+    .skillsBreakdown {
+        display: grid;
+        grid: repeat(38, auto) / repeat(9, auto);
+        grid-column-gap: 2px;
+        grid-row-gap: 6px;
+    }
+    .skillName {
+        text-align: left;
+    }
+    .skillNameField {
+        border: none;
+        border-bottom: black 1px solid;
+    }
+    .skillRank {
+        display: float;
+        text-align: center;
+    }
+    .leftButton {
+        border: none;
+        background: transparent;
+        float:left;
+        color: darkgray;
+    }
+    .rightButton {
+        border: none;
+        background: transparent;
+        float: right;
+        color: darkgray;
+    }
+    
+    .languagesBreakdown{
+        display: grid;
+        grid: repeat(3, auto) / repeat(3, auto);
+        grid-column-gap: 5px;
+        grid-row-gap: 2px;
+    }
+
+
+
 
 
     /* Remettre a 400px (500?) */
@@ -121,6 +200,8 @@
             margin-bottom: 5px;
         }
         
+        .savesModifiers { display: none; }
+        .ACModifiers { display: none; }
         .subMain > div { margin: 5px; }
         
         
@@ -148,7 +229,6 @@
             grid-template-areas: 'statsStats statsHP';
         }
     }
-    
     @media only screen and (min-width: 961px){ 
         .main-container {
             display: grid;
@@ -176,15 +256,10 @@
 
     }
     
-    
-
-
-
-
 </style>
   
 <body>
-<div class="main-container main"`>
+<div class="main-container main">
     <style>
         .info  { grid-area: info; } 
         .speed { grid-area: speed; } 
@@ -233,7 +308,7 @@
         <div class="weight" id="weight">Weight</div>
         <div class="hair" id="hair">Hair</div>
         <div class="eyes" id="eyes">Eyes</div>  
-    </div> <!-- Character infos -->
+    </div> 
     <div class="speed subMain">
         <style>
             .speedTitle { grid-area: speedTitle; }
@@ -253,7 +328,7 @@
         <div class="swimSpeed">Swim speed</div>
         <div class="climbSpeed">Climb speed</div>
         <div class="burrowSpeed">Burrow speed</div>
-    </div> <!-- Speed infos --> 
+    </div>  
     <div class="stats subMain">
         <style>
             .statsStats { grid-area: statsStats; }
@@ -315,8 +390,7 @@
                 <div class="whiteOnBlack">Initiative</div>
             </div>
         </div>
-    </div>
-    
+    </div> 
     <div class="combatStats subMain">
         <style>
             .ACTotal { grid-area: ACTotal; }
@@ -365,8 +439,7 @@
                 <div class="ACModifiers boxed">Modifiers</div>
             </div>
 
-        </div>
-            
+        </div>         
         <div class="saves">
             <style>
                 .savesMain { grid-area: savesMain; }
@@ -407,12 +480,685 @@
             </div>
             <div class="savesModifiers boxed">Modifiers</div>
         </div>
-        <div class="babCMBmcd">BAB/CMB/CMD</div>
+        <div class="babCMBmcd">
+            <div class="babSpellResistance">
+                <div class="whiteOnBlack">BASE ATTACK BONUS</div>
+                <div class="boxed" id="bab"></div>
+                <div class="whiteOnBlack">SPELL RESISTANCE</div>
+                <div class="boxed" id="spellResistance"></div>
+            </div>
+            <div class="CMB">
+                <div class="CMBBreakDown">
+                    <div class="whiteOnBlack">CMB</div>
+                    <div class="boxed" id="CMBTotal"></div><div>=</div>
+                    <div class="boxed" id="baseBAB"></div><div>+</div>
+                    <div class="boxed" id="strMod"></div><div>+</div>
+                    <div class="boxed" id="sizeMod"></div><div></div>
+                    <div class="legend">TOTAL</div><div></div>
+                    <div class="legend">BAB<br>BONUS</div><div></div>
+                    <div class="legend">STRENGTH<br>MODIFIER</div><div></div>
+    
+
+                    <div class="legend">SIZE<br>MODIFIER</div><div></div>
+                </div>
+                <div class="boxed">Modifiers</div>
+            </div>
+            <div class="CMDBreakdown">
+                <div class="whiteOnBlack">CMD</div>
+                <div class="boxed" id="CMDBonus"></div><div>=</div>
+                <div class="boxed" id=""></div><div>+</div>
+                <div class="boxed" id=""></div><div>+</div>
+                <div class="boxed" id=""></div><div>+</div>
+                <div class="boxed" id=""></div><div>+ 10</div>
+                <div></div><div class="legend">TOTAL</div><div></div>
+                <div class="legend">BAB</div><div></div>
+                <div class="legend">STR<br>MOD.</div><div></div>
+                <div class="legend">DEX<br>MOD.</div><div></div>
+                <div class="legend">SIZE<br>MOD.</div><div></div>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="weapons subMain">
     </div>
     
-    <div class="weapons subMain">Weapons</div>
-    <div class="skills subMain">Skills</div>
-    <div class="languages subMain">Languages</div>
+    <div class="skills subMain">
+        <div class="whiteOnBlack" style="column-span: all;">SKILLS</div>
+        <div class="skillsBreakdown">
+            <div></div><div class="legend">Skill Names</div>
+            <div class="legend">Total<br>Bonus</div><div></div>
+            <div class="legend">Ability<br>Mod.</div><div></div>
+            <div class="legend">Ranks</div><div></div>
+            <div class="legend">Misc.<br>Mod.</div>
+
+            <!-- skill 0 -->
+            <div id="classSkill0">&#9723;</div>
+            <div id="skilleName0" class="skillName">Acrobatics</div>
+            <div id="totalBonus0" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod0" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(0, false)">-</button>
+                <span id="ranks0"></span>
+                <button class="rightButton" onchange="assignSkillRank(0, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod0" class="underlined"></div> 
+
+            <!-- skill 1 -->
+            <div id="classSkill1">&#9723;</div>
+            <div id="skilleName1" class="skillName">Appraise</div>
+            <div id="totalBonus1" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod1" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(1, false)">-</button>
+                <span id="ranks1"></span>
+                <button class="rightButton" onchange="assignSkillRank(1, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod1" class="underlined"></div> 
+            
+            <!-- skill 2 -->
+            <div id="classSkill2">&#9723;</div>
+            <div id="skilleName2" class="skillName">Bluff</div>
+            <div id="totalBonus2" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod2" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(2, false)">-</button>
+                <span id="ranks2"></span>
+                <button class="rightButton" onchange="assignSkillRank(2, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod2" class="underlined"></div> 
+            
+            <!-- skill 3 -->
+            <div id="classSkill3">&#9723;</div>
+            <div id="skilleName3" class="skillName">Climb</div>
+            <div id="totalBonus3" class="underlined"></div>
+            <div>=STR</div>
+            <div id="abilityMod3" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(3, false)">-</button>
+                <span id="ranks3"></span>
+                <button class="rightButton" onchange="assignSkillRank(3, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod3" class="underlined"></div> 
+            
+            <!-- skill 4 -->
+            <div id="classSkill4">&#9723;</div>
+            <div id="skilleName4" class="skillName">
+                Craft
+                <input type="text" class="skillNameField" id="skillName4" onchange="AssignSkillName(4, this.value)">
+            </div>
+            <div id="totalBonus4" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod4" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(4, false)">-</button>
+                <span id="ranks4"></span>
+                <button class="rightButton" onchange="assignSkillRank(4, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod4" class="underlined"></div> 
+                        
+            <!-- skill 5 -->
+            <div id="classSkill5">&#9723;</div>
+            <div id="skilleName5" class="skillName">
+                Craft
+                <input type="text" class="skillNameField" id="skillName5" onchange="AssignSkillName(5, this.value)">
+            </div>
+            <div id="totalBonus5" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod5" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(5, false)">-</button>
+                <span id="ranks5"></span>
+                <button class="rightButton" onchange="assignSkillRank(5, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod5" class="underlined"></div> 
+            
+            <!-- skill 6 -->
+            <div id="classSkill6">&#9723;</div>
+            <div id="skilleName6" class="skillName">
+                Craft
+                <input type="text" class="skillNameField" id="skillName6" onchange="AssignSkillName(6, this.value)">
+            </div>
+            <div id="totalBonus6" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod6" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(6, false)">-</button>
+                <span id="ranks6"></span>
+                <button class="rightButton" onchange="assignSkillRank(6, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod6" class="underlined"></div> 
+            
+            <!-- skill 7 -->
+            <div id="classSkill7">&#9723;</div>
+            <div id="skilleName7" class="skillName">Diplomacy</div>
+            <div id="totalBonus7" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod7" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(7, false)">-</button>
+                <span id="ranks7"></span>
+                <button class="rightButton" onchange="assignSkillRank(7, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod7" class="underlined"></div> 
+            
+            <!-- skill 8 -->
+            <div id="classSkill8">&#9723;</div>
+            <div id="skilleName8" class="skillName">Disable Device*</div>
+            <div id="totalBonus8" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod8" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(8, false)">-</button>
+                <span id="ranks8"></span>
+                <button class="rightButton" onchange="assignSkillRank(8, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod8" class="underlined"></div> 
+            
+            <!-- skill 9 -->
+            <div id="classSkill9">&#9723;</div>
+            <div id="skilleName9" class="skillName">Disguise</div>
+            <div id="totalBonus9" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod9" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(9, false)">-</button>
+                <span id="ranks9"></span>
+                <button class="rightButton" onchange="assignSkillRank(9, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod9" class="underlined"></div> 
+            
+            <!-- skill 10 -->
+            <div id="classSkill10">&#9723;</div>
+            <div id="skilleName10" class="skillName">Escape Artist</div>
+            <div id="totalBonus10" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod10" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(10, false)">-</button>
+                <span id="ranks10"></span>
+                <button class="rightButton" onchange="assignSkillRank(10, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod10" class="underlined"></div> 
+            
+            <!-- skill 11 -->
+            <div id="classSkill11">&#9723;</div>
+            <div id="skilleName11" class="skillName">Fly</div>
+            <div id="totalBonus11" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod11" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(11, false)">-</button>
+                <span id="ranks11"></span>
+                <button class="rightButton" onchange="assignSkillRank(11, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod11" class="underlined"></div> 
+            
+            <!-- skill 12 -->
+            <div id="classSkill12">&#9723;</div>
+            <div id="skilleName12" class="skillName">Handle Animal*</div>
+            <div id="totalBonus12" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod12" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(12, false)">-</button>
+                <span id="ranks12"></span>
+                <button class="rightButton" onchange="assignSkillRank(12, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod12" class="underlined"></div> 
+        
+            <!-- skill 13 -->
+            <div id="classSkill13">&#9723;</div>
+            <div id="skilleName13" class="skillName">Heal</div>
+            <div id="totalBonus13" class="underlined"></div>
+            <div>=WIS</div>
+            <div id="abilityMod13" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(13, false)">-</button>
+                <span id="ranks13"></span>
+                <button class="rightButton" onchange="assignSkillRank(13, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod13" class="underlined"></div> 
+            
+            <!-- skill 14 -->
+            <div id="classSkill14">&#9723;</div>
+            <div id="skilleName14" class="skillName">Intimidate</div>
+            <div id="totalBonus14" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod14" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(14, false)">-</button>
+                <span id="ranks14"></span>
+                <button class="rightButton" onchange="assignSkillRank(14, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod14" class="underlined"></div> 
+            
+            <!-- skill 15 -->
+            <div id="classSkill15">&#9723;</div>
+            <div id="skilleName15" class="skillName">Knowledge(Arcana)*</div>
+            <div id="totalBonus15" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod15" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(15, false)">-</button>
+                <span id="ranks15"></span>
+                <button class="rightButton" onchange="assignSkillRank(15, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod15" class="underlined"></div> 
+            
+            <!-- skill 16 -->
+            <div id="classSkill16">&#9723;</div>
+            <div id="skilleName16" class="skillName">Knowledge(Dungeoneering)*</div>
+            <div id="totalBonus16" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod16" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(16, false)">-</button>
+                <span id="ranks16"></span>
+                <button class="rightButton" onchange="assignSkillRank(16, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod16" class="underlined"></div> 
+            
+            <!-- skill 17 -->
+            <div id="classSkill17">&#9723;</div>
+            <div id="skilleName17" class="skillName">Knowledge(Engineering)*</div>
+            <div id="totalBonus17" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod17" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(17, false)">-</button>
+                <span id="ranks17"></span>
+                <button class="rightButton" onchange="assignSkillRank(17, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod16" class="underlined"></div>
+            
+            <!-- skill 18 -->
+            <div id="classSkill16">&#9723;</div>
+            <div id="skilleName18" class="skillName">Knowledge(Geography)*</div>
+            <div id="totalBonus18" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod18" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(18, false)">-</button>
+                <span id="ranks18"></span>
+                <button class="rightButton" onchange="assignSkillRank(18, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod18" class="underlined"></div>
+            
+            <!-- skill 19 -->
+            <div id="classSkill19">&#9723;</div>
+            <div id="skilleName19" class="skillName">Knowledge(History)*</div>
+            <div id="totalBonus19" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod19" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(19, false)">-</button>
+                <span id="ranks19"></span>
+                <button class="rightButton" onchange="assignSkillRank(19, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod19" class="underlined"></div>
+            
+            <!-- skill 20 -->
+            <div id="classSkill20">&#9723;</div>
+            <div id="skilleName20" class="skillName">Knowledge(Local)*</div>
+            <div id="totalBonus20" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod20" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(20, false)">-</button>
+                <span id="ranks20"></span>
+                <button class="rightButton" onchange="assignSkillRank(20, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod20" class="underlined"></div>
+            
+            <!-- skill 21 -->
+            <div id="classSkill21">&#9723;</div>
+            <div id="skilleName21" class="skillName">Knowledge(Nature)*</div>
+            <div id="totalBonus21" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod21" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(21, false)">-</button>
+                <span id="ranks21"></span>
+                <button class="rightButton" onchange="assignSkillRank(21, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod21" class="underlined"></div>
+            
+            <!-- skill 22 -->
+            <div id="classSkill22">&#9723;</div>
+            <div id="skilleName22" class="skillName">Knowledge(Nobility)*</div>
+            <div id="totalBonus22" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod22" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(22, false)">-</button>
+                <span id="ranks22"></span>
+                <button class="rightButton" onchange="assignSkillRank(22, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod22" class="underlined"></div>
+            
+            <!-- skill 23 -->
+            <div id="classSkill23">&#9723;</div>
+            <div id="skilleName23" class="skillName">Knowledge(Planes)*</div>
+            <div id="totalBonus23" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod23" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(23, false)">-</button>
+                <span id="ranks23"></span>
+                <button class="rightButton" onchange="assignSkillRank(23, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod23" class="underlined"></div>
+            
+            <!-- skill 24 -->
+            <div id="classSkill24">&#9723;</div>
+            <div id="skilleName24" class="skillName">Knowledge(Religion)*</div>
+            <div id="totalBonus24" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod24" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(24, false)">-</button>
+                <span id="ranks24"></span>
+                <button class="rightButton" onchange="assignSkillRank(24, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod24" class="underlined"></div>
+            
+            <!-- skill 25 -->
+            <div id="classSkill25">&#9723;</div>
+            <div id="skilleName25" class="skillName">Linguistics*</div>
+            <div id="totalBonus25" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod25" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(25, false)">-</button>
+                <span id="ranks25"></span>
+                <button class="rightButton" onchange="assignSkillRank(25, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod25" class="underlined"></div>
+            
+            <!-- skill 26 -->
+            <div id="classSkill26">&#9723;</div>
+            <div id="skilleName26" class="skillName">Perception</div>
+            <div id="totalBonus26" class="underlined"></div>
+            <div>=WIS</div>
+            <div id="abilityMod26" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(26, false)">-</button>
+                <span id="ranks26"></span>
+                <button class="rightButton" onchange="assignSkillRank(26, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod26" class="underlined"></div>
+            
+            <!-- skill 27 -->
+            <div id="classSkill27">&#9723;</div>
+            <div id="skilleName27" class="skillName">
+                Perform
+                <input type="text" class="skillNameField" id="skillName27" onchange="AssignSkillName(27, this.value)">
+            </div>
+            <div id="totalBonus27" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod27" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(27, false)">-</button>
+                <span id="ranks27"></span>
+                <button class="rightButton" onchange="assignSkillRank(27, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod27" class="underlined"></div>
+            
+            <!-- skill 28 -->
+            <div id="classSkill28">&#9723;</div>
+            <div id="skilleName28" class="skillName">
+                Perform
+                <input type="text" class="skillNameField" id="skillName28" onchange="AssignSkillName(28, this.value)">
+            </div>
+            <div id="totalBonus28" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod28" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(28, false)">-</button>
+                <span id="ranks28"></span>
+                <button class="rightButton" onchange="assignSkillRank(28, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod28" class="underlined"></div>
+        
+            <!-- skill 29 -->
+            <div id="classSkill29">&#9723;</div>
+            <div id="skilleName29" class="skillName">
+                Profession
+                <input type="text" class="skillNameField" id="skillName29" onchange="AssignSkillName(29, this.value)">
+            </div>
+            <div id="totalBonus29" class="underlined"></div>
+            <div>=WIS</div>
+            <div id="abilityMod29" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(29, false)">-</button>
+                <span id="ranks29"></span>
+                <button class="rightButton" onchange="assignSkillRank(29, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod29" class="underlined"></div>
+            
+            <!-- skill 30 -->
+            <div id="classSkill30">&#9723;</div>
+            <div id="skilleName30" class="skillName">
+                Profession
+                <input type="text" class="skillNameField" id="skillName30" onchange="AssignSkillName(30, this.value)">
+            </div>
+            <div id="totalBonus30" class="underlined"></div>
+            <div>=WIS</div>
+            <div id="abilityMod30" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(30, false)">-</button>
+                <span id="ranks30"></span>
+                <button class="rightButton" onchange="assignSkillRank(30, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod30" class="underlined"></div>
+            
+            <!-- skill 31 -->
+            <div id="classSkill31">&#9723;</div>
+            <div id="skilleName31" class="skillName">Ride</div>
+            <div id="totalBonus31" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod31" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(31, false)">-</button>
+                <span id="ranks31"></span>
+                <button class="rightButton" onchange="assignSkillRank(31, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod31" class="underlined"></div>
+            
+            <!-- skill 32 -->
+            <div id="classSkill32">&#9723;</div>
+            <div id="skilleName32" class="skillName">Sense Motive</div>
+            <div id="totalBonus32" class="underlined"></div>
+            <div>=WIS</div>
+            <div id="abilityMod32" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(32, false)">-</button>
+                <span id="ranks32"></span>
+                <button class="rightButton" onchange="assignSkillRank(32, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod32" class="underlined"></div>
+            
+            <!-- skill 33 -->
+            <div id="classSkill33">&#9723;</div>
+            <div id="skilleName33" class="skillName">Sleight of Hand*</div>
+            <div id="totalBonus33" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod33" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(33, false)">-</button>
+                <span id="ranks33"></span>
+                <button class="rightButton" onchange="assignSkillRank(33, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod33" class="underlined"></div>
+            
+            <!-- skill 34 -->
+            <div id="classSkill34">&#9723;</div>
+            <div id="skilleName34" class="skillName">Spellcraft*</div>
+            <div id="totalBonus34" class="underlined"></div>
+            <div>=INT</div>
+            <div id="abilityMod34" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(34, false)">-</button>
+                <span id="ranks34"></span>
+                <button class="rightButton" onchange="assignSkillRank(34, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod34" class="underlined"></div>
+            
+            <!-- skill 35 -->
+            <div id="classSkill35">&#9723;</div>
+            <div id="skilleName35" class="skillName">Stealth</div>
+            <div id="totalBonus35" class="underlined"></div>
+            <div>=DEX</div>
+            <div id="abilityMod35" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(35, false)">-</button>
+                <span id="ranks35"></span>
+                <button class="rightButton" onchange="assignSkillRank(35, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod35" class="underlined"></div>
+            
+            <!-- skill 36 -->
+            <div id="classSkill36">&#9723;</div>
+            <div id="skilleName36" class="skillName">Survival</div>
+            <div id="totalBonus36" class="underlined"></div>
+            <div>=WIS</div>
+            <div id="abilityMod36" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(36, false)">-</button>
+                <span id="ranks36"></span>
+                <button class="rightButton" onchange="assignSkillRank(36, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod36" class="underlined"></div>
+            
+            <!-- skill 37 -->
+            <div id="classSkill37">&#9723;</div>
+            <div id="skilleName37" class="skillName">Swim</div>
+            <div id="totalBonus37" class="underlined"></div>
+            <div>=STR</div>
+            <div id="abilityMod37" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(37, false)">-</button>
+                <span id="ranks37"></span>
+                <button class="rightButton" onchange="assignSkillRank(37, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod37" class="underlined"></div>
+            
+            <!-- skill 38 -->
+            <div id="classSkill38">&#9723;</div>
+            <div id="skilleName38" class="skillName">Use Magic Device*</div>
+            <div id="totalBonus38" class="underlined"></div>
+            <div>=CHA</div>
+            <div id="abilityMod38" class="underlined"></div>
+            <div>+</div>
+            <div class="skillRank underlined">
+                <button class="leftButton" onchange="assignSkillRank(38, false)">-</button>
+                <span id="ranks38"></span>
+                <button class="rightButton" onchange="assignSkillRank(38, true)">+</button>
+            </div>
+            <div>+</div>
+            <div id="miscMod38" class="underlined"></div>
+        </div>
+        <div style="font-size: small; text-align: left; padding-top: 3px;">&#9724;Class Skill &emsp;*Trained Only</div>
+        <div style="text-align: left; padding-top: 5px; font-size: large;">Conditionnal Modifiers:</div>
+        <div class="underlined">&nbsp;</div>
+        <div class="underlined">&nbsp;</div>
+    <!-- Unchecked box: &#9725;     checked box: &#9724; -->
+    </div> 
+    <div class="languages subMain">
+        <div style="text-align: left; font-size: large;">Languages:</div>
+        <div class="languagesBreakdown">
+            <input class="underline" id="lang0" type="text" size="8" onchange="AssignLang(0, this.value)">
+            <input class="underline" id="lang1" type="text" size="8" onchange="AssignLang(1, this.value)">
+            <input class="underline" id="lang2" type="text" size="8" onchange="AssignLang(2, this.value)">
+            <input class="underline" id="lang3" type="text" size="8" onchange="AssignLang(3, this.value)">
+            <input class="underline" id="lang4" type="text" size="8" onchange="AssignLang(4, this.value)">
+            <input class="underline" id="lang5" type="text" size="8" onchange="AssignLang(5, this.value)">
+            <input class="underline" id="lang6" type="text" size="8" onchange="AssignLang(6, this.value)">
+            <input class="underline" id="lang7" type="text" size="8" onchange="AssignLang(7, this.value)">
+            <input class="underline" id="lang8" type="text" size="8" onchange="AssignLang(8, this.value)">
+        </div>
+    </div>
+    
+    
     <div class="ACItems subMain">AC Items</div> 
     <div class="gear subMain">Gear</div>
     <div class="weight subMain">Weight</div>
