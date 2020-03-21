@@ -44,7 +44,7 @@
         color: white;
     }
     .smallTitle {
-        font-size: small;
+        font-size: x-small;
     }
     .boxed {
         border: 0;
@@ -176,11 +176,12 @@
     
     .weaponBreakdown {
         display:grid;
-        grid: repeat(7, auto) / repeat(7, auto);
+        grid: repeat(7, 1fr) / repeat(7, 1fr);
     }
-    /*.weaponBreakdown>div {
-        border: red 1px solid;
-    }*/
+    .ACItemGrid {
+        display: grid;
+        grid: repeat(8 1fr) / repeat(8, 1 fr);
+    }
 
 
 
@@ -199,9 +200,9 @@
         .AC-container {
             display: inline-block;
         }
-        .AC-container > div {
-            margin-top: 5px;
-            margin-bottom: 5px;
+        .subMain {
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
         .sitAC {
             display: grid;
@@ -541,7 +542,6 @@
             </div>
         </div>
     </div> 
-    
     <div class="weapons subMain">
         <style>
             .weaponTitle { grid-column: 1 / span 4; grid-row: 1 / span 2;  }
@@ -608,7 +608,6 @@
             <div class="boxed weaponDamage" id="weaponDamage1"></div>
         </div>
     </div>
-    
     <div class="skills subMain">
         <div class="whiteOnBlack" style="column-span: all;">SKILLS</div>
         <div class="skillsBreakdown">
@@ -1245,8 +1244,21 @@
         </div>
     </div>
     
+    <div class="ACItems subMain">
+        <style>
+            .ACItemsTitle { grid-column: 1 / span 2; grid-row: 1 / span 2; }
+            .ACBonusTitle { grid-column: 3; grid-row: 2; }
+            .ACTypeTitle { grid-column: 4; grid-row: 2; }
+            ACCheckPenaltyTitle { grid-column: 5; grid-row: 2; }
+        </style>
+        <div class="ACItemGrid">
+            <div class="whiteOnBlack ACItemsTitle">AC ITEMS</div>
+            <div class="whiteOnBlack ACBonusTitle smallTitle">BONUS</div>
+            <div class="whiteOnBlack ACTypeTitle smallTitle">TYPE</div>
+            <div class="whiteOnBlack ACCheckPenaltyTitle smallTitle">CHECK PENALTY</div>
+        </div>
+    </div> 
     
-    <div class="ACItems subMain">AC Items</div> 
     <div class="gear subMain">Gear</div>
     <div class="weight subMain">Weight</div>
     <div class="money subMain">Money</div>
