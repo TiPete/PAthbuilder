@@ -43,6 +43,9 @@
         background-color: black;
         color: white;
     }
+    .smallTitle {
+        font-size: small;
+    }
     .boxed {
         border: 0;
         border: black solid 1px;
@@ -132,7 +135,7 @@
         display: grid;
         grid: repeat(38, auto) / repeat(9, auto);
         grid-column-gap: 2px;
-        grid-row-gap: 6px;
+        grid-row-gap: 3px;
     }
     .skillName {
         text-align: left;
@@ -165,7 +168,19 @@
         grid-row-gap: 2px;
     }
 
-
+    .weapons {
+        display: grid;
+        grid-row-gap: 25px;
+        
+    }
+    
+    .weaponBreakdown {
+        display:grid;
+        grid: repeat(7, auto) / repeat(7, auto);
+    }
+    /*.weaponBreakdown>div {
+        border: red 1px solid;
+    }*/
 
 
 
@@ -233,7 +248,15 @@
         .main-container {
             display: grid;
             grid-template-areas: 
-            'info info info info' 'stats stats speed speed' 'stats stats skills skills' 'combatStats combatStats skills skills' 'weapons  weapons skills skills' 'weapons weapons languages languages' 'ACItems ACItems ACItems spells' 'gear feats feats spells' 'gear specialAbilities specialAbilities spells' 'weight specialAbilities specialAbilities spells' 'money specialAbilities specialAbilities spells' 'money experiencePoints experiencePoints spells';
+                'info info info info' 
+                'stats stats speed speed' 
+                'stats stats skills skills' 
+                'combatStats combatStats skills skills'
+                'weapons  weapons skills skills' 
+                'weapons  weapons skills skills' 
+                'weapons  weapons skills skills' 
+                'weapons weapons languages languages' 
+                'ACItems ACItems ACItems spells' 'gear feats feats spells' 'gear specialAbilities specialAbilities spells' 'weight specialAbilities specialAbilities spells' 'money specialAbilities specialAbilities spells' 'money experiencePoints experiencePoints spells';
             
         }
         .info {
@@ -520,6 +543,70 @@
     </div> 
     
     <div class="weapons subMain">
+        <style>
+            .weaponTitle { grid-column: 1 / span 4; grid-row: 1 / span 2;  }
+            .weaponTitleAB { grid-column: 5 / span 2; grid-row: 2; }
+            .weaponTitleCritical { grid-column: 7; grid-row: 2; }
+            .weaponName { grid-column: 1 / span 4; grid-row: 3 / span 2;}
+            .weaponAttackBonus { grid-column: 5/span 2; grid-row: 3 / span 2;}
+            .weaponCritical { grid-column: 7; grid-row: 3 / span 2;}
+            .weaponTitleType { grid-column: 1; grid-row: 5; }
+            .weaponTitleRange { grid-column: 2; grid-row: 5; }
+            .weaponTitleAmmo { grid-column: 3 / span 2; grid-row: 5; }
+            .weaponTitleDamage  { grid-column: 5 / span 3; grid-row: 5;}
+            .weaponType { grid-column: 1; grid-row: 6 / span 2; }
+            .weaponRange { grid-column: 2; grid-row: 6 / span 2; }
+            .weaponAmmo { grid-column: 3 / span 2; grid-row: 6 / span 2; }
+            .weaponDamage { grid-column: 5 / span 3; grid-row: 6 / span 2; }
+        </style>
+        <div class="weaponBreakdown" id="weapon1">
+            <div class="whiteOnBlack weaponTitle">WEAPONS</div>
+            <div class="whiteOnBlack weaponTitleAB smallTitle">ATTACK BONUS</div>
+            <div class="whiteOnBlack weaponTitleCritical smallTitle">CRITICAL</div>
+            <div class="boxed weaponName" id="weaponName1"></div>
+            <div class="boxed weaponAttackBonus" id="weaponAttackBonus1"></div>
+            <div class="boxed weaponCritical" id="weaponCritical1"></div>
+            <div class="whiteOnBlack weaponTitleType">TYPE</div>
+            <div class="whiteOnBlack weaponTitleRange">RANGE</div>
+            <div class="whiteOnBlack weaponTitleAmmo">Ammunition</div>
+            <div class="whiteOnBlack weaponTitleDamage">DAMAGE</div>
+            <div class="boxed weaponType" id="weaponType1"></div>
+            <div class="boxed weaponRange" id="weaponRange1"></div>
+            <div class="boxed weaponAmmo" id="weaponAmmo1"></div>
+            <div class="boxed weaponDamage" id="weaponDamage1"></div>
+        </div>
+        <div class="weaponBreakdown" id="weapon1">
+            <div class="whiteOnBlack weaponTitle">WEAPONS</div>
+            <div class="whiteOnBlack weaponTitleAB">ATTACK BONUS</div>
+            <div class="whiteOnBlack weaponTitleCritical">CRITICAL</div>
+            <div class="boxed weaponName" id="weaponName1"></div>
+            <div class="boxed weaponAttackBonus" id="weaponAttackBonus1"></div>
+            <div class="boxed weaponCritical" id="weaponCritical1"></div>
+            <div class="whiteOnBlack weaponTitleType">TYPE</div>
+            <div class="whiteOnBlack weaponTitleRange">RANGE</div>
+            <div class="whiteOnBlack weaponTitleAmmo">Ammunition</div>
+            <div class="whiteOnBlack weaponTitleDamage">DAMAGE</div>
+            <div class="boxed weaponType" id="weaponType1"></div>
+            <div class="boxed weaponRange" id="weaponRange1"></div>
+            <div class="boxed weaponAmmo" id="weaponAmmo1"></div>
+            <div class="boxed weaponDamage" id="weaponDamage1"></div>
+        </div>
+        <div class="weaponBreakdown" id="weapon1">
+            <div class="whiteOnBlack weaponTitle">WEAPONS</div>
+            <div class="whiteOnBlack weaponTitleAB">ATTACK BONUS</div>
+            <div class="whiteOnBlack weaponTitleCritical">CRITICAL</div>
+            <div class="boxed weaponName" id="weaponName1"></div>
+            <div class="boxed weaponAttackBonus" id="weaponAttackBonus1"></div>
+            <div class="boxed weaponCritical" id="weaponCritical1"></div>
+            <div class="whiteOnBlack weaponTitleType">TYPE</div>
+            <div class="whiteOnBlack weaponTitleRange">RANGE</div>
+            <div class="whiteOnBlack weaponTitleAmmo">Ammunition</div>
+            <div class="whiteOnBlack weaponTitleDamage">DAMAGE</div>
+            <div class="boxed weaponType" id="weaponType1"></div>
+            <div class="boxed weaponRange" id="weaponRange1"></div>
+            <div class="boxed weaponAmmo" id="weaponAmmo1"></div>
+            <div class="boxed weaponDamage" id="weaponDamage1"></div>
+        </div>
     </div>
     
     <div class="skills subMain">
